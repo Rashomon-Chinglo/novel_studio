@@ -1,46 +1,29 @@
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
 from app.core.llm import get_llm
 
-from ..schemas.bible import Bible
-from ..schemas.chapter import ChapterBlueprint
-from ..schemas.substory import Substory
-
-BLUEPRINT_INIT_PROMPT = """
-{overview_outline}
-{substory_outline}
-{substory_summary}
-{before_chapter_summary}
-{format_instructions}
-"""
+from ..schemas.chapter import ChapterBlueprint, ChapterScene
 
 
-def get_blueprint_init_chain(bible: Bible, substory: Substory):
+def get_chapter_blueprint_chain(prompt: ChatPromptTemplate):
     llm = get_llm(0.8)
-    parser = JsonOutputParser(pydantic_object=ChapterBlueprint)
-    prompt = ChatPromptTemplate.from_messages(
-        [("system", BLUEPRINT_INIT_PROMPT)]
-    ).partial(
-        overview_outline=bible.model_dump_json(
-            include=[
-                "worldview_tone",
-                "main_conflict",
-                "ending_vision",
-                "key_roles_summary",
-            ]
-        ),
-        substory=substory.model_dump_json(
-            include=[
-                "core_conflict",
-                "status_change",
-                "logic_nodes",
-            ]
-        ),
+
+    structured_llm = prompt | llm.with_structured_output(
+        ChapterBlueprint, method="function_calling", strict=True
     )
-    structured_llm = prompt | llm | parser | (lambda x: ChapterBlueprint(**x))
     return structured_llm
 
 
-BRAINSTORM_PROMPT = """
-"""
+def get_chapter_brainstorm_chain(prompt: ChatPromptTemplate):
+    llm = get_llm(0.8)
+    structured_llm = prompt | llm | StrOutputParser()
+    return structured_llm
+
+
+def get_chapter_scene_chain(prompt: ChatPromptTemplate):
+    llm = get_llm(0.8)
+    structured_llm = prompt | llm.with_structured_output(
+        ChapterScene, method="function_calling", strict=True
+    )
+    return structured_llm

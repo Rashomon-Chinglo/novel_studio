@@ -51,7 +51,7 @@ class SubstoryBrainstormPrompt(PromptTemplate[SubstoryBrainstormContext]):
         return "1.0.0"
 
 
-class SubstoryPrompt(PromptTemplate[SubstoryGenerateContext]):
+class SubstoryGeneratePrompt(PromptTemplate[SubstoryGenerateContext]):
     @property
     def template(self) -> str:
         return """

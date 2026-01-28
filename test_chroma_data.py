@@ -92,7 +92,6 @@ def cmd_diagnose(args):
         # 👇 改动：展示 Top 3 详情
         print("\n   📄 [Top 3 命中详情]")
         for i, res in enumerate(results):
-            score_info = ""  # LangChain 的 similarity_search 默认不返回分数，如果需要分数要用 similarity_search_with_score
             print(f"   {'=' * 10} Rank {i + 1} {'=' * 10}")
             # 限制打印长度，防止刷屏
             content_preview = res.page_content.replace("\n", " ")

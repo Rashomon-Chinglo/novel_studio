@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Bible(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     title: str = Field(alias="书名", description="书名")
     logline: str = Field(
         alias="梗概",
@@ -16,13 +18,11 @@ class Bible(BaseModel):
     main_conflict: str = Field(alias="主线冲突", description="主线冲突")
     ending_vision: str = Field(alias="结局愿景", description="结局愿景")
 
-    key_roles_summary: str = Field(
-        alias="主角们的简要概述", description="主角们的简要概述"
-    )
+    key_roles_summary: str = Field(alias="主角们的简要概述", description="主角们的简要概述")
 
-    def prompt(self, exclude: list[str] | None = None) -> str:
+    def prompt(self, exclude: set[str] | None = None) -> str:
         if exclude is None:
-            exclude = []
+            exclude = set()
         bible = self.model_dump(exclude=exclude, exclude_none=True, by_alias=True)
 
         content = "\n\n".join([f"## {k}\n{v}" for k, v in bible.items()])

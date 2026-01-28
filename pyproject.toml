@@ -52,15 +52,10 @@ ignore = [
 quote-style = "double"
 indent-style = "space"
 
-[tool.ty]
-python-version = "3.12"
-strict = true
-ignore-missing-imports = true
-exclude = [".venv", "test"]
+[tool.ty.analysis]
+respect-type-ignore-comments = true
 
-[tool.ty.lsp]
-# 启用全量 LSP 功能
-enable = true
-rename = true
-hover = true
-definition = true
+[tool.ty.rules]
+# 默认规则配置
+unresolved-import = "error"
+unresolved-attribute = "error"
