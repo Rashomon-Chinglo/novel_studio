@@ -20,7 +20,9 @@ class Bible(BaseModel):
         alias="主角们的简要概述", description="主角们的简要概述"
     )
 
-    def prompt(self, exclude: list[str] = []):
+    def prompt(self, exclude: list[str] | None = None) -> str:
+        if exclude is None:
+            exclude = []
         bible = self.model_dump(exclude=exclude, exclude_none=True, by_alias=True)
 
         content = "\n\n".join([f"## {k}\n{v}" for k, v in bible.items()])

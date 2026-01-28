@@ -1,7 +1,8 @@
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from app.core.llm import get_llm
+from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+
+from app.core.llm import get_llm
 
 
 class Bible(BaseModel):

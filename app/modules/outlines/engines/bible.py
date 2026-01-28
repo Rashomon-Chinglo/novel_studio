@@ -1,10 +1,7 @@
+from ..chain.bible import get_bible_chain, get_brainstorm_chain
+from ..context.bible import BibleContext, BrainstormContext
+from ..prompts.bible import BiblePrompt, BrainstormPrompt
 from ..schemas import Bible
-from ..chain.bible import get_bible_chain
-from ..chain.bible import get_brainstorm_chain
-from ..context.bible import BrainstormContext
-from ..context.bible import BibleContext
-from ..prompts.bible import BrainstormPrompt
-from ..prompts.bible import BiblePrompt
 
 
 class BibleEngine:

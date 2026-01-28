@@ -1,8 +1,12 @@
-from app.modules.base.prompt import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate
-from ..context.chapter import ChapterBlueprintContext
-from ..context.chapter import ChapterBlueprintBrainstormContext
-from ..context.chapter import ChapterSceneContext
+
+from app.modules.base.prompt import PromptTemplate
+
+from ..context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterSceneContext,
+)
 
 
 class ChapterBlueprintPrompt(PromptTemplate[ChapterBlueprintContext]):
@@ -63,7 +67,7 @@ class BlueprintBrainstormPrompt(PromptTemplate[ChapterBlueprintBrainstormContext
         # 任务
         请**根据以下逻辑节点**与**用户头脑风暴记录**，结合上述背景，规划本章节（Chapter）的场景骨架。
         {chapter_blueprint}
-    
+
         {logic_nodes_to_process}
         """
 
@@ -77,9 +81,7 @@ class BlueprintBrainstormPrompt(PromptTemplate[ChapterBlueprintBrainstormContext
             ]
         )
 
-    def build_variables(
-        self, context: ChapterBlueprintBrainstormContext
-    ) -> dict[str, str]:
+    def build_variables(self, context: ChapterBlueprintBrainstormContext) -> dict[str, str]:
         return {
             "overview_outline": context.bible.prompt(),
             "substory_outline": context.substory.prompt(),
@@ -111,7 +113,7 @@ class ChapterScenePrompt(PromptTemplate[ChapterSceneContext]):
         # 任务
         请**根据以下逻辑节点**，**章节蓝图**，**场景骨架**，结合上述背景，规划出场景骨架的详细内容。
         {chapter_blueprint}
-    
+
         {logic_nodes_to_process}
 
         {scene_blueprint}

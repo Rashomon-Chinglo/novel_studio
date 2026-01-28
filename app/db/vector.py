@@ -1,7 +1,7 @@
 from langchain_chroma import Chroma
 from langchain_community.embeddings import JinaEmbeddings
-from app.core.config import settings
 
+from app.core.config import settings
 
 # def get_chroma_collection():
 #     client = chromadb.PersistentClient(path=settings.CHROMA_URL)

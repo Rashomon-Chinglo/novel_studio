@@ -1,14 +1,17 @@
+import asyncio
+import json
+import uuid
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 from app.db.session import AsyncSessionLocal
 from app.db.vector import get_vector_store
 from app.models.snippet import Snippet
+
 from .chain import get_mining_chain
-from .schemas import ExtractedResult, ExtractedSnippet
-import asyncio
-import uuid
-import json
-from .prompt import MaterialsMiningPrompt
 from .context import MaterialsMiningContext
+from .prompt import MaterialsMiningPrompt
+from .schemas import ExtractedResult, ExtractedSnippet
 
 
 class MaterialEngine:

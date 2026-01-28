@@ -1,6 +1,7 @@
+import asyncio
+
 from app.db.session import init_sqlite_db
 from app.db.vector import get_vector_store
-import asyncio
 
 
 async def init_db():

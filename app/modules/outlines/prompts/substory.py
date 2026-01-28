@@ -1,22 +1,23 @@
-from ..context.substory import SubstoryContext
-from ..context.substory import BrainstormContext
-from app.modules.base.prompt import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate
 
+from app.modules.base.prompt import PromptTemplate
 
-class BrainstormPrompt(PromptTemplate[BrainstormContext]):
+from ..context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
+
+
+class SubstoryBrainstormPrompt(PromptTemplate[SubstoryBrainstormContext]):
     @property
     def template(self) -> str:
         return """
         你是一位精通故事结构的剧情架构师。你的目标是协助作者策划小说中的一个具体篇章（分卷/副本/Substory）。
-        
+
         【你的任务】
         1. 倾听作者的想法，给出简短、有建设性的反馈。
         2. **主动追问**缺失的关键剧情逻辑，引导用户聊出以下内容：
            - **本卷核心冲突** (Core Conflict): 这一卷主要解决什么问题？对抗什么？
            - **起止状态变化** (Status Change): 这一卷开始和结束时，主角或世界有什么本质的不同？
            - **关键因果链** (Logic Chain): 大致的剧情走向，A导致B，B导致C的逻辑链条。
-        
+
         【重要原则】
         - 始终基于“因果逻辑”来审视剧情，如果发现逻辑断层，请温和地指出来。
         - **不要** 替用户做决定。
@@ -39,11 +40,9 @@ class BrainstormPrompt(PromptTemplate[BrainstormContext]):
             ]
         )
 
-    def build_variables(self, context: BrainstormContext) -> dict[str, str]:
+    def build_variables(self, context: SubstoryBrainstormContext) -> dict[str, str]:
         return {
-            "history": "\n".join(context.history)
-            if context.history
-            else "(无历史记录)",
+            "history": "\n".join(context.history) if context.history else "(无历史记录)",
             "user_input": context.user_input,
             "overview_outline": context.bible.prompt(),
         }
@@ -52,7 +51,7 @@ class BrainstormPrompt(PromptTemplate[BrainstormContext]):
         return "1.0.0"
 
 
-class SubstoryPrompt(PromptTemplate[SubstoryContext]):
+class SubstoryPrompt(PromptTemplate[SubstoryGenerateContext]):
     @property
     def template(self) -> str:
         return """
@@ -85,7 +84,7 @@ class SubstoryPrompt(PromptTemplate[SubstoryContext]):
             ]
         )
 
-    def build_variables(self, context: SubstoryContext) -> dict[str, str]:
+    def build_variables(self, context: SubstoryGenerateContext) -> dict[str, str]:
         return {
             "overview_outline": context.bible.prompt(),
             "conversation_text": "\n".join(context.history),

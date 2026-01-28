@@ -1,9 +1,10 @@
 # test_sqlite.py
 import asyncio
-import sys
-import os
 import json
-from sqlalchemy import select, func, text
+import os
+import sys
+
+from sqlalchemy import func, select
 
 # 路径修补
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -32,7 +33,7 @@ async def check_sqlite():
             return
 
         # 2. 详细检查最近入库的 3 条
-        print(f"\n   👀 [最新 3 条数据预览]")
+        print("\n   👀 [最新 3 条数据预览]")
 
         # 按 id 倒序或者随机取都行，这里简单起见直接取 limit
         stmt = select(Snippet).limit(3)
@@ -55,7 +56,7 @@ async def check_sqlite():
                     print(f"   ✅ 标签(List): {tags_data}")
                 else:
                     print(f"   ⚠️  标签解析后不是 List: {type(tags_data)}")
-            except Exception as e:
+            except Exception:
                 print(f"   ❌ 标签 JSON 解析失败 (存进去的不是合法 JSON?): {item.tags}")
 
             # 内容预览 (处理换行符)

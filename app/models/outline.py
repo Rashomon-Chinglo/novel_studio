@@ -1,6 +1,8 @@
-from sqlalchemy import JSON, Column, String, DateTime, ForeignKey, Integer
-from sqlalchemy.ext.asyncio import AsyncAttrs
 from datetime import datetime
+
+from sqlalchemy import JSON, Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy.ext.asyncio import AsyncAttrs
+
 from app.db.session import Base
 
 

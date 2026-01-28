@@ -1,6 +1,8 @@
 import asyncio
-import aiofiles
 from pathlib import Path
+
+import aiofiles
+
 from app.modules.materials.engine import MaterialEngine
 
 
@@ -12,7 +14,7 @@ async def get_content():
         # "0012_第12章 楼道里的人.txt",
     ]
     for file in files:
-        async with aiofiles.open(path / file, "r", encoding="utf-8") as f:
+        async with aiofiles.open(path / file, encoding="utf-8") as f:
             content = await f.read()
             yield file, content
 

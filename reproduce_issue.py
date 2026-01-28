@@ -1,15 +1,16 @@
 import asyncio
-import sys
 import os
+import sys
 
 # Ensure app package is found
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.modules.outlines.engines.bible import BibleEngine
 
+
 async def main():
     print("🚀 Reproducing Bible Generation Issue...")
-    
+
     try:
         engine = BibleEngine()
         print("✅ BibleEngine initialized.")

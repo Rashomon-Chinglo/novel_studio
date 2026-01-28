@@ -21,6 +21,46 @@ dependencies = [
 [dependency-groups]
 dev = [
     "aiofiles>=25.1.0",
-    "mypy>=1.19.1",
     "ruff>=0.14.10",
+    "ty>=0.0.14",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (基础错误)
+    "I",   # isort (自动排序 import)
+    "B",   # flake8-bugbear (设计漏洞)
+    "UP",  # pyupgrade (Python 3.12 语法升级)
+    "N",   # pep8-naming (变量名规范)
+    "RUF", # Ruff 特有规则
+]
+ignore = [
+    "E501",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ty]
+python-version = "3.12"
+strict = true
+ignore-missing-imports = true
+exclude = [".venv", "test"]
+
+[tool.ty.lsp]
+# 启用全量 LSP 功能
+enable = true
+rename = true
+hover = true
+definition = true

@@ -1,9 +1,7 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import declarative_base
-from app.core.config import settings
 
+from app.core.config import settings
 
 engine = create_async_engine(
     settings.SQLITE_URL,
@@ -21,7 +19,6 @@ Base = declarative_base()
 
 
 async def init_sqlite_db():
-    from app.models.snippet import Snippet
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)

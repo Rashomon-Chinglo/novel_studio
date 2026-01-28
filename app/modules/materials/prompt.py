@@ -1,6 +1,8 @@
-from app.modules.base.prompt import PromptTemplate
-from .context import MaterialsMiningContext
 from langchain_core.prompts import ChatPromptTemplate
+
+from app.modules.base.prompt import PromptTemplate
+
+from .context import MaterialsMiningContext
 
 
 class MaterialsMiningPrompt(PromptTemplate[MaterialsMiningContext]):
@@ -14,10 +16,10 @@ class MaterialsMiningPrompt(PromptTemplate[MaterialsMiningContext]):
         2. 你需要摘录出 0-N 个“精华片段” (ExtractedSnippet)。
         3. 每个片段 20-100 字，必须是原文摘录。
         4. 如果没有精彩内容，返回空列表。
-        
+
         【文本片段】
         {text}
-        
+
         """
 
     @property

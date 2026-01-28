@@ -1,7 +1,6 @@
 import asyncio
-import sys
 import os
-import readline  # Enable proper line editing (backspace, arrows)
+import sys
 
 # 1. Path fix to ensure app package is found
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -61,7 +60,7 @@ async def run_bible_phase():
             response = await engine.brainstorm(history, user_input)
             print(" " * 20, end="\r")
             print(f"🤖 AI: {response}")
-            
+
             # Append to history
             history.append(f"User: {user_input}")
             history.append(f"AI: {response}")
@@ -139,7 +138,7 @@ async def main():
     if not result:
         print("❌ Bible phase failed or aborted.")
         return
-    
+
     bible, _ = result
 
     # Phase 2: Substory

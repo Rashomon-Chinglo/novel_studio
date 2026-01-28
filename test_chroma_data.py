@@ -1,10 +1,9 @@
 # inspect_db.py
 import argparse
-import sys
-import os
 import collections
+import os
+import sys
 import time
-import random
 
 # 路径修补
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +34,7 @@ def cmd_diagnose(args):
         # 为了不消耗太多内存，这里只取 ids
         ids = store.get()["ids"]
         total_count = len(ids)
-        print(f"   ✅ 连接成功")
+        print("   ✅ 连接成功")
         print(f"   📊 当前数据总量: {total_count} 条片段")
 
         if total_count == 0:
@@ -61,14 +60,14 @@ def cmd_diagnose(args):
             missing_fields.append(field)
 
     if not missing_fields:
-        print(f"   ✅ 元数据结构正常 (包含 title, category, tags)")
+        print("   ✅ 元数据结构正常 (包含 title, category, tags)")
     else:
         print(f"   ❌ 发现缺失字段: {missing_fields}")
 
     if len(sample_doc) < 10:
-        print(f"   ⚠️  警告: 抽样片段内容过短 (<10字)，可能是脏数据")
+        print("   ⚠️  警告: 抽样片段内容过短 (<10字)，可能是脏数据")
     else:
-        print(f"   ✅ 文本内容长度正常")
+        print("   ✅ 文本内容长度正常")
 
     # 3. 向量搜索能力回测 (Top 3)
     print("\n3️⃣  [Jina 向量检索能力回测 (Top 3)]")
@@ -85,13 +84,13 @@ def cmd_diagnose(args):
         # 验证第一名是否是自己
         top_res = results[0]
         if top_res.page_content[:20] == sample_doc[:20]:
-            print(f"   ✅ 回测成功 (Rank 1 精准命中)")
+            print("   ✅ 回测成功 (Rank 1 精准命中)")
             print(f"   ⚡ 响应耗时: {(end_time - start_time) * 1000:.2f} ms")
         else:
-            print(f"   ⚠️  回测漂移: 第一名不是原片段 (可能是语义极其相似的片段)")
+            print("   ⚠️  回测漂移: 第一名不是原片段 (可能是语义极其相似的片段)")
 
         # 👇 改动：展示 Top 3 详情
-        print(f"\n   📄 [Top 3 命中详情]")
+        print("\n   📄 [Top 3 命中详情]")
         for i, res in enumerate(results):
             score_info = ""  # LangChain 的 similarity_search 默认不返回分数，如果需要分数要用 similarity_search_with_score
             print(f"   {'=' * 10} Rank {i + 1} {'=' * 10}")
@@ -104,7 +103,7 @@ def cmd_diagnose(args):
             )
 
     else:
-        print(f"   ❌ 搜索失败: 返回结果为空")
+        print("   ❌ 搜索失败: 返回结果为空")
 
     # 4. 分布统计
     print("\n4️⃣  [数据分布概览]")

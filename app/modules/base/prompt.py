@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from pydantic import BaseModel
+
 from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
 
 
 class PromptTemplate[T: BaseModel](ABC):

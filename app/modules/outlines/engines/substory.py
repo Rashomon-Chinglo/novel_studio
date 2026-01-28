@@ -1,11 +1,8 @@
+from ..chain.substory import get_brainstorm_chain, get_substory_chain
+from ..context.substory import BrainstormContext, SubstoryContext
+from ..prompts.substory import BrainstormPrompt, SubstoryPrompt
 from ..schemas.bible import Bible
 from ..schemas.substory import Substory
-from ..chain.substory import get_brainstorm_chain
-from ..chain.substory import get_substory_chain
-from ..context.substory import BrainstormContext
-from ..context.substory import SubstoryContext
-from ..prompts.substory import BrainstormPrompt
-from ..prompts.substory import SubstoryPrompt
 
 
 class SubstoryEngine:

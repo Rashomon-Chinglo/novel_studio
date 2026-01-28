@@ -22,8 +22,12 @@ class Substory(BaseModel):
     status_change: str = Field(alias="状态变化")
 
     def prompt(
-        self, exclude: list[str] = [], node_range: tuple[int, int] | None = None
-    ):
+        self,
+        exclude: list[str] | None = None,
+        node_range: tuple[int, int] | None = None,
+    ) -> str:
+        if exclude is None:
+            exclude = []
         substory = self.model_dump(
             exclude=["logic_nodes", *exclude],
             exclude_none=True,

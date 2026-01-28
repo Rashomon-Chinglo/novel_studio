@@ -1,15 +1,16 @@
-from app.modules.base.prompt import PromptTemplate
-from ..context.bible import BrainstormContext
-from ..context.bible import BibleContext
 from langchain_core.prompts import ChatPromptTemplate
 
+from app.modules.base.prompt import PromptTemplate
 
-class BrainstormPrompt(PromptTemplate[BrainstormContext]):
+from ..context.bible import BibleBrainstormContext, BibleGenerateContext
+
+
+class BibleBrainstormPrompt(PromptTemplate[BibleBrainstormContext]):
     @property
     def template(self) -> str:
         return """
         你是一位专业的网文策划顾问。你的目标是通过对话，引导用户完善小说的核心设定。
-        
+
         【你的任务】
         1. 倾听用户的想法，给出简短的、鼓励性的反馈。
         2. **主动追问**缺失的关键信息，在必要时给出几个供参考的简短提示。你需要引导用户聊出以下内容（如果还没聊到）：
@@ -17,7 +18,7 @@ class BrainstormPrompt(PromptTemplate[BrainstormContext]):
            - 世界观基调 (Worldview Tone)
            - 主角的核心欲望 (Drive)
            - 核心冲突 (Main Conflict)
-        
+
         【重要原则】
         - **不要** 替用户做决定。
         - **不要** 主动生成完整的大纲或长篇大论的设定集。
@@ -38,7 +39,7 @@ class BrainstormPrompt(PromptTemplate[BrainstormContext]):
             ]
         )
 
-    def build_variables(self, context: BrainstormContext) -> dict[str, str]:
+    def build_variables(self, context: BibleBrainstormContext) -> dict[str, str]:
         return {
             "history": "\n".join(context.history)
             if context.history
@@ -50,13 +51,13 @@ class BrainstormPrompt(PromptTemplate[BrainstormContext]):
         return "1.0.0"
 
 
-class BiblePrompt(PromptTemplate[BibleContext]):
+class BibleGeneratePrompt(PromptTemplate[BibleGenerateContext]):
     @property
     def template(self) -> str:
         return """
         你是一位网文大神级主编。
         你面前是一份**作者与策划的头脑风暴会议记录**。
-        
+
         请仔细阅读这份记录，依靠你专业的商业直觉，从中提炼、整合、补全，策划一份具有极强商业指导意义的故事总纲。
 
         【头脑风暴记录】
@@ -80,7 +81,7 @@ class BiblePrompt(PromptTemplate[BibleContext]):
             ]
         )
 
-    def build_variables(self, context: BibleContext) -> dict[str, str]:
+    def build_variables(self, context: BibleGenerateContext) -> dict[str, str]:
         return {"conversation_text": "\n".join(context.messages)}
 
     def version(self) -> str:
