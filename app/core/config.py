@@ -22,11 +22,9 @@ class Settings(BaseSettings):
     OPENAI_MODEL: str = "gemini-3-flash-preview"
 
     JINA_API_KEY: str
-    JINA_URL: str = "https://api.jina.ai/v1/embeddings"
+    JINA_API_URL: str = "https://api.jina.ai/v1/embeddings"
 
-    model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", extra="ignore"
-    )
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
-settings = Settings()
+settings = Settings()  # type: ignore[missing-argument]

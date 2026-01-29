@@ -51,7 +51,7 @@ async def check_sqlite():
             # 在 SQLite 里 tags 是存成字符串 '["a", "b"]' 的
             # 我们要验证取出来后能不能当列表用
             try:
-                tags_data = json.loads(item.tags)
+                tags_data = json.loads(item.tags)  # type: ignore[arg-type]
                 if isinstance(tags_data, list):
                     print(f"   ✅ 标签(List): {tags_data}")
                 else:

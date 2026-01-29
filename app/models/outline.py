@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import JSON, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.ext.asyncio import AsyncAttrs
@@ -6,11 +6,15 @@ from sqlalchemy.ext.asyncio import AsyncAttrs
 from app.db.session import Base
 
 
+def utc_now() -> datetime:
+    return datetime.now(UTC)
+
+
 class Bible(AsyncAttrs, Base):
     __tablename__ = "bibles"
     id = Column(String, primary_key=True, index=True)
     content = Column(JSON)
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    created_at = Column(DateTime, default=utc_now, index=True)
 
 
 class Substory(AsyncAttrs, Base):
@@ -20,7 +24,7 @@ class Substory(AsyncAttrs, Base):
     title = Column(String, index=True)
     order_index = Column(Integer, index=True)
     content = Column(JSON)
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    created_at = Column(DateTime, default=utc_now, index=True)
 
 
 class Chapter(AsyncAttrs, Base):
@@ -30,4 +34,4 @@ class Chapter(AsyncAttrs, Base):
     title = Column(String, index=True)
     order_index = Column(Integer, index=True)
     content = Column(JSON)
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    created_at = Column(DateTime, default=utc_now, index=True)

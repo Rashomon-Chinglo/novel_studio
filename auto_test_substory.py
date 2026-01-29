@@ -33,7 +33,7 @@ async def main():
     ]
 
     try:
-        engine = SubstoryEngine(bible=DUMMY_BIBLE)
+        engine = SubstoryEngine()
     except Exception as e:
         print(f"❌ SubstoryEngine Initialization Failed: {e}")
         return
@@ -41,7 +41,8 @@ async def main():
     for i in range(1, 11):
         print(f"\n--- Iteration {i}/10 ---")
         try:
-            substory = await engine.generate(history)
+            context = engine.SubstoryGenerateContext(history=history, bible=DUMMY_BIBLE)
+            substory = await engine.generate(context)
             print(f"Object: {substory}")
 
             # Print Key-Values

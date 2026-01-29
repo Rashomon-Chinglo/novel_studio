@@ -30,7 +30,8 @@ async def main():
     for i in range(1, 11):
         print(f"\n--- Iteration {i}/10 ---")
         try:
-            bible = await engine.generate(history)
+            context = engine.BibleGenerateContext(messages=history)
+            bible = await engine.generate(context)
             print(f"Object: {bible}")
 
             # Print Key-Values

@@ -1,29 +1,43 @@
-from pydantic import BaseModel, ConfigDict, Field
+from typing import ClassVar
+
+from pydantic import BaseModel, Field
 
 
 class SubstoryActionNode(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        "cause": "起因",
+        "process": "经过",
+        "effect": "结果",
+        "exchange": "变化",
+        "context": "背景与可能的变化",
+    }
 
-    cause: str = Field(alias="起因")
-    process: str = Field(alias="经过")
-    effect: str = Field(alias="结果")
-    exchange: str = Field(alias="变化")
-    context: str | None = Field(alias="背景与可能的变化")
+    cause: str
+    process: str
+    effect: str
+    exchange: str
+    context: str | None = None
 
     def prompt(self, index: int | None = None):
-        action_node = self.model_dump(exclude_none=True, by_alias=True)
+        data = self.model_dump(exclude_none=True)
+        action_node = {self._prompt_labels.get(k, k): v for k, v in data.items()}
         content = "\n\n".join([f"- **{k}**: {v}" for k, v in action_node.items()])
         _index = f"{index}" if index else ""
         return f"<卷钢逻辑节点{_index}>\n{content}\n</卷钢逻辑节点{_index}>"
 
 
 class Substory(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        "substory_title": "篇章标题",
+        "logic_nodes": "逻辑节点列表",
+        "core_conflict": "核心冲突",
+        "status_change": "状态变化",
+    }
 
-    substory_title: str = Field(alias="篇章标题")
-    logic_nodes: list[SubstoryActionNode] = Field(alias="逻辑节点列表", min_length=1)
-    core_conflict: str = Field(alias="核心冲突")
-    status_change: str = Field(alias="状态变化")
+    substory_title: str
+    logic_nodes: list[SubstoryActionNode] = Field(min_length=1)
+    core_conflict: str
+    status_change: str
 
     def prompt(
         self,
@@ -31,11 +45,11 @@ class Substory(BaseModel):
     ) -> str:
         if exclude is None:
             exclude = []
-        substory = self.model_dump(
+        data = self.model_dump(
             exclude=set(["logic_nodes", *exclude]),
             exclude_none=True,
-            by_alias=True,
         )
+        substory = {self._prompt_labels.get(k, k): v for k, v in data.items()}
         logic_nodes_prompt = "\n".join(
             [node.prompt(index + 1) for index, node in enumerate(self.logic_nodes)]
         )

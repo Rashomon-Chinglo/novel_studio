@@ -40,7 +40,7 @@ async def main():
     print("---------------------------------------------------------")
 
     try:
-        engine = SubstoryEngine(bible=DUMMY_BIBLE)
+        engine = SubstoryEngine()
         print("✅ SubstoryEngine 初始化成功")
     except Exception as e:
         print(f"❌ SubstoryEngine 初始化失败: {e}")
@@ -66,15 +66,14 @@ async def main():
         # 2. 判断是否触发生成 (Trigger)
         if user_input.upper() == "GEN" or user_input == "生成":
             print("\n⚙️  [System] 用户触发生成指令...")
-            print(
-                f"📊 [Context] 将基于过去的 {len(history)} 条对话记录生成 Substory..."
-            )
+            print(f"📊 [Context] 将基于过去的 {len(history)} 条对话记录生成 Substory...")
 
             try:
-                substory = await engine.generate(history)
+                context = engine.SubstoryGenerateContext(history=history, bible=DUMMY_BIBLE)
+                substory = await engine.generate(context)
 
                 print("\n🎉 ============ [SUBSTORY GENERATED] ============ 🎉")
-                print(f"📑 篇章标题: {substory.title}")
+                print(f"📑 篇章标题: {substory.substory_title}")
                 print("-" * 50)
                 print(f"⚔️ 核心冲突: {substory.core_conflict}")
                 print("-" * 50)
@@ -101,7 +100,10 @@ async def main():
         # 3. 正常聊天流程 (Chat)
         print("🤖 AI (Thinking)...")
         try:
-            response = await engine.brainstorm(history, user_input)
+            context = engine.SubstoryBrainstormContext(
+                history=history, user_input=user_input, bible=DUMMY_BIBLE
+            )
+            response = await engine.brainstorm(context)
             print(response)
             # 清除 "Thinking..."
             print(" " * 20, end="\r")

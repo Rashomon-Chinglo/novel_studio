@@ -1,44 +1,61 @@
-from pydantic import BaseModel, ConfigDict, Field
+from typing import ClassVar
+
+from pydantic import BaseModel, Field
 
 
 class ChapterSceneBeat(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        "type": "场景类型",
+        "description": "具体的剧情动作点",
+    }
 
-    type: str = Field(alias="场景类型")
-    description: str = Field(alias="具体的剧情动作点")
+    type: str
+    description: str
 
     def prompt(self, index: int | None = None):
-        scene_beat = self.model_dump(exclude_none=True, by_alias=True)
+        data = self.model_dump(exclude_none=True)
+        scene_beat = {self._prompt_labels.get(k, k): v for k, v in data.items()}
         content = "\n\n".join([f"- **{k}**: {v}" for k, v in scene_beat.items()])
         _index = f"{index}" if index else ""
         return f"<场景节拍{_index}>\n{content}\n</场景节拍{index}>"
 
 
 class ChapterSceneBlueprint(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        "location": "场景地点",
+        "time_setting": "场景时间及环境",
+        "characters": "场景中的人物",
+        "objective": "本场细的目标",
+        "logic_bridge": "本场戏承接substory的哪一条",
+    }
 
-    location: str = Field(alias="场景地点")
-    time_setting: str = Field(alias="场景时间及环境")
-    characters: list[str] = Field(alias="场景中的人物")
-    objective: str = Field(alias="本场细的目标")
-    logic_bridge: str = Field(alias="本场戏承接substory的哪一条")
+    location: str
+    time_setting: str
+    characters: list[str]
+    objective: str
+    logic_bridge: str
 
     def prompt(self, index: int | None = None):
-        scene_blueprint = self.model_dump(exclude_none=True, by_alias=True)
-        scene_blueprint["场景中的人物"] = ",".join(scene_blueprint["场景中的人物"])
+        data = self.model_dump(exclude_none=True)
+        scene_blueprint = {self._prompt_labels.get(k, k): v for k, v in data.items()}
+        scene_blueprint["场景中的人物"] = ",".join(data["characters"])
         content = "\n\n".join([f"- **{k}**: {v}" for k, v in scene_blueprint.items()])
         _index = f"{index}" if index else ""
         return f"<场景蓝图{_index}>\n{content}\n</场景蓝图{_index}>"
 
 
 class ChapterScene(ChapterSceneBlueprint):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        **ChapterSceneBlueprint._prompt_labels,
+        "beats": "场景内的动作节拍序列",
+    }
 
-    beats: list[ChapterSceneBeat] = Field(alias="场景内的动作节拍序列", min_length=1)
+    beats: list[ChapterSceneBeat] = Field(min_length=1)
 
     def prompt(self, index: int | None = None):
-        scene = self.model_dump(exclude_none=True, by_alias=True, exclude={"beats"})
-        scene["场景中的人物"] = ",".join(scene["场景中的人物"])
+        data = self.model_dump(exclude_none=True, exclude={"beats"})
+        scene = {self._prompt_labels.get(k, k): v for k, v in data.items()}
+        scene["场景中的人物"] = ",".join(data["characters"])
         scene_beats = "\n\n".join([beat.prompt(index + 1) for index, beat in enumerate(self.beats)])
         content = "\n\n".join([f"- **{k}**: {v}" for k, v in scene.items()])
         _index = f"{index}" if index else ""
@@ -46,24 +63,32 @@ class ChapterScene(ChapterSceneBlueprint):
 
 
 class ChapterBase(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        "chapter_index": "章节序号",
+        "title": "章节标题",
+        "thematic_tone": "章节主题色调",
+        "opening_hook": "章节开头的悬念",
+        "ending_cliffhanger": "章节结尾的悬念",
+    }
 
-    chapter_index: int = Field(alias="章节序号")
-    title: str = Field(alias="章节标题")
-    thematic_tone: str = Field(alias="章节主题色调")
-    opening_hook: str | None = Field(alias="章节开头的悬念")
-    ending_cliffhanger: str | None = Field(alias="章节结尾的悬念")
+    chapter_index: int
+    title: str
+    thematic_tone: str
+    opening_hook: str | None = None
+    ending_cliffhanger: str | None = None
 
 
 class ChapterBlueprint(ChapterBase):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        **ChapterBase._prompt_labels,
+        "scenes_blueprint": "序列场景蓝图",
+    }
 
-    scenes_blueprint: list[ChapterSceneBlueprint] = Field(alias="序列场景蓝图", min_length=1)
+    scenes_blueprint: list[ChapterSceneBlueprint] = Field(min_length=1)
 
     def prompt(self):
-        chapter_blueprint = self.model_dump(
-            exclude_none=True, by_alias=True, exclude={"scenes_blueprint"}
-        )
+        data = self.model_dump(exclude_none=True, exclude={"scenes_blueprint"})
+        chapter_blueprint = {self._prompt_labels.get(k, k): v for k, v in data.items()}
         scenes_blueprint = "\n\n".join(
             [
                 scene_blueprint.prompt(index + 1)
@@ -75,12 +100,16 @@ class ChapterBlueprint(ChapterBase):
 
 
 class Chapter(ChapterBase):
-    model_config = ConfigDict(populate_by_name=True)
+    _prompt_labels: ClassVar[dict[str, str]] = {
+        **ChapterBase._prompt_labels,
+        "scenes": "章节内的场景序列",
+    }
 
-    scenes: list[ChapterScene] = Field(alias="章节内的场景序列", min_length=1)
+    scenes: list[ChapterScene] = Field(min_length=1)
 
     def prompt(self):
-        chapter = self.model_dump(exclude_none=True, by_alias=True, exclude={"scenes"})
+        data = self.model_dump(exclude_none=True, exclude={"scenes"})
+        chapter = {self._prompt_labels.get(k, k): v for k, v in data.items()}
         scenes = "\n\n".join([scene.prompt(index + 1) for index, scene in enumerate(self.scenes)])
         content = "\n\n".join([f"## {k}\n{v}" for k, v in chapter.items()])
         return f"<章节>\n{content}\n<场景列表>\n{scenes}\n</场景列表>\n</章节>"

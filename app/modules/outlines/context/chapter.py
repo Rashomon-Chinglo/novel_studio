@@ -20,7 +20,7 @@ class ChapterBlueprintBrainstormContext(ChapterBlueprintContext):
 
 
 class ChapterSceneContext(ChapterBlueprintContext):
-    last_scene_beat: ChapterSceneBeat
+    last_scene_beat: ChapterSceneBeat | None
     chapter_blueprint: ChapterBlueprint
     scene_blueprint: ChapterSceneBlueprint
 

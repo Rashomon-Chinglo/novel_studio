@@ -5,6 +5,9 @@ from ..schemas import Bible
 
 
 class BibleEngine:
+    BibleBrainstormContext = BibleBrainstormContext
+    BibleGenerateContext = BibleGenerateContext
+
     def __init__(self):
         self.brainstorm_template = BibleBrainstormPrompt()
         self.brainstorm_llm = get_brainstorm_chain(self.brainstorm_template.prompt)

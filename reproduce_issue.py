@@ -32,7 +32,8 @@ async def main():
     print(f"📊 Context: {len(history)} messages.")
 
     try:
-        bible = await engine.generate(history)
+        context = engine.BibleGenerateContext(messages=history)
+        bible = await engine.generate(context)
         print("\n🎉 Generation Successful!")
         print(f"Title: {bible.title}")
         print(f"Logline: {bible.logline}")
@@ -40,7 +41,9 @@ async def main():
     except Exception as e:
         print(f"\n❌ Generation Failed: {e}")
         import traceback
+
         traceback.print_exc()
+
 
 if __name__ == "__main__":
     asyncio.run(main())

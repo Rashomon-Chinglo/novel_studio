@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 try:
+    from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
     from app.modules.outlines.engines.bible import BibleEngine
 except ImportError as e:
     print(f"Error importing BibleEngine: {e}")
@@ -56,7 +57,8 @@ async def main():
 
             try:
                 # 调用 "建筑师" Agent
-                bible = await engine.generate(history)
+                context = BibleGenerateContext(messages=history)
+                bible = await engine.generate(context)
                 print(bible)
 
                 print("\n🎉 ============ [DEEPNOVEL STORY BIBLE] ============ 🎉")
@@ -86,7 +88,8 @@ async def main():
         try:
             # 调用 "引导员" Agent
             # 注意：history 是过去的记录，user_input 是当前的话
-            response = await engine.brainstorm(history, user_input)
+            context = BibleBrainstormContext(history=history, user_input=user_input)
+            response = await engine.brainstorm(context)
 
             # 清除 "Thinking..."
             print(" " * 20, end="\r")

@@ -81,7 +81,7 @@ class MaterialEngine:
             类型：{snippet.category}，标签：{",".join(snippet.tags)}，情绪：{snippet.mood}，内容：{snippet.essential_text}
             """
             )
-            print(f"Successfully saved snippet: {snippet.schema_json(indent=2)}")
+            print(f"Successfully saved snippet: {snippet.model_dump_json(indent=2)}")
 
         try:
             async with AsyncSessionLocal() as session:

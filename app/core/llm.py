@@ -5,8 +5,8 @@ from app.core.config import settings
 
 def get_llm(temperature: float = 0.7) -> ChatOpenAI:
     return ChatOpenAI(
-        openai_api_key=settings.OPENAI_API_KEY,
-        base_url=settings.OPENAI_BASE_URL,
-        model_name=settings.OPENAI_MODEL,
+        api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
+        base_url=settings.OPENAI_BASE_URL,  # type: ignore[unknown-argument]
+        model=settings.OPENAI_MODEL,  # type: ignore[unknown-argument]
         temperature=temperature,
     )

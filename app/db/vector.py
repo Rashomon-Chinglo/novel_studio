@@ -11,9 +11,9 @@ from app.core.config import settings
 
 
 def get_vector_store():
-    embeddings = JinaEmbeddings(
-        jina_api_key=settings.JINA_API_KEY,
-        jina_url=settings.JINA_URL,
+    embeddings = JinaEmbeddings(  # type: ignore[missing-argument]
+        jina_api_key=settings.JINA_API_KEY,  # type: ignore[invalid-argument-type]
+        jina_url=settings.JINA_API_URL,  # type: ignore[invalid-argument-type]
         model_name="jina-embeddings-v3",
     )
     return Chroma(

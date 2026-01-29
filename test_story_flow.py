@@ -6,6 +6,11 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 try:
+    from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
+    from app.modules.outlines.context.substory import (
+        SubstoryBrainstormContext,
+        SubstoryGenerateContext,
+    )
     from app.modules.outlines.engines.bible import BibleEngine
     from app.modules.outlines.engines.substory import SubstoryEngine
 except ImportError as e:
@@ -41,7 +46,8 @@ async def run_bible_phase():
         if user_input.upper() == "GEN" or user_input == "生成":
             print("\n⚙️  [System] Generating Story Bible...")
             try:
-                bible = await engine.generate(history)
+                context = BibleGenerateContext(messages=history)
+                bible = await engine.generate(context)
                 print("\n🎉 ============ [STORY BIBLE] ============ 🎉")
                 print(f"📖 Title: {bible.title}")
                 print(f"📝 Logline: {bible.logline}")
@@ -51,13 +57,15 @@ async def run_bible_phase():
             except Exception as e:
                 print(f"❌ Bible Generation Failed: {e}")
                 import traceback
+
                 traceback.print_exc()
                 return None
 
         # Chat
         print("🤖 AI (Thinking)...", end="\r")
         try:
-            response = await engine.brainstorm(history, user_input)
+            context = BibleBrainstormContext(history=history, user_input=user_input)
+            response = await engine.brainstorm(context)
             print(" " * 20, end="\r")
             print(f"🤖 AI: {response}")
 
@@ -76,7 +84,7 @@ async def run_substory_phase(bible):
     print("   Type 'GEN' to generate the Substory Outline.")
     print("---------------------------------------------------------")
 
-    engine = SubstoryEngine(bible)
+    engine = SubstoryEngine()
     history = []
 
     while True:
@@ -96,9 +104,10 @@ async def run_substory_phase(bible):
         if user_input.upper() == "GEN" or user_input == "生成":
             print("\n⚙️  [System] Generating Substory Outline...")
             try:
-                substory = await engine.generate(history)
+                context = SubstoryGenerateContext(history=history, bible=bible)
+                substory = await engine.generate(context)
                 print("\n🎉 ============ [SUBSTORY OUTLINE] ============ 🎉")
-                print(f"📑 Title: {substory.title}")
+                print(f"📑 Title: {substory.substory_title}")
                 print(f"🔥 Core Conflict: {substory.core_conflict}")
                 print(f"🔄 Status Change: {substory.status_change}")
                 print("-" * 50)
@@ -114,13 +123,15 @@ async def run_substory_phase(bible):
             except Exception as e:
                 print(f"❌ Substory Generation Failed: {e}")
                 import traceback
+
                 traceback.print_exc()
                 break
 
         # Chat
         print("🤖 AI (Thinking)...", end="\r")
         try:
-            response = await engine.brainstorm(history, user_input)
+            context = SubstoryBrainstormContext(history=history, user_input=user_input, bible=bible)
+            response = await engine.brainstorm(context)
             print(" " * 20, end="\r")
             print(f"🤖 AI: {response}")
 

@@ -73,11 +73,11 @@ class ChapterEngine:
                 )
             )
             scenes.append(scene)
-        return Chapter(  # type: ignore
-            chapter_index=context.chapter_blueprint.chapter_index,  # type: ignore
-            title=context.chapter_blueprint.title,  # type: ignore
-            thematic_tone=context.chapter_blueprint.thematic_tone,  # type: ignore
-            opening_hook=context.chapter_blueprint.opening_hook,  # type: ignore
-            ending_cliffhanger=context.chapter_blueprint.ending_cliffhanger,  # type: ignore
-            scenes=scenes,  # type: ignore
+        return Chapter(
+            chapter_index=context.chapter_blueprint.chapter_index,
+            title=context.chapter_blueprint.title,
+            thematic_tone=context.chapter_blueprint.thematic_tone,
+            opening_hook=context.chapter_blueprint.opening_hook,
+            ending_cliffhanger=context.chapter_blueprint.ending_cliffhanger,
+            scenes=scenes,
         )
