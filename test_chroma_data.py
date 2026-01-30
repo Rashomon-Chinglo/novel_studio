@@ -97,9 +97,7 @@ def cmd_diagnose(args):
             content_preview = res.page_content.replace("\n", " ")
 
             print(f"   📝 内容: {content_preview}")
-            print(
-                f"   🏷️  来源: 《{res.metadata.get('title')}》 | 标签: {res.metadata.get('tags')}"
-            )
+            print(f"   🏷️  来源: 《{res.metadata.get('title')}》 | 标签: {res.metadata.get('tags')}")
 
     else:
         print("   ❌ 搜索失败: 返回结果为空")
@@ -114,11 +112,7 @@ def cmd_diagnose(args):
     for book, count in book_counts.items():
         print(f"   📘 《{book}》: {count} 条")
 
-    print(
-        "\n✅ [体检结束] 系统运行良好"
-        if total_count > 0
-        else "\n⚠️ [体检结束] 系统存在问题"
-    )
+    print("\n✅ [体检结束] 系统运行良好" if total_count > 0 else "\n⚠️ [体检结束] 系统存在问题")
 
 
 # ==========================================
@@ -136,9 +130,7 @@ def cmd_peek(args):
     store = get_store()
     data = store.get(limit=5)
     for i in range(len(data["ids"])):
-        print(
-            f"📄 [{data['metadatas'][i].get('title')}] {data['documents'][i][:30]}..."
-        )
+        print(f"📄 [{data['metadatas'][i].get('title')}] {data['documents'][i][:30]}...")
 
 
 def cmd_clean(args):

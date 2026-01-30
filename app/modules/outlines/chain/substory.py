@@ -7,13 +7,13 @@ from ..schemas.substory import Substory
 
 
 def get_brainstorm_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.8)
+    llm = get_llm()
     structured_llm = prompt | llm | StrOutputParser()
     return structured_llm
 
 
 def get_substory_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.3)
+    llm = get_llm()
     structured_llm = prompt | llm.with_structured_output(
         Substory, method="function_calling", strict=True
     )

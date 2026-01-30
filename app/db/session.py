@@ -19,7 +19,6 @@ Base = declarative_base()
 
 
 async def init_sqlite_db():
-
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         print(f"✅ Initialized SQLite database at {settings.SQLITE_URL}")

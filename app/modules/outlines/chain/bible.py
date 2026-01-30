@@ -7,13 +7,13 @@ from ..schemas.bible import Bible
 
 
 def get_brainstorm_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.8)
+    llm = get_llm()
     structured_llm = prompt | llm | StrOutputParser()
     return structured_llm
 
 
 def get_bible_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.3)
+    llm = get_llm()
 
     structured_llm = prompt | llm.with_structured_output(
         Bible, method="function_calling", strict=True

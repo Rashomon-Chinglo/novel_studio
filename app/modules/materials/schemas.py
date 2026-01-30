@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 
-class ExtractedSnippet(BaseModel):
+class MaterialSnippet(BaseModel):
     essential_text: str = Field(description="从文章中摘录的精华文本，20-100字")
     category: str = Field(description="摘录文本的分类")
     tags: list[str] = Field(description="摘录文本的标签")
@@ -9,4 +9,4 @@ class ExtractedSnippet(BaseModel):
 
 
 class ExtractedResult(BaseModel):
-    snippets: list[ExtractedSnippet] = Field(description="从文章中摘录的精华文本列表")
+    snippets: list[MaterialSnippet] = Field(description="从文章中摘录的精华文本列表")

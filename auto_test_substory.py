@@ -38,8 +38,8 @@ async def main():
         print(f"❌ SubstoryEngine Initialization Failed: {e}")
         return
 
-    for i in range(1, 11):
-        print(f"\n--- Iteration {i}/10 ---")
+    for i in range(1, 2):
+        print(f"\n--- Single Test Iteration {i}/1 ---")
         try:
             context = engine.SubstoryGenerateContext(history=history, bible=DUMMY_BIBLE)
             substory = await engine.generate(context)

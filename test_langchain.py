@@ -7,14 +7,10 @@ from app.core.llm import get_llm
 
 class Bible(BaseModel):
     title: str = Field(description="书名")
-    logline: str = Field(
-        description="梗概，一句话梗概（尽量做到引人眼球，30-50字，必须包含钩子）"
-    )
+    logline: str = Field(description="梗概，一句话梗概（尽量做到引人眼球，30-50字，必须包含钩子）")
 
     marketing_hook: str = Field(description="核心卖点，爽点")
-    worldview_tone: str = Field(
-        description="世界观基调，例如[赛博休闲]，[女尊恋爱]，[无限流]等"
-    )
+    worldview_tone: str = Field(description="世界观基调，例如[赛博休闲]，[女尊恋爱]，[无限流]等")
     main_conflict: str = Field(description="主线冲突")
     ending_vision: str = Field(description="结局愿景")
 
@@ -22,13 +18,13 @@ class Bible(BaseModel):
 
 
 def get_brainstorm_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.8)
+    llm = get_llm()
     structured_llm = prompt | llm | StrOutputParser()
     return structured_llm
 
 
 def get_bible_chain(prompt: ChatPromptTemplate):
-    llm = get_llm(0.3)
+    llm = get_llm()
 
     # Note: method="json_mode" is used, which typically requires the model to be explicitly
     # instructed to output JSON in the prompt, though libraries may handle some of this.
@@ -41,9 +37,7 @@ def get_bible_chain(prompt: ChatPromptTemplate):
 
 def test_structured_output():
     # 'json_mode' often requires the word "JSON" in the prompt to work reliably with OpenAI
-    prompt = ChatPromptTemplate.from_template(
-        "Generate a creative novel outline about {topic}."
-    )
+    prompt = ChatPromptTemplate.from_template("Generate a creative novel outline about {topic}.")
     chain = get_bible_chain(prompt)
 
     print("Invoking chain...")
@@ -67,9 +61,7 @@ def test_structured_output():
 
     print(f"\nSuccessfully parsed output into type: {type(parsed_output)}")
 
-    assert isinstance(parsed_output, Bible), (
-        f"Expected Bible instance, got {type(parsed_output)}"
-    )
+    assert isinstance(parsed_output, Bible), f"Expected Bible instance, got {type(parsed_output)}"
     print(f"Title: {parsed_output.title}")
     print(f"Logline: {parsed_output.logline}")
     print("\nTest passed successfully!")
