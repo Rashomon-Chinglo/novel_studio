@@ -79,6 +79,8 @@ class MaterialService:
                 async with session.begin():
                     session.add_all(sql_snippets)
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # Optimization: Use async add_texts to prevent blocking the event loop
+            # This is especially important as it involves network (Jina) and disk I/O (Chroma)
+            await self.vector_store.aadd_texts(**chroma_snippets)
         except Exception as e:
             print(f"Error saving snippets: {e}")
