@@ -2,14 +2,18 @@ from typing import ClassVar
 
 from pydantic import BaseModel, Field
 
+from app.modules.base.schemas import MaterialCategory, MaterialMood
+
 
 class ChapterSceneBeat(BaseModel):
     _prompt_labels: ClassVar[dict[str, str]] = {
-        "type": "场景类型",
+        "category": "描写技法",
+        "mood": "情绪",
         "description": "具体的剧情动作点",
     }
 
-    type: str
+    category: MaterialCategory
+    mood: MaterialMood
     description: str
 
     def prompt(self, index: int | None = None):

@@ -3,7 +3,7 @@ from app.modules.outlines.schemas.chapter import Chapter, ChapterScene, ChapterS
 
 def test_chapter_init():
     try:
-        beat = ChapterSceneBeat(type="对话", description="两人交谈")
+        beat = ChapterSceneBeat(category="对话", mood="喜悦", description="两人交谈")
         scene = ChapterScene(
             location="客厅",
             time_setting="晚上",
