@@ -1,16 +1,18 @@
 from pydantic import BaseModel
 
+from app.modules.post_writing.schemas import ChapterSummary, CumulativeSubstorySummary
+
 from ..schemas.bible import Bible
 from ..schemas.chapter import ChapterBlueprint, ChapterSceneBeat, ChapterSceneBlueprint
-from ..schemas.substory import Substory, SubstoryActionNode
+from ..schemas.substory import ChapterOriginalSubstoryNodes, Substory
 
 
 class ChapterBlueprintContext(BaseModel):
     bible: Bible
     substory: Substory
-    cumulative_substory_summary: str
-    pre_chapter_summary: str
-    logic_nodes_to_process: list[SubstoryActionNode]
+    cumulative_substory_summary: CumulativeSubstorySummary
+    pre_chapter_summary: ChapterSummary
+    logic_nodes_to_process: ChapterOriginalSubstoryNodes
 
 
 class ChapterBlueprintBrainstormContext(ChapterBlueprintContext):

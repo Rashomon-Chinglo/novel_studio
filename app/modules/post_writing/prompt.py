@@ -55,16 +55,13 @@ class ChapterSummaryPrompt(PromptTemplate[ChapterSummaryContext]):
         )
 
     def build_variables(self, context: ChapterSummaryContext) -> dict[str, str]:
-        original_logic_nodes_prompt = f"""<章节对应卷钢节点>\n{
-            "\n".join([node.prompt() for node in context.original_logic_nodes])
-        }\n</章节对应卷钢节点>"""
         return {
             "overview_outline": context.bible.prompt(),
             "substory_outline": context.substory.prompt(),
-            "original_logic_nodes": original_logic_nodes_prompt,
+            "original_logic_nodes": context.original_logic_nodes.prompt(),
             "chapter_outline": context.chapter_outline.prompt(),
-            "cumulative_substory_summary": f"<卷内进度总结>\n{context.cumulative_substory_summary}\n</卷内进度总结>",
-            "pre_chapter_summary": f"<上一章节总结>\n{context.pre_chapter_summary}\n</上一章节总结>",
+            "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
+            "pre_chapter_summary": context.pre_chapter_summary.prompt(),
             "chapter_content": context.chapter.prompt(),
         }
 
@@ -117,8 +114,8 @@ class SubstoryCumulativeSummaryPrompt(PromptTemplate[SubstoryCumulativeSummaryCo
         return {
             "overview_outline": context.bible.prompt(),
             "substory_outline": context.substory.prompt(),
-            "cumulative_substory_summary": f"<卷内进度总结>\n{context.cumulative_substory_summary}\n</卷内进度总结>",
-            "current_chapter_summary": f"<当前章节总结>\n{context.current_chapter_summary}\n</当前章节总结>",
+            "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
+            "current_chapter_summary": context.current_chapter_summary.prompt(),
         }
 
     def version(self) -> str:

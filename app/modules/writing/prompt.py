@@ -64,10 +64,6 @@ class ChapterSceneWritingPrompt(PromptTemplate[ChapterSceneWritingContext]):
         )
 
     def build_variables(self, context: ChapterSceneWritingContext) -> dict[str, str]:
-        original_logic_nodes_prompt = f"""<章节对应卷钢节点>\n{
-            "\n".join([node.prompt() for node in context.original_logic_nodes])
-        }\n</章节对应卷钢节点>"""
-
         materials_prompt = "\n".join(
             [material.prompt(index + 1) for index, material in enumerate(context.materials)]
         )
@@ -75,12 +71,12 @@ class ChapterSceneWritingPrompt(PromptTemplate[ChapterSceneWritingContext]):
         return {
             "overview_outline": context.bible.prompt(),
             "substory_outline": context.substory.prompt(),
-            "original_logic_nodes": original_logic_nodes_prompt,
+            "original_logic_nodes": context.original_logic_nodes.prompt(),
             "chapter_blueprint": context.chapter_blueprint.prompt(),
             "scene_blueprint": context.scene_blueprint.prompt(),
             "scene": context.scene.prompt(),
-            "cumulative_substory_summary": f"<卷内进度总结>\n{context.cumulative_substory_summary}\n</卷内进度总结>",
-            "pre_chapter_summary": f"<上一章节总结>\n{context.pre_chapter_summary}\n</上一章节总结>",
+            "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
+            "pre_chapter_summary": context.pre_chapter_summary.prompt(),
             "previous_content": f"<上文内容>\n{context.previous_content}\n</上文内容>",
             "reference_texts": f"<参考素材>\n{materials_prompt}\n</参考素材>",
         }

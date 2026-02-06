@@ -55,3 +55,13 @@ class Substory(BaseModel):
         )
         content = "\n\n".join([f"## {k}\n{v}" for k, v in substory.items()])
         return f"<篇章逻辑>\n{content}\n<逻辑节点列表>\n{logic_nodes_prompt}\n</逻辑节点列表>\n</篇章逻辑>"
+
+
+class ChapterOriginalSubstoryNodes(BaseModel):
+    """章节对应的原始卷钢逻辑节点列表"""
+
+    nodes: list[SubstoryActionNode] = Field(min_length=1)
+
+    def prompt(self) -> str:
+        nodes_prompt = "\n".join([node.prompt() for node in self.nodes])
+        return f"<章节逻辑节点>\n{nodes_prompt}\n</章节逻辑节点>"
