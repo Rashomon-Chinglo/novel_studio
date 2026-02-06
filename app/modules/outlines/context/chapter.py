@@ -1,11 +1,11 @@
-from app.modules.base.context import BaseContext
+from pydantic import BaseModel
 
 from ..schemas.bible import Bible
 from ..schemas.chapter import ChapterBlueprint, ChapterSceneBeat, ChapterSceneBlueprint
 from ..schemas.substory import Substory, SubstoryActionNode
 
 
-class ChapterBlueprintContext(BaseContext):
+class ChapterBlueprintContext(BaseModel):
     bible: Bible
     substory: Substory
     cumulative_substory_summary: str

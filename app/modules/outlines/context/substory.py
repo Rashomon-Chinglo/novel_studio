@@ -1,14 +1,14 @@
-from app.modules.base.context import BaseContext
+from pydantic import BaseModel
 
 from ..schemas.bible import Bible
 
 
-class SubstoryBrainstormContext(BaseContext):
+class SubstoryBrainstormContext(BaseModel):
     history: list[str]
     user_input: str
     bible: Bible
 
 
-class SubstoryGenerateContext(BaseContext):
+class SubstoryGenerateContext(BaseModel):
     history: list[str]
     bible: Bible

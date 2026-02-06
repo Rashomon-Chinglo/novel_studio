@@ -1,5 +1,5 @@
-from app.modules.base.context import BaseContext
+from pydantic import BaseModel
 
 
-class MaterialsMiningContext(BaseContext):
+class MaterialsMiningContext(BaseModel):
     text: str

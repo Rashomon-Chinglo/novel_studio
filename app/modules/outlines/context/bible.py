@@ -1,10 +1,10 @@
-from app.modules.base.context import BaseContext
+from pydantic import BaseModel
 
 
-class BibleBrainstormContext(BaseContext):
+class BibleBrainstormContext(BaseModel):
     history: list[str]
     user_input: str
 
 
-class BibleGenerateContext(BaseContext):
+class BibleGenerateContext(BaseModel):
     messages: list[str]
