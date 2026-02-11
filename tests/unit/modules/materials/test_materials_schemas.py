@@ -1,9 +1,10 @@
 import pytest
-from app.modules.materials.schemas import MaterialSnippet, ExtractedResult
 from inline_snapshot import snapshot
 
+from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
 
-@pytest.mark.unit
+
+@pytest.mark.unit()
 def test_material_snippet_valid_data():
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
@@ -21,7 +22,7 @@ def test_material_snippet_valid_data():
     )
 
 
-@pytest.mark.unit
+@pytest.mark.unit()
 def test_material_snippet_prompt():
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
@@ -39,7 +40,7 @@ def test_material_snippet_prompt():
 """)
 
 
-@pytest.mark.unit
+@pytest.mark.unit()
 def test_material_snippet_prompt_no_index():
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
@@ -57,7 +58,7 @@ def test_material_snippet_prompt_no_index():
 """)
 
 
-@pytest.mark.unit
+@pytest.mark.unit()
 def test_material_result_valid_data():
     result = ExtractedResult(
         snippets=[
