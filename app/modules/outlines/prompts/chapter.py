@@ -83,6 +83,9 @@ class ChapterBlueprintPrompt(PromptTemplate[ChapterBlueprintContext]):
             "logic_nodes_to_process": context.logic_nodes_to_process.prompt(),
         }
 
+    def version(self) -> str:
+        return "1.0.0"
+
 
 class ChapterBlueprintBrainstormPrompt(PromptTemplate[ChapterBlueprintBrainstormContext]):
     @property
@@ -154,6 +157,9 @@ class ChapterBlueprintBrainstormPrompt(PromptTemplate[ChapterBlueprintBrainstorm
             "conversation_history": f"<头脑风暴记录>\n{conversation_history}\n</头脑风暴记录>",
             "user_input": context.user_input,
         }
+
+    def version(self) -> str:
+        return "1.0.0"
 
 
 class ChapterScenePrompt(PromptTemplate[ChapterSceneContext]):
@@ -241,3 +247,6 @@ class ChapterScenePrompt(PromptTemplate[ChapterSceneContext]):
             "last_scene_beat": last_scene_beat,
             "scene_blueprint": context.scene_blueprint.prompt(),
         }
+
+    def version(self) -> str:
+        return "1.0.0"

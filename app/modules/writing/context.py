@@ -9,7 +9,7 @@ from app.modules.outlines.schemas.chapter import (
     ChapterSceneBlueprint,
 )
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
-from app.modules.post_writing.schemas import ChapterSummary, CumulativeSubstorySummary
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 
 
 class ChapterSceneWritingContext(BaseModel):
