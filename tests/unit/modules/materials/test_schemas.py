@@ -35,7 +35,7 @@ def test_material_snippet_prompt():
 - **文本**: 窗外下着大雨，雷声阵阵。
 - **描写技法**: 环境
 - **情绪**: 压抑
-- **内容标签**: 天气，开场
+- **内容标签**: 天气, 开场
 </参考素材1>\
 """)
 
@@ -48,12 +48,12 @@ def test_material_snippet_prompt_no_index():
         mood="压抑",
         tags=["天气", "开场"],
     )
-    assert snippet.prompt() == snapshot("""
+    assert snippet.prompt() == snapshot("""\
 <参考素材>
 - **文本**: 窗外下着大雨，雷声阵阵。
 - **描写技法**: 环境
 - **情绪**: 压抑
-- **内容标签**: 天气，开场
+- **内容标签**: 天气, 开场
 </参考素材>\
 """)
 
