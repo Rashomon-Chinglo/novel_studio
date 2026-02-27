@@ -1,3 +1,5 @@
+import functools
+
 from langchain_chroma import Chroma
 from langchain_community.embeddings import JinaEmbeddings
 
@@ -10,7 +12,12 @@ from app.core.config import settings
 #     return collection
 
 
+@functools.lru_cache
 def get_vector_store():
+    """
+    Get the vector store instance.
+    Cached to reuse the embedding model and Chroma client connection.
+    """
     embeddings = JinaEmbeddings(  # type: ignore[missing-argument]
         jina_api_key=settings.JINA_API_KEY,  # type: ignore[invalid-argument-type]
         jina_url=settings.JINA_API_URL,  # type: ignore[invalid-argument-type]
