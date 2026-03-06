@@ -1,0 +1,3 @@
+## 2024-05-24 - LLM and Vector Store Initialization Overhead & Blocking I/O
+**Learning:** Initializing expensive clients like `ChatOpenAI`, `JinaEmbeddings`, and `Chroma` for every function call introduces massive latency overhead. Furthermore, using synchronous operations like `add_texts` within an async event loop (e.g. `process_content`) can severely block the thread.
+**Action:** Use `@functools.lru_cache` on client factory functions (`get_llm`, `get_vector_store`) to ensure they act as singletons, preventing redundant initialization. Always use asynchronous variants of library methods (e.g. `aadd_texts`) in async contexts.
