@@ -1,15 +1,17 @@
 import pytest
 from inline_snapshot import snapshot
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from app.modules.writing.engine import WritingEngine
+from pytest_mock import MockerFixture
+
 from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
-from app.modules.writing.schemas import Chapter, SceneChunk
+from app.modules.writing.engine import WritingEngine
 from app.modules.writing.providers import MaterialProvider
+from app.modules.writing.schemas import Chapter, SceneChunk
 
 
 @pytest.fixture()
-def mock_scene_writing_chain(mocker: MagicMock) -> MagicMock:
+def mock_scene_writing_chain(mocker: MockerFixture) -> MagicMock:
     mock = mocker.patch("app.modules.writing.engine.get_scene_writing_chain")
     mock.return_value.ainvoke = mocker.AsyncMock()
     mock.return_value.ainvoke.return_value = "测试场景写作"

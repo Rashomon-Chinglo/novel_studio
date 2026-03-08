@@ -25,7 +25,7 @@ def test_chapter_blueprint_context(
     cumulative_substory_summary: CumulativeSubstorySummary,
     chapter_summary: ChapterSummary,
     chapter_original_substory_nodes: ChapterOriginalSubstoryNodes,
-):
+) -> None:
     context = ChapterBlueprintContext(
         bible=bible,
         substory=substory,
@@ -85,7 +85,7 @@ def test_chapter_blueprint_brainstorm_context(
     chapter_blueprint: ChapterBlueprint,
     history: list[str],
     user_input: str,
-):
+) -> None:
     context = ChapterBlueprintBrainstormContext(
         bible=bible,
         substory=substory,
@@ -166,7 +166,7 @@ def test_chapter_scene_context(
     chapter_scene_beat: ChapterSceneBeat,
     chapter_blueprint: ChapterBlueprint,
     chapter_scene_blueprint: ChapterSceneBlueprint,
-):
+) -> None:
     context = ChapterSceneContext(
         bible=bible,
         substory=substory,
@@ -255,7 +255,7 @@ def test_chapter_context(
     chapter_summary: ChapterSummary,
     chapter_original_substory_nodes: ChapterOriginalSubstoryNodes,
     chapter_blueprint: ChapterBlueprint,
-):
+) -> None:
     context = ChapterContext(
         bible=bible,
         substory=substory,

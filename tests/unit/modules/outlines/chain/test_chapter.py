@@ -28,7 +28,7 @@ def chapter_scene_prompt() -> ChapterScenePrompt:
 
 
 @pytest.mark.unit()
-def test_get_chapter_blueprint_chain(chapter_blueprint_prompt: ChapterBlueprintPrompt):
+def test_get_chapter_blueprint_generate_chain(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
     chain = get_chapter_blueprint_chain(chapter_blueprint_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)
@@ -40,7 +40,7 @@ def test_get_chapter_blueprint_chain(chapter_blueprint_prompt: ChapterBlueprintP
 
 
 @pytest.mark.unit()
-def test_get_chapter_brainstorm_chain(chapter_brainstorm_prompt: ChapterBlueprintBrainstormPrompt):
+def test_get_chapter_blueprint_brainstorm_chain(chapter_brainstorm_prompt: ChapterBlueprintBrainstormPrompt) -> None:
     chain = get_chapter_brainstorm_chain(chapter_brainstorm_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)
@@ -50,7 +50,7 @@ def test_get_chapter_brainstorm_chain(chapter_brainstorm_prompt: ChapterBlueprin
 
 
 @pytest.mark.unit()
-def test_get_chapter_scene_chain(chapter_scene_prompt: ChapterScenePrompt):
+def test_get_chapter_scene_generate_chain(chapter_scene_prompt: ChapterScenePrompt) -> None:
     chain = get_chapter_scene_chain(chapter_scene_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)

@@ -17,7 +17,7 @@ def generate_prompt() -> SubstoryGeneratePrompt:
 
 
 @pytest.mark.unit()
-def test_get_brainstorm_chain(brainstorm_prompt: SubstoryBrainstormPrompt):
+def test_get_brainstorm_chain(brainstorm_prompt: SubstoryBrainstormPrompt) -> None:
     chain = get_brainstorm_chain(brainstorm_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)
@@ -27,7 +27,7 @@ def test_get_brainstorm_chain(brainstorm_prompt: SubstoryBrainstormPrompt):
 
 
 @pytest.mark.unit()
-def test_get_generate_chain(generate_prompt: SubstoryGeneratePrompt):
+def test_get_generate_chain(generate_prompt: SubstoryGeneratePrompt) -> None:
     chain = get_substory_chain(generate_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)

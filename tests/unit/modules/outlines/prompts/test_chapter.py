@@ -28,19 +28,19 @@ def chapter_scene_prompt():
 
 
 @pytest.mark.unit()
-def test_chapter_blueprint_prompt_template(chapter_blueprint_prompt: ChapterBlueprintPrompt):
+def test_chapter_blueprint_prompt_template(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
     assert len(chapter_blueprint_prompt.template) == snapshot(1314)
 
 
 @pytest.mark.unit()
 def test_chapter_blueprint_brainstorm_prompt_template(
     chapter_blueprint_brainstorm_prompt: ChapterBlueprintBrainstormPrompt,
-):
+) -> None:
     assert len(chapter_blueprint_brainstorm_prompt.template) == snapshot(814)
 
 
 @pytest.mark.unit()
-def test_chapter_scene_prompt_template(chapter_scene_prompt: ChapterScenePrompt):
+def test_chapter_scene_prompt_template(chapter_scene_prompt: ChapterScenePrompt) -> None:
     assert len(chapter_scene_prompt.template) == snapshot(1321)
 
 
@@ -48,7 +48,7 @@ def test_chapter_scene_prompt_template(chapter_scene_prompt: ChapterScenePrompt)
 def test_chapter_blueprint_prompt_build_variables(
     chapter_blueprint_prompt: ChapterBlueprintPrompt,
     chapter_blueprint_context: ChapterBlueprintContext,
-):
+) -> None:
     assert chapter_blueprint_prompt.build_variables(chapter_blueprint_context) == snapshot(
         {
             "overview_outline": """\
@@ -133,7 +133,7 @@ def test_chapter_blueprint_prompt_build_variables(
 def test_chapter_blueprint_brainstorm_prompt_build_variables(
     chapter_blueprint_brainstorm_prompt: ChapterBlueprintBrainstormPrompt,
     chapter_blueprint_brainstorm_context: ChapterBlueprintBrainstormContext,
-):
+) -> None:
     assert chapter_blueprint_brainstorm_prompt.build_variables(
         chapter_blueprint_brainstorm_context
     ) == snapshot(
@@ -257,7 +257,7 @@ history
 @pytest.mark.unit()
 def test_chapter_scene_prompt_build_variables(
     chapter_scene_prompt: ChapterScenePrompt, chapter_scene_context: ChapterSceneContext
-):
+) -> None:
     assert chapter_scene_prompt.build_variables(chapter_scene_context) == snapshot(
         {
             "overview_outline": """\
@@ -392,34 +392,34 @@ def test_chapter_scene_prompt_build_variables(
 
 
 @pytest.mark.unit()
-def test_chapter_blueprint_prompt_prompt(chapter_blueprint_prompt: ChapterBlueprintPrompt):
+def test_chapter_blueprint_prompt_prompt(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
     assert isinstance(chapter_blueprint_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
 def test_chapter_blueprint_brainstorm_prompt_prompt(
     chapter_blueprint_brainstorm_prompt: ChapterBlueprintBrainstormPrompt,
-):
+) -> None:
     assert isinstance(chapter_blueprint_brainstorm_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
-def test_chapter_scene_prompt_prompt(chapter_scene_prompt: ChapterScenePrompt):
+def test_chapter_scene_prompt_prompt(chapter_scene_prompt: ChapterScenePrompt) -> None:
     assert isinstance(chapter_scene_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
-def test_chapter_blueprint_prompt_version(chapter_blueprint_prompt: ChapterBlueprintPrompt):
+def test_chapter_blueprint_prompt_version(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
     assert chapter_blueprint_prompt.version() == snapshot("1.0.0")
 
 
 @pytest.mark.unit()
 def test_chapter_blueprint_brainstorm_prompt_version(
     chapter_blueprint_brainstorm_prompt: ChapterBlueprintBrainstormPrompt,
-):
+) -> None:
     assert chapter_blueprint_brainstorm_prompt.version() == snapshot("1.0.0")
 
 
 @pytest.mark.unit()
-def test_chapter_scene_prompt_version(chapter_scene_prompt: ChapterScenePrompt):
+def test_chapter_scene_prompt_version(chapter_scene_prompt: ChapterScenePrompt) -> None:
     assert chapter_scene_prompt.version() == snapshot("1.0.0")

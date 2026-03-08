@@ -12,7 +12,7 @@ def materials_prompt() -> MaterialsMiningPrompt:
 
 
 @pytest.mark.unit()
-def test_get_mining_chain(materials_prompt: MaterialsMiningPrompt):
+def test_get_mining_chain(materials_prompt: MaterialsMiningPrompt) -> None:
     chain = get_mining_chain(materials_prompt.prompt)
     assert isinstance(chain, RunnableSequence)
     assert [type(step).__name__ for step in chain.steps] == snapshot(

@@ -5,7 +5,7 @@ from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
 
 
 @pytest.mark.unit()
-def test_material_snippet_valid_data():
+def test_material_snippet_valid_data() -> None:
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
         category="环境",
@@ -23,7 +23,7 @@ def test_material_snippet_valid_data():
 
 
 @pytest.mark.unit()
-def test_material_snippet_prompt():
+def test_material_snippet_prompt() -> None:
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
         category="环境",
@@ -41,7 +41,7 @@ def test_material_snippet_prompt():
 
 
 @pytest.mark.unit()
-def test_material_snippet_prompt_no_index():
+def test_material_snippet_prompt_no_index() -> None:
     snippet = MaterialSnippet(
         essential_text="窗外下着大雨，雷声阵阵。",
         category="环境",
@@ -59,7 +59,7 @@ def test_material_snippet_prompt_no_index():
 
 
 @pytest.mark.unit()
-def test_material_result_valid_data():
+def test_material_result_valid_data() -> None:
     result = ExtractedResult(
         snippets=[
             MaterialSnippet(

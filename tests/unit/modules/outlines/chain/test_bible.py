@@ -18,7 +18,7 @@ def bible_generate_prompt() -> BibleGeneratePrompt:
 
 
 @pytest.mark.unit()
-def test_get_brainstorm_chain(bible_prompt: BibleBrainstormPrompt):
+def test_get_brainstorm_chain(bible_prompt: BibleBrainstormPrompt) -> None:
     chain = get_brainstorm_chain(bible_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)
@@ -28,7 +28,7 @@ def test_get_brainstorm_chain(bible_prompt: BibleBrainstormPrompt):
 
 
 @pytest.mark.unit()
-def test_get_generate_chain(bible_generate_prompt: BibleGeneratePrompt):
+def test_get_generate_chain(bible_generate_prompt: BibleGeneratePrompt) -> None:
     chain = get_bible_chain(bible_generate_prompt.prompt)
 
     assert isinstance(chain, RunnableSequence)

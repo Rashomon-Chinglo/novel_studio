@@ -12,12 +12,12 @@ def materials_prompt() -> MaterialsMiningPrompt:
 
 
 @pytest.mark.unit()
-def test_materials_prompt_template(materials_prompt: MaterialsMiningPrompt):
+def test_materials_prompt_template(materials_prompt: MaterialsMiningPrompt) -> None:
     assert len(materials_prompt.template) == snapshot(688)
 
 
 @pytest.mark.unit()
-def test_materials_prompt_build_variables(materials_prompt: MaterialsMiningPrompt):
+def test_materials_prompt_build_variables(materials_prompt: MaterialsMiningPrompt) -> None:
     context = MaterialsMiningContext(
         text="这是一个测试文本。",
     )
@@ -25,10 +25,10 @@ def test_materials_prompt_build_variables(materials_prompt: MaterialsMiningPromp
 
 
 @pytest.mark.unit()
-def test_materials_prompt_prompt(materials_prompt: MaterialsMiningPrompt):
+def test_materials_prompt_prompt(materials_prompt: MaterialsMiningPrompt) -> None:
     assert isinstance(materials_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
-def test_materials_prompt_version(materials_prompt: MaterialsMiningPrompt):
+def test_materials_prompt_version(materials_prompt: MaterialsMiningPrompt) -> None:
     assert materials_prompt.version() == snapshot("1.0.0")

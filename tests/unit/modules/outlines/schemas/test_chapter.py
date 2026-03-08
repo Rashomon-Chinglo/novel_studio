@@ -57,7 +57,7 @@ def chapter(scene):
     )
 
 @pytest.mark.unit
-def test_chapter_scene_beat_prompt(scene_beat):
+def test_chapter_scene_beat_prompt(scene_beat) -> None:
     assert scene_beat.prompt(index=1) == snapshot("""\
 <场景节拍1>
 - **描写技法**: 动作
@@ -69,7 +69,7 @@ def test_chapter_scene_beat_prompt(scene_beat):
 """)
 
 @pytest.mark.unit
-def test_chapter_scene_blueprint_prompt(scene_blueprint):
+def test_chapter_scene_blueprint_prompt(scene_blueprint) -> None:
     assert scene_blueprint.prompt(index=1) == snapshot("""\
 <场景蓝图1>
 - **场景地点**: 贫民窟的废弃工厂巷道
@@ -85,7 +85,7 @@ def test_chapter_scene_blueprint_prompt(scene_blueprint):
 """)
 
 @pytest.mark.unit
-def test_chapter_scene_prompt(scene):
+def test_chapter_scene_prompt(scene) -> None:
     assert scene.prompt(index=1) == snapshot("""\
 <场景1>
 - **场景地点**: 贫民窟的废弃工厂巷道
@@ -110,7 +110,7 @@ def test_chapter_scene_prompt(scene):
 """)
 
 @pytest.mark.unit
-def test_chapter_blueprint_prompt(chapter_blueprint):
+def test_chapter_blueprint_prompt(chapter_blueprint) -> None:
     assert chapter_blueprint.prompt() == snapshot("""\
 <章节蓝图>
 ## 章节序号
@@ -144,7 +144,7 @@ def test_chapter_blueprint_prompt(chapter_blueprint):
 """)
 
 @pytest.mark.unit
-def test_chapter_prompt(chapter):
+def test_chapter_prompt(chapter) -> None:
     assert chapter.prompt() == snapshot("""\
 <章节>
 ## 章节序号

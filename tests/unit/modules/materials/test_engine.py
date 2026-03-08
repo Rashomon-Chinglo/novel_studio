@@ -1,18 +1,20 @@
 import pytest
 
+from unittest.mock import MagicMock
+from pytest_mock import MockerFixture
 from app.modules.materials.engine import MaterialEngine
 from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
 
 
 @pytest.fixture()
-def mock_chain(mocker):
+def mock_chain(mocker: MockerFixture) -> MagicMock:
     mock = mocker.patch("app.modules.materials.engine.get_mining_chain")
     mock.return_value.ainvoke = mocker.AsyncMock()
     return mock
 
 
 @pytest.fixture()
-def engine(mock_chain):
+def engine(mock_chain: MagicMock) -> MaterialEngine:
     return MaterialEngine()
 
 
@@ -25,14 +27,14 @@ def engine(mock_chain):
         ("你好，你今天晚上吃什么？" * 50, 2),
     ],
 )
-def test_engine_split_text(engine, text, length_of_chunks):
+def test_engine_split_text(engine: MaterialEngine, text: str, length_of_chunks: int) -> None:
     chunks = engine.split_text(text)
     assert len(chunks) == length_of_chunks
 
 
 @pytest.mark.unit()
 @pytest.mark.asyncio()
-async def test_engine_mine(engine, mock_chain):
+async def test_engine_mine(engine: MaterialEngine, mock_chain: MagicMock) -> None:
     mock_response = ExtractedResult(
         snippets=[
             MaterialSnippet(

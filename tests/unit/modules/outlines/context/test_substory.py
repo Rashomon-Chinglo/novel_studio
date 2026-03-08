@@ -12,7 +12,11 @@ from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterSceneB
 
 
 @pytest.mark.unit()
-def test_substory_brainstorm_context(history: list[str], user_input: str, bible: Bible):
+def test_substory_brainstorm_context(
+    history: list[str],
+    user_input: str,
+    bible: Bible,
+) -> None:
     context = SubstoryBrainstormContext(
         bible=bible,
         history=history,
@@ -39,7 +43,7 @@ def test_substory_brainstorm_context(history: list[str], user_input: str, bible:
 def test_substory_generate_context(
     history: list[str],
     bible: Bible,
-):
+) -> None:
     context = SubstoryGenerateContext(
         bible=bible,
         history=history,

@@ -8,7 +8,7 @@ import pytest
 def test_bible_brainstorm_context(
     history: list[str],
     user_input: str,
-):
+) -> None:
     context = BibleBrainstormContext(
         history=history,
         user_input=user_input,
@@ -19,7 +19,7 @@ def test_bible_brainstorm_context(
 @pytest.mark.unit()
 def test_bible_generate_context(
     messages: list[str],
-):
+) -> None:
     context = BibleGenerateContext(
         messages=messages,
     )

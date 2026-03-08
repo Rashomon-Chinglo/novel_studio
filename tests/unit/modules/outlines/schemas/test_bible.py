@@ -16,7 +16,7 @@ def bible():
     )
 
 @pytest.mark.unit
-def test_bible_prompt(bible):
+def test_bible_prompt(bible) -> None:
     assert bible.prompt() == snapshot("""\
 <小说总纲>
 ## 书名

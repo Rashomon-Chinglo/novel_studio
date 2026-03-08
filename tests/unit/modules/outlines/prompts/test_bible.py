@@ -19,14 +19,14 @@ def bible_generate_prompt() -> BibleGeneratePrompt:
 
 
 @pytest.mark.unit()
-def test_bible_brainstorm_prompt_template(bible_brainstorm_prompt: BibleBrainstormPrompt):
+def test_bible_brainstorm_prompt_template(bible_brainstorm_prompt: BibleBrainstormPrompt) -> None:
     assert len(bible_brainstorm_prompt.template) == snapshot(637)
 
 
 @pytest.mark.unit()
 def test_bible_brainstorm_prompt_build_variables(
     bible_brainstorm_prompt: BibleBrainstormPrompt, bible_brainstorm_context: BibleBrainstormContext
-):
+) -> None:
     assert bible_brainstorm_prompt.build_variables(bible_brainstorm_context) == snapshot(
         {
             "history": """\
@@ -39,17 +39,17 @@ history\
 
 
 @pytest.mark.unit()
-def test_bible_brainstorm_prompt_prompt(bible_brainstorm_prompt: BibleBrainstormPrompt):
+def test_bible_brainstorm_prompt_prompt(bible_brainstorm_prompt: BibleBrainstormPrompt) -> None:
     assert isinstance(bible_brainstorm_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
-def test_bible_brainstorm_prompt_version(bible_brainstorm_prompt: BibleBrainstormPrompt):
+def test_bible_brainstorm_prompt_version(bible_brainstorm_prompt: BibleBrainstormPrompt) -> None:
     assert bible_brainstorm_prompt.version() == snapshot("1.0.0")
 
 
 @pytest.mark.unit()
-def test_bible_generate_prompt_template(bible_generate_prompt: BibleGeneratePrompt):
+def test_bible_generate_prompt_template(bible_generate_prompt: BibleGeneratePrompt) -> None:
     assert len(bible_generate_prompt.template) == snapshot(737)
 
 
@@ -68,10 +68,10 @@ messages\
 
 
 @pytest.mark.unit()
-def test_bible_generate_prompt_prompt(bible_generate_prompt: BibleGeneratePrompt):
+def test_bible_generate_prompt_prompt(bible_generate_prompt: BibleGeneratePrompt) -> None:
     assert isinstance(bible_generate_prompt.prompt, ChatPromptTemplate)
 
 
 @pytest.mark.unit()
-def test_bible_generate_prompt_version(bible_generate_prompt: BibleGeneratePrompt):
+def test_bible_generate_prompt_version(bible_generate_prompt: BibleGeneratePrompt) -> None:
     assert bible_generate_prompt.version() == snapshot("1.0.0")

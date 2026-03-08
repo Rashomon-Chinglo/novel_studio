@@ -69,7 +69,7 @@ def chapter_writing_context(
     )
 
 @pytest.fixture()
-def material_provider() -> MaterialProvider:
+def material_provider() -> AsyncMock:
     provider = AsyncMock(spec=MaterialProvider)
     provider.provide_materials_for_scene.return_value = []
     return provider

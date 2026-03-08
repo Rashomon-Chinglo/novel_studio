@@ -30,7 +30,7 @@ def chapter_nodes(action_node):
     return ChapterOriginalSubstoryNodes(nodes=[action_node])
 
 @pytest.mark.unit
-def test_substory_action_node_prompt(action_node):
+def test_substory_action_node_prompt(action_node) -> None:
     assert action_node.prompt(index=1) == snapshot("""\
 <卷钢逻辑节点1>
 - **起因**: 黑帮抢夺贫民窟的净水装置
@@ -46,7 +46,7 @@ def test_substory_action_node_prompt(action_node):
 """)
 
 @pytest.mark.unit
-def test_substory_prompt(substory):
+def test_substory_prompt(substory) -> None:
     assert substory.prompt() == snapshot("""\
 <篇章逻辑>
 ## 篇章标题

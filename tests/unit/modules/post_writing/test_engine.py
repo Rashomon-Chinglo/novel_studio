@@ -7,8 +7,11 @@ from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumu
 from app.modules.post_writing.engine import PostWritingEngine
 
 
+from pytest_mock import MockerFixture
+
+
 @pytest.fixture()
-def mock_chapter_summary_chain(mocker: MagicMock) -> MagicMock:
+def mock_chapter_summary_chain(mocker: MockerFixture) -> MagicMock:
     mock = mocker.patch("app.modules.post_writing.engine.get_chapter_summary_chain")
     mock.return_value.ainvoke = mocker.AsyncMock()
     mock.return_value.ainvoke.return_value = "测试章节总结"
@@ -16,7 +19,7 @@ def mock_chapter_summary_chain(mocker: MagicMock) -> MagicMock:
 
 
 @pytest.fixture()
-def mock_substory_cumulative_summary_chain(mocker: MagicMock) -> MagicMock:
+def mock_substory_cumulative_summary_chain(mocker: MockerFixture) -> MagicMock:
     mock = mocker.patch("app.modules.post_writing.engine.get_cumulative_substory_summary_chain")
     mock.return_value.ainvoke = mocker.AsyncMock()
     mock.return_value.ainvoke.return_value = "测试累积总结"
