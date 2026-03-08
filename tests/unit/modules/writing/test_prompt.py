@@ -1,0 +1,198 @@
+import pytest
+from inline_snapshot import snapshot
+from langchain_core.prompts import ChatPromptTemplate
+
+from app.modules.writing.prompt import ChapterSceneWritingPrompt
+from app.modules.writing.context import ChapterSceneWritingContext
+
+
+@pytest.fixture()
+def chapter_scene_writing_prompt() -> ChapterSceneWritingPrompt:
+    return ChapterSceneWritingPrompt()
+
+
+@pytest.mark.unit()
+def test_chapter_scene_writing_prompt_template(
+    chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
+) -> None:
+    assert len(chapter_scene_writing_prompt.template) == snapshot(935)
+
+
+@pytest.mark.unit()
+def test_chapter_scene_writing_prompt_build_variables(
+    chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
+    chapter_scene_writing_context: ChapterSceneWritingContext,
+) -> None:
+    assert chapter_scene_writing_prompt.build_variables(chapter_scene_writing_context) == snapshot(
+        {
+            "overview_outline": """\
+<小说总纲>
+## 书名
+测试小说名
+
+## 梗概
+这是一个测试用的核心梗概，描述了主角的冒险故事。
+
+## 核心卖点，爽点
+无敌流，快节奏，系统文
+
+## 世界观基调
+赛博朋克风格废土世界，基调灰暗但充满希望
+
+## 主线冲突
+底层平民与财阀高层的生存资源争夺战
+
+## 结局愿景
+主角推翻财阀，建立新的秩序
+
+## 主角们的简要概述
+主角李四是孤儿，配角王五是他的黑客导师
+</小说总纲>\
+""",
+            "substory_outline": """\
+<篇章逻辑>
+## 篇章标题
+第一卷：初入废土
+
+## 核心冲突
+主角能否在贫民窟的黑帮火拼中活下来
+
+## 状态变化
+从手无寸铁的平民变为觉醒异能的战士
+<逻辑节点列表>
+<卷钢逻辑节点1>
+- **起因**: 黑帮抢夺贫民窟的净水装置
+
+- **经过**: 主角为了保护妹妹被卷入冲突，意外接触到神秘源石
+
+- **结果**: 主角觉醒了雷电异能
+
+- **变化**: 平静的生活被打破，被黑帮追杀
+
+- **背景与可能的变化**: 此时全城的警方力量已被财阀抽走
+</卷钢逻辑节点1>
+</逻辑节点列表>
+</篇章逻辑>\
+""",
+            "original_logic_nodes": """\
+<章节逻辑节点>
+<卷钢逻辑节点>
+- **起因**: 黑帮抢夺贫民窟的净水装置
+
+- **经过**: 主角为了保护妹妹被卷入冲突，意外接触到神秘源石
+
+- **结果**: 主角觉醒了雷电异能
+
+- **变化**: 平静的生活被打破，被黑帮追杀
+
+- **背景与可能的变化**: 此时全城的警方力量已被财阀抽走
+</卷钢逻辑节点>
+</章节逻辑节点>\
+""",
+            "chapter_blueprint": """\
+<章节蓝图>
+## 章节序号
+1
+
+## 章节标题
+雨夜的枪声
+
+## 章节主题色调
+紧张、压抑
+
+## 章节开头的悬念
+一颗子弹擦过李四的耳边，打碎了身后的净水器
+
+## 章节结尾的悬念
+李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……
+<场景骨架列表>
+<场景蓝图1>
+- **场景地点**: 贫民窟的废弃工厂巷道
+
+- **场景时间及环境**: 深夜，暴雨倾盆
+
+- **场景中的人物**: 李四,黑帮小喽啰,妹妹小红
+
+- **本场细的目标**: 李四试图带着妹妹逃离黑帮的包围圈
+
+- **本场戏承接substory的哪一条**: 承接卷一节点1：黑帮火拼爆发
+</场景蓝图1>
+</场景骨架列表>
+</章节蓝图>\
+""",
+            "scene_blueprint": """\
+<场景蓝图>
+- **场景地点**: 贫民窟的废弃工厂巷道
+
+- **场景时间及环境**: 深夜，暴雨倾盆
+
+- **场景中的人物**: 李四,黑帮小喽啰,妹妹小红
+
+- **本场细的目标**: 李四试图带着妹妹逃离黑帮的包围圈
+
+- **本场戏承接substory的哪一条**: 承接卷一节点1：黑帮火拼爆发
+</场景蓝图>\
+""",
+            "scene": """\
+<场景>
+- **场景地点**: 贫民窟的废弃工厂巷道
+
+- **场景时间及环境**: 深夜，暴雨倾盆
+
+- **场景中的人物**: 李四,黑帮小喽啰,妹妹小红
+
+- **本场细的目标**: 李四试图带着妹妹逃离黑帮的包围圈
+
+- **本场戏承接substory的哪一条**: 承接卷一节点1：黑帮火拼爆发
+<场景节拍列表>
+<场景节拍1>
+- **描写技法**: 动作
+
+- **情绪**: 激昂
+
+- **具体的剧情动作点**: 李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷
+</场景节拍1>
+</场景节拍列表>
+</场景>\
+""",
+            "cumulative_substory_summary": """\
+<卷内进度总结>
+黑帮大举搜索贫民窟，李四处于极度恐惧中。
+</卷内进度总结>\
+""",
+            "pre_chapter_summary": """\
+<章节总结>
+上一章讲了李四逃入废弃工厂，暂时躲过了追捕。
+</章节总结>\
+""",
+            "previous_content": """\
+<上文内容>
+李四站在门前，犹豫了片刻。
+</上文内容>\
+""",
+            "reference_texts": """\
+<参考素材>
+<参考素材1>
+- **文本**: 阴暗的走廊里弥漫着铁锈的味道。
+- **描写技法**: 环境
+- **情绪**: 压抑
+- **内容标签**: ['环境描写', '氛围感']
+</参考素材1>
+</参考素材>\
+""",
+        }
+    )
+
+
+@pytest.mark.unit()
+def test_chapter_scene_writing_prompt_prompt(
+    chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
+) -> None:
+    assert isinstance(chapter_scene_writing_prompt.prompt, ChatPromptTemplate)
+
+
+@pytest.mark.unit()
+def test_chapter_scene_writing_prompt_version(
+    chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
+) -> None:
+    assert chapter_scene_writing_prompt.version() == snapshot("1.0.0")
