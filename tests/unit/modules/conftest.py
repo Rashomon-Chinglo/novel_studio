@@ -5,6 +5,7 @@ from app.modules.outlines.schemas.chapter import (
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
+    ChapterBlueprint,
 )
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
@@ -100,3 +101,16 @@ def chapter_summary() -> ChapterSummary:
 @pytest.fixture
 def cumulative_substory_summary() -> CumulativeSubstorySummary:
     return CumulativeSubstorySummary(summary="黑帮大举搜索贫民窟，李四处于极度恐惧中。")
+
+@pytest.fixture()
+def chapter_blueprint(
+    chapter_scene_blueprint: ChapterSceneBlueprint,
+) -> ChapterBlueprint:
+    return ChapterBlueprint(
+        chapter_index=1,
+        title="雨夜的枪声",
+        thematic_tone="紧张、压抑",
+        opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
+        ending_cliffhanger="李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……",
+        scenes_blueprint=[chapter_scene_blueprint],
+    )

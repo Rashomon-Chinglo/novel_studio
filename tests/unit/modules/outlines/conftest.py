@@ -82,19 +82,6 @@ def chapter_blueprint_context(
     )
 
 @pytest.fixture
-def chapter_blueprint(
-    chapter_scene_blueprint: ChapterSceneBlueprint,
-) -> ChapterBlueprint:
-    return ChapterBlueprint(
-        chapter_index=1,
-        title="雨夜的枪声",
-        thematic_tone="紧张、压抑",
-        opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
-        ending_cliffhanger="李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……",
-        scenes_blueprint=[chapter_scene_blueprint],
-    )
-
-@pytest.fixture
 def chapter_blueprint_brainstorm_context(
     chapter_blueprint_context: ChapterBlueprintContext,
     chapter_blueprint: ChapterBlueprint,
