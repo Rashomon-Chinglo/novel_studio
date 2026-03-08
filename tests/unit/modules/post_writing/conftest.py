@@ -6,7 +6,7 @@ from app.modules.writing.schemas import Chapter as WritingChapter, SceneChunk
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
 
-@pytest.fixture
+@pytest.fixture()
 def writing_chapter() -> WritingChapter:
     return WritingChapter(
         chunks=[
@@ -15,7 +15,7 @@ def writing_chapter() -> WritingChapter:
         ]
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter_summary_context(
     bible: Bible,
     substory: Substory,
@@ -35,7 +35,7 @@ def chapter_summary_context(
         chapter=writing_chapter,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def substory_cumulative_summary_context(
     bible: Bible,
     substory: Substory,

@@ -3,17 +3,17 @@ from app.modules.writing.schemas import Chapter, SceneChunk
 import pytest
 
 
-@pytest.fixture
+@pytest.fixture()
 def scene_chunk_1() -> SceneChunk:
     return SceneChunk(content="李四深吸一口气，推开了沉重的铁门。")
 
 
-@pytest.fixture
+@pytest.fixture()
 def scene_chunk_2() -> SceneChunk:
     return SceneChunk(content="进入铁门后，引入眼帘的是不可名状的怪物。")
 
 
-@pytest.fixture
+@pytest.fixture()
 def chapter(scene_chunk_1: SceneChunk, scene_chunk_2: SceneChunk) -> Chapter:
     return Chapter(chunks=[scene_chunk_1, scene_chunk_2])
 

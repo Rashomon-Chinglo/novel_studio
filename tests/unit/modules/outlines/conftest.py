@@ -18,32 +18,32 @@ from app.modules.outlines.context.substory import SubstoryBrainstormContext, Sub
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.context.chapter import ChapterBlueprintContext, ChapterBlueprintBrainstormContext, ChapterSceneContext, ChapterContext
 
-@pytest.fixture
+@pytest.fixture()
 def history() -> list[str]:
     return ["test", "history"]
 
-@pytest.fixture
+@pytest.fixture()
 def user_input() -> str:
     return "test"
 
-@pytest.fixture
+@pytest.fixture()
 def messages() -> list[str]:
     return ["test", "messages"]
 
-@pytest.fixture
+@pytest.fixture()
 def bible_brainstorm_context(history: list[str], user_input: str) -> BibleBrainstormContext:
     return BibleBrainstormContext(
         history=history,
         user_input=user_input,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def bible_generate_context(messages: list[str]) -> BibleGenerateContext:
     return BibleGenerateContext(
         messages=messages,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def substory_brainstorm_context(
     history: list[str],
     user_input: str,
@@ -55,7 +55,7 @@ def substory_brainstorm_context(
         bible=bible,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def substory_generate_context(
     history: list[str],
     bible: Bible,
@@ -65,7 +65,7 @@ def substory_generate_context(
         bible=bible,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter_blueprint_context(
     bible: Bible,
     substory: Substory,
@@ -81,7 +81,7 @@ def chapter_blueprint_context(
         logic_nodes_to_process=chapter_original_substory_nodes,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter_blueprint_brainstorm_context(
     chapter_blueprint_context: ChapterBlueprintContext,
     chapter_blueprint: ChapterBlueprint,
@@ -95,7 +95,7 @@ def chapter_blueprint_brainstorm_context(
         user_input=user_input,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter_scene_context(
     chapter_blueprint_context: ChapterBlueprintContext,
     chapter_scene_beat: ChapterSceneBeat,
@@ -109,7 +109,7 @@ def chapter_scene_context(
         scene_blueprint=chapter_scene_blueprint,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter_context(
     chapter_blueprint_context: ChapterBlueprintContext,
     chapter_blueprint: ChapterBlueprint,
@@ -119,7 +119,7 @@ def chapter_context(
         chapter_blueprint=chapter_blueprint,
     )
 
-@pytest.fixture
+@pytest.fixture()
 def chapter(
     chapter_blueprint: ChapterBlueprint,
     chapter_scene: ChapterScene,

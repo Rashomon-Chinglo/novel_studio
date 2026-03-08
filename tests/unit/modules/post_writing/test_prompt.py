@@ -155,6 +155,17 @@ def test_chapter_summary_prompt_build_variables(
 @pytest.mark.unit()
 def test_chapter_summary_prompt_prompt(chapter_summary_prompt: ChapterSummaryPrompt) -> None:
     assert isinstance(chapter_summary_prompt.prompt, ChatPromptTemplate)
+    assert chapter_summary_prompt.prompt.input_variables == snapshot(
+        [
+            "chapter_content",
+            "chapter_outline",
+            "cumulative_substory_summary",
+            "original_logic_nodes",
+            "overview_outline",
+            "pre_chapter_summary",
+            "substory_outline",
+        ]
+    )
 
 
 @pytest.mark.unit()
@@ -246,6 +257,14 @@ def test_substory_cumulative_summary_prompt_prompt(
     substory_cumulative_summary_prompt: SubstoryCumulativeSummaryPrompt,
 ) -> None:
     assert isinstance(substory_cumulative_summary_prompt.prompt, ChatPromptTemplate)
+    assert substory_cumulative_summary_prompt.prompt.input_variables == snapshot(
+        [
+            "cumulative_substory_summary",
+            "current_chapter_summary",
+            "overview_outline",
+            "substory_outline",
+        ]
+    )
 
 
 @pytest.mark.unit()

@@ -13,22 +13,24 @@ from langchain_core.prompts import ChatPromptTemplate
 
 
 @pytest.fixture()
-def chapter_blueprint_prompt():
+def chapter_blueprint_prompt() -> ChapterBlueprintPrompt:
     return ChapterBlueprintPrompt()
 
 
 @pytest.fixture()
-def chapter_blueprint_brainstorm_prompt():
+def chapter_blueprint_brainstorm_prompt() -> ChapterBlueprintBrainstormPrompt:
     return ChapterBlueprintBrainstormPrompt()
 
 
 @pytest.fixture()
-def chapter_scene_prompt():
+def chapter_scene_prompt() -> ChapterScenePrompt:
     return ChapterScenePrompt()
 
 
 @pytest.mark.unit()
-def test_chapter_blueprint_prompt_template(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
+def test_chapter_blueprint_prompt_template(
+    chapter_blueprint_prompt: ChapterBlueprintPrompt,
+) -> None:
     assert len(chapter_blueprint_prompt.template) == snapshot(1314)
 
 
@@ -394,6 +396,15 @@ def test_chapter_scene_prompt_build_variables(
 @pytest.mark.unit()
 def test_chapter_blueprint_prompt_prompt(chapter_blueprint_prompt: ChapterBlueprintPrompt) -> None:
     assert isinstance(chapter_blueprint_prompt.prompt, ChatPromptTemplate)
+    assert chapter_blueprint_prompt.prompt.input_variables == snapshot(
+        [
+            "cumulative_substory_summary",
+            "logic_nodes_to_process",
+            "overview_outline",
+            "pre_chapter_summary",
+            "substory_outline",
+        ]
+    )
 
 
 @pytest.mark.unit()
@@ -401,11 +412,34 @@ def test_chapter_blueprint_brainstorm_prompt_prompt(
     chapter_blueprint_brainstorm_prompt: ChapterBlueprintBrainstormPrompt,
 ) -> None:
     assert isinstance(chapter_blueprint_brainstorm_prompt.prompt, ChatPromptTemplate)
+    assert chapter_blueprint_brainstorm_prompt.prompt.input_variables == snapshot(
+        [
+            "chapter_blueprint",
+            "cumulative_substory_summary",
+            "logic_nodes_to_process",
+            "overview_outline",
+            "pre_chapter_summary",
+            "substory_outline",
+            "user_input",
+        ]
+    )
 
 
 @pytest.mark.unit()
 def test_chapter_scene_prompt_prompt(chapter_scene_prompt: ChapterScenePrompt) -> None:
     assert isinstance(chapter_scene_prompt.prompt, ChatPromptTemplate)
+    assert chapter_scene_prompt.prompt.input_variables == snapshot(
+        [
+            "chapter_blueprint",
+            "cumulative_substory_summary",
+            "last_scene_beat",
+            "logic_nodes_to_process",
+            "overview_outline",
+            "pre_chapter_summary",
+            "scene_blueprint",
+            "substory_outline",
+        ]
+    )
 
 
 @pytest.mark.unit()

@@ -9,16 +9,16 @@ from app.modules.outlines.schemas.chapter import (
 )
 from app.modules.base.schemas import MaterialCategory, MaterialMood
 
-@pytest.fixture
-def scene_beat():
+@pytest.fixture()
+def scene_beat() -> ChapterSceneBeat:
     return ChapterSceneBeat(
         category="动作",
         mood="激昂",
         description="李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷",
     )
 
-@pytest.fixture
-def scene_blueprint():
+@pytest.fixture()
+def scene_blueprint() -> ChapterSceneBlueprint:
     return ChapterSceneBlueprint(
         location="贫民窟的废弃工厂巷道",
         time_setting="深夜，暴雨倾盆",
@@ -27,15 +27,15 @@ def scene_blueprint():
         logic_bridge="承接卷一节点1：黑帮火拼爆发",
     )
 
-@pytest.fixture
-def scene(scene_blueprint, scene_beat):
+@pytest.fixture()
+def scene(scene_blueprint: ChapterSceneBlueprint, scene_beat: ChapterSceneBeat) -> ChapterScene:
     return ChapterScene(
         **scene_blueprint.model_dump(),
         beats=[scene_beat],
     )
 
-@pytest.fixture
-def chapter_blueprint(scene_blueprint):
+@pytest.fixture()
+def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprint:
     return ChapterBlueprint(
         chapter_index=1,
         title="雨夜的枪声",
@@ -45,8 +45,8 @@ def chapter_blueprint(scene_blueprint):
         scenes_blueprint=[scene_blueprint],
     )
 
-@pytest.fixture
-def chapter(scene):
+@pytest.fixture()
+def chapter(scene: ChapterScene) -> Chapter:
     return Chapter(
         chapter_index=1,
         title="雨夜的枪声",
@@ -56,8 +56,8 @@ def chapter(scene):
         scenes=[scene],
     )
 
-@pytest.mark.unit
-def test_chapter_scene_beat_prompt(scene_beat) -> None:
+@pytest.mark.unit()
+def test_chapter_scene_beat_prompt(scene_beat: ChapterSceneBeat) -> None:
     assert scene_beat.prompt(index=1) == snapshot("""\
 <场景节拍1>
 - **描写技法**: 动作
@@ -68,8 +68,8 @@ def test_chapter_scene_beat_prompt(scene_beat) -> None:
 </场景节拍1>\
 """)
 
-@pytest.mark.unit
-def test_chapter_scene_blueprint_prompt(scene_blueprint) -> None:
+@pytest.mark.unit()
+def test_chapter_scene_blueprint_prompt(scene_blueprint: ChapterSceneBlueprint) -> None:
     assert scene_blueprint.prompt(index=1) == snapshot("""\
 <场景蓝图1>
 - **场景地点**: 贫民窟的废弃工厂巷道
@@ -84,8 +84,8 @@ def test_chapter_scene_blueprint_prompt(scene_blueprint) -> None:
 </场景蓝图1>\
 """)
 
-@pytest.mark.unit
-def test_chapter_scene_prompt(scene) -> None:
+@pytest.mark.unit()
+def test_chapter_scene_prompt(scene: ChapterScene) -> None:
     assert scene.prompt(index=1) == snapshot("""\
 <场景1>
 - **场景地点**: 贫民窟的废弃工厂巷道
@@ -109,8 +109,8 @@ def test_chapter_scene_prompt(scene) -> None:
 </场景1>\
 """)
 
-@pytest.mark.unit
-def test_chapter_blueprint_prompt(chapter_blueprint) -> None:
+@pytest.mark.unit()
+def test_chapter_blueprint_prompt(chapter_blueprint: ChapterBlueprint) -> None:
     assert chapter_blueprint.prompt() == snapshot("""\
 <章节蓝图>
 ## 章节序号
@@ -143,8 +143,8 @@ def test_chapter_blueprint_prompt(chapter_blueprint) -> None:
 </章节蓝图>\
 """)
 
-@pytest.mark.unit
-def test_chapter_prompt(chapter) -> None:
+@pytest.mark.unit()
+def test_chapter_prompt(chapter: Chapter) -> None:
     assert chapter.prompt() == snapshot("""\
 <章节>
 ## 章节序号

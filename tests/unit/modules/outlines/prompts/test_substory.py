@@ -19,7 +19,9 @@ def substory_generate_prompt() -> SubstoryGeneratePrompt:
 
 
 @pytest.mark.unit()
-def test_substory_brainstorm_prompt_template(substory_brainstorm_prompt: SubstoryBrainstormPrompt) -> None:
+def test_substory_brainstorm_prompt_template(
+    substory_brainstorm_prompt: SubstoryBrainstormPrompt,
+) -> None:
     assert len(substory_brainstorm_prompt.template) == snapshot(699)
 
 
@@ -64,17 +66,26 @@ history\
 
 
 @pytest.mark.unit()
-def test_substory_brainstorm_prompt_prompt(substory_brainstorm_prompt: SubstoryBrainstormPrompt) -> None:
+def test_substory_brainstorm_prompt_prompt(
+    substory_brainstorm_prompt: SubstoryBrainstormPrompt,
+) -> None:
     assert isinstance(substory_brainstorm_prompt.prompt, ChatPromptTemplate)
+    assert substory_brainstorm_prompt.prompt.input_variables == snapshot(
+        ["history", "overview_outline", "user_input"]
+    )
 
 
 @pytest.mark.unit()
-def test_substory_brainstorm_prompt_version(substory_brainstorm_prompt: SubstoryBrainstormPrompt) -> None:
+def test_substory_brainstorm_prompt_version(
+    substory_brainstorm_prompt: SubstoryBrainstormPrompt,
+) -> None:
     assert substory_brainstorm_prompt.version() == snapshot("1.0.0")
 
 
 @pytest.mark.unit()
-def test_substory_generate_prompt_template(substory_generate_prompt: SubstoryGeneratePrompt) -> None:
+def test_substory_generate_prompt_template(
+    substory_generate_prompt: SubstoryGeneratePrompt,
+) -> None:
     assert len(substory_generate_prompt.template) == snapshot(965)
 
 
@@ -120,6 +131,9 @@ history\
 @pytest.mark.unit()
 def test_substory_generate_prompt_prompt(substory_generate_prompt: SubstoryGeneratePrompt) -> None:
     assert isinstance(substory_generate_prompt.prompt, ChatPromptTemplate)
+    assert substory_generate_prompt.prompt.input_variables == snapshot(
+        ["conversation_text", "overview_outline"]
+    )
 
 
 @pytest.mark.unit()

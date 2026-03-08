@@ -34,7 +34,8 @@ async def test_scene_writing(
 ) -> None:
     result = await writing_engine.scene_writing(chapter_scene_writing_context)
     assert result == snapshot(SceneChunk(content="测试场景写作"))
-    mock_scene_writing_chain.return_value.ainvoke.assert_called_once()
+    variables = writing_engine.chunk_template.build_variables(chapter_scene_writing_context)
+    mock_scene_writing_chain.return_value.ainvoke.assert_called_once_with(variables)
 
 
 @pytest.mark.asyncio

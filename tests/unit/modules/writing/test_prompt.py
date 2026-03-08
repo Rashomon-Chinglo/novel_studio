@@ -189,6 +189,20 @@ def test_chapter_scene_writing_prompt_prompt(
     chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
 ) -> None:
     assert isinstance(chapter_scene_writing_prompt.prompt, ChatPromptTemplate)
+    assert chapter_scene_writing_prompt.prompt.input_variables == snapshot(
+        [
+            "chapter_blueprint",
+            "cumulative_substory_summary",
+            "original_logic_nodes",
+            "overview_outline",
+            "pre_chapter_summary",
+            "previous_content",
+            "reference_texts",
+            "scene",
+            "scene_blueprint",
+            "substory_outline",
+        ]
+    )
 
 
 @pytest.mark.unit()

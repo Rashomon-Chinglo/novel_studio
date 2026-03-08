@@ -27,6 +27,7 @@ def test_materials_prompt_build_variables(materials_prompt: MaterialsMiningPromp
 @pytest.mark.unit()
 def test_materials_prompt_prompt(materials_prompt: MaterialsMiningPrompt) -> None:
     assert isinstance(materials_prompt.prompt, ChatPromptTemplate)
+    assert materials_prompt.prompt.input_variables == snapshot(["text"])
 
 
 @pytest.mark.unit()

@@ -3,8 +3,8 @@ from inline_snapshot import snapshot
 from app.modules.outlines.schemas.bible import Bible
 
 
-@pytest.fixture
-def bible():
+@pytest.fixture()
+def bible() -> Bible:
     return Bible(
         title="测试小说名",
         logline="这是一个测试用的核心梗概，描述了主角的冒险故事。",
@@ -15,8 +15,8 @@ def bible():
         key_roles_summary="主角李四是孤儿，配角王五是他的黑客导师"
     )
 
-@pytest.mark.unit
-def test_bible_prompt(bible) -> None:
+@pytest.mark.unit()
+def test_bible_prompt(bible: Bible) -> None:
     assert bible.prompt() == snapshot("""\
 <小说总纲>
 ## 书名
@@ -42,8 +42,8 @@ def test_bible_prompt(bible) -> None:
 </小说总纲>\
 """)
 
-@pytest.mark.unit
-def test_bible_prompt_exclude(bible):
+@pytest.mark.unit()
+def test_bible_prompt_exclude(bible: Bible) -> None:
     assert bible.prompt(exclude={"title", "logline"}) == snapshot("""\
 <小说总纲>
 ## 核心卖点，爽点
