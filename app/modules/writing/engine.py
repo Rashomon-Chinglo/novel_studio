@@ -17,7 +17,7 @@ class WritingEngine:
     async def scene_writing(self, context: ChapterSceneWritingContext) -> SceneChunk:
         variables = self.chunk_template.build_variables(context)
         result = await self.scene_llm.ainvoke(variables)
-        return result
+        return SceneChunk(content=result)
 
     async def writing(self, context: ChapterWritingContext) -> Chapter:
         scene_chunks: list[SceneChunk] = []
@@ -28,6 +28,7 @@ class WritingEngine:
                 bible=context.bible,
                 substory=context.substory,
                 original_logic_nodes=context.original_logic_nodes,
+                chapter_blueprint=context.chapter_blueprint,
                 scene_blueprint=scene_blueprint,
                 scene=scene,
                 cumulative_substory_summary=context.cumulative_substory_summary,

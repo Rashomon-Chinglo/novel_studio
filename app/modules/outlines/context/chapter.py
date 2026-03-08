@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.modules.post_writing.schemas import ChapterSummary, CumulativeSubstorySummary
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 
 from ..schemas.bible import Bible
 from ..schemas.chapter import ChapterBlueprint, ChapterSceneBeat, ChapterSceneBlueprint

@@ -80,3 +80,6 @@ class ChapterSceneWritingPrompt(PromptTemplate[ChapterSceneWritingContext]):
             "previous_content": f"<上文内容>\n{context.previous_content}\n</上文内容>",
             "reference_texts": f"<参考素材>\n{materials_prompt}\n</参考素材>",
         }
+
+    def version(self) -> str:
+        return "1.0.0"

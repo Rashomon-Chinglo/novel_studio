@@ -24,3 +24,11 @@ Thumbs.db
 # Editor settings
 .vscode/
 .idea/
+
+# Testing and Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.pytest_cache/
+*.pyc
