@@ -1,7 +1,8 @@
-import pytest
-
 from unittest.mock import MagicMock
+
+import pytest
 from pytest_mock import MockerFixture
+
 from app.modules.materials.engine import MaterialEngine
 from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
 
