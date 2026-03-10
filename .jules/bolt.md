@@ -1,0 +1,3 @@
+## 2024-03-10 - [Cache expensive client initializations]
+**Learning:** Instantiating `ChatOpenAI` and `JinaEmbeddings` (along with `Chroma` client connections) frequently is expensive and can create a hidden bottleneck in applications serving many requests or executing loops, especially if they hit APIs during initialization or validation.
+**Action:** Use `@functools.lru_cache()` to memoize factory functions like `get_vector_store` and `get_llm` to ensure they act as singletons per process, and replace blocking `add_texts` with `await aadd_texts` in async handlers to keep the event loop unblocked.

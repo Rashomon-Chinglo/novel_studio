@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
@@ -9,7 +10,6 @@ from app.modules.outlines.schemas.chapter import (
     ChapterSceneBlueprint,
 )
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 
 
 class ChapterSceneWritingContext(BaseModel):

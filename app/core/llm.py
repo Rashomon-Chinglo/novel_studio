@@ -1,9 +1,13 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+@functools.lru_cache
 def get_llm() -> ChatOpenAI:
+    # ⚡ Bolt: Added lru_cache to prevent redundant initialization of the ChatOpenAI client.
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
         base_url=settings.OPENAI_BASE_URL,  # type: ignore[unknown-argument]
