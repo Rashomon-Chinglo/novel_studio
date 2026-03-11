@@ -1,0 +1,3 @@
+## 2024-05-24 - Cache Expensive Factory Functions
+**Learning:** Factory functions initializing expensive clients like Vector Stores (ChromaDB + Embeddings) and LLMs (ChatOpenAI) were being called repeatedly, creating redundant instances. This leads to unnecessary network overhead, memory usage, and initialization delays, which become significant performance bottlenecks, especially during concurrent operations or rapid successive calls.
+**Action:** Use Python's `@functools.lru_cache` on functions like `get_vector_store` and `get_llm` to ensure they act as singletons, avoiding redundant initialization of expensive clients.
