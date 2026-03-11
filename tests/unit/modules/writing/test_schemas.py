@@ -1,6 +1,7 @@
-from inline_snapshot import snapshot
-from app.modules.writing.schemas import Chapter, SceneChunk
 import pytest
+from inline_snapshot import snapshot
+
+from app.modules.writing.schemas import Chapter, SceneChunk
 
 
 @pytest.fixture()
