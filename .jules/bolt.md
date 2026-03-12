@@ -1,0 +1,3 @@
+## 2024-05-18 - Caching Expensive Langchain Client Initializations
+**Learning:** Initializing Langchain clients like `ChatOpenAI` and `Chroma` + `JinaEmbeddings` can be surprisingly expensive in Python applications, as they might involve network checks or heavy library initializations. Calling `get_llm()` or `get_vector_store()` repeatedly across different modules creates a silent bottleneck.
+**Action:** Always use `@functools.lru_cache()` on factory functions that return expensive client instances in Python to ensure they act as singletons, avoiding redundant initializations.
