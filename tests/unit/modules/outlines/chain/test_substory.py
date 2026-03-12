@@ -1,9 +1,10 @@
-from app.modules.outlines.chain.substory import get_brainstorm_chain, get_substory_chain
-from app.modules.outlines.prompts.substory import SubstoryBrainstormPrompt, SubstoryGeneratePrompt
 import pytest
 from inline_snapshot import snapshot
-from langchain_core.runnables import RunnableSequence
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
+from langchain_core.runnables import RunnableSequence
+
+from app.modules.outlines.chain.substory import get_brainstorm_chain, get_substory_chain
+from app.modules.outlines.prompts.substory import SubstoryBrainstormPrompt, SubstoryGeneratePrompt
 
 
 @pytest.fixture()
