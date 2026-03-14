@@ -1,20 +1,23 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.schemas.substory import (
-    SubstoryActionNode,
-    Substory,
     ChapterOriginalSubstoryNodes,
+    Substory,
+    SubstoryActionNode,
 )
+
 
 @pytest.fixture()
 def action_node() -> SubstoryActionNode:
-    return SubstoryActionNode(  
+    return SubstoryActionNode(
         cause="黑帮抢夺贫民窟的净水装置",
         process="主角为了保护妹妹被卷入冲突，意外接触到神秘源石",
         effect="主角觉醒了雷电异能",
         exchange="平静的生活被打破，被黑帮追杀",
         context="此时全城的警方力量已被财阀抽走",
     )
+
 
 @pytest.fixture()
 def substory(action_node: SubstoryActionNode) -> Substory:
@@ -25,9 +28,11 @@ def substory(action_node: SubstoryActionNode) -> Substory:
         logic_nodes=[action_node],
     )
 
+
 @pytest.fixture()
 def chapter_nodes(action_node: SubstoryActionNode) -> ChapterOriginalSubstoryNodes:
     return ChapterOriginalSubstoryNodes(nodes=[action_node])
+
 
 @pytest.mark.unit()
 def test_substory_action_node_prompt(action_node: SubstoryActionNode) -> None:
@@ -44,6 +49,7 @@ def test_substory_action_node_prompt(action_node: SubstoryActionNode) -> None:
 - **背景与可能的变化**: 此时全城的警方力量已被财阀抽走
 </卷钢逻辑节点1>\
 """)
+
 
 @pytest.mark.unit()
 def test_substory_prompt(substory: Substory) -> None:
@@ -73,8 +79,11 @@ def test_substory_prompt(substory: Substory) -> None:
 </篇章逻辑>\
 """)
 
+
 @pytest.mark.unit()
-def test_chapter_original_substory_nodes_prompt(chapter_nodes: ChapterOriginalSubstoryNodes) -> None:
+def test_chapter_original_substory_nodes_prompt(
+    chapter_nodes: ChapterOriginalSubstoryNodes,
+) -> None:
     assert chapter_nodes.prompt() == snapshot("""\
 <章节逻辑节点>
 <卷钢逻辑节点>
