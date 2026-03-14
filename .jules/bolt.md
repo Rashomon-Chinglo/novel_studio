@@ -1,0 +1,3 @@
+## 2024-03-14 - Optimize expensive Langchain component initializations
+**Learning:** Instantiating `Chroma` and `ChatOpenAI` multiple times during execution is very expensive (in this case taking ~400ms for 10 instantiations). Specifically, `get_vector_store` connects to Chroma and instantiates embedding models on every instantiation. Currently they are not cached.
+**Action:** Use Python's `@functools.lru_cache` to cache factory functions (e.g., `get_vector_store` and `get_llm`) so only the first instantiation pays the initialization cost, treating these components effectively as singletons without complex state management.
