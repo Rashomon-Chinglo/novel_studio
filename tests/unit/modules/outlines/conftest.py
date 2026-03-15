@@ -1,5 +1,14 @@
 import pytest
 
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
+from app.modules.outlines.context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterContext,
+    ChapterSceneContext,
+)
+from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
     Chapter,
@@ -11,12 +20,8 @@ from app.modules.outlines.schemas.chapter import (
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
     Substory,
-    SubstoryActionNode,
 )
-from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
-from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-from app.modules.outlines.context.chapter import ChapterBlueprintContext, ChapterBlueprintBrainstormContext, ChapterSceneContext, ChapterContext
+
 
 @pytest.fixture()
 def history() -> list[str]:

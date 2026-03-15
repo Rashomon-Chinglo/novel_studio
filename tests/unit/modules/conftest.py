@@ -1,18 +1,22 @@
 import pytest
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
     Chapter as ChapterOutline,
+)
+from app.modules.outlines.schemas.chapter import (
+    ChapterBlueprint,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
-    ChapterBlueprint,
 )
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
     Substory,
     SubstoryActionNode,
 )
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+
 
 @pytest.fixture()
 def bible() -> Bible:
