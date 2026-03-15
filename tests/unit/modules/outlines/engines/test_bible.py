@@ -1,10 +1,12 @@
+from unittest.mock import MagicMock
+
 import pytest
 from inline_snapshot import snapshot
 from pytest_mock import MockerFixture
-from unittest.mock import MagicMock
-from app.modules.outlines.schemas import Bible
-from app.modules.outlines.engines.bible import BibleEngine
+
 from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
+from app.modules.outlines.engines.bible import BibleEngine
+from app.modules.outlines.schemas import Bible
 
 
 @pytest.fixture()

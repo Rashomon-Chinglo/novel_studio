@@ -1,18 +1,23 @@
-import pytest
-
-from inline_snapshot import snapshot
-
-from pytest_mock import MockerFixture
 from unittest.mock import MagicMock
+
+import pytest
+from inline_snapshot import snapshot
+from pytest_mock import MockerFixture
+
+from app.modules.outlines.context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterContext,
+    ChapterSceneContext,
+)
 from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.schemas.chapter import (
     Chapter,
     ChapterBlueprint,
     ChapterScene,
-    ChapterSceneBlueprint,
     ChapterSceneBeat,
+    ChapterSceneBlueprint,
 )
-from app.modules.outlines.context.chapter import ChapterBlueprintBrainstormContext, ChapterBlueprintContext, ChapterContext, ChapterSceneContext
 
 
 @pytest.fixture()

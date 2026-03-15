@@ -1,10 +1,13 @@
 import pytest
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
-from app.modules.writing.schemas import Chapter as WritingChapter, SceneChunk
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
+from app.modules.writing.schemas import Chapter as WritingChapter
+from app.modules.writing.schemas import SceneChunk
+
 
 @pytest.fixture()
 def writing_chapter() -> WritingChapter:

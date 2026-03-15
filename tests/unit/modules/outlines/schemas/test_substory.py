@@ -1,14 +1,16 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.schemas.substory import (
-    SubstoryActionNode,
-    Substory,
     ChapterOriginalSubstoryNodes,
+    Substory,
+    SubstoryActionNode,
 )
+
 
 @pytest.fixture()
 def action_node() -> SubstoryActionNode:
-    return SubstoryActionNode(  
+    return SubstoryActionNode(
         cause="黑帮抢夺贫民窟的净水装置",
         process="主角为了保护妹妹被卷入冲突，意外接触到神秘源石",
         effect="主角觉醒了雷电异能",
