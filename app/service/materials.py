@@ -79,6 +79,6 @@ class MaterialService:
                 async with session.begin():
                     session.add_all(sql_snippets)
 
-            self.vector_store.add_texts(**chroma_snippets)
+                await self.vector_store.aadd_texts(**chroma_snippets)
         except Exception as e:
             print(f"Error saving snippets: {e}")
