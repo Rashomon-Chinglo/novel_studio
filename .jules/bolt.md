@@ -1,0 +1,3 @@
+## 2024-03-17 - Caching Expensive Clients and Non-Blocking IO
+**Learning:** Factory functions that initialize expensive clients like Vector Stores (Chroma, JinaEmbeddings) and LLMs (ChatOpenAI) can cause significant overhead if invoked repeatedly, such as on every service layer call. Furthermore, calling synchronous methods on vector stores (`add_texts`) inside async coroutines blocks the asyncio event loop, causing poor concurrency.
+**Action:** Always use `@functools.lru_cache` to implement singletons for expensive stateless clients like Vector Stores and LLMs. Always check if a library like LangChain Chroma provides async equivalents (`aadd_texts`) to avoid blocking the event loop in async applications.

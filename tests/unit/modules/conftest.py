@@ -1,18 +1,22 @@
 import pytest
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
     Chapter as ChapterOutline,
+)
+from app.modules.outlines.schemas.chapter import (
+    ChapterBlueprint,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
-    ChapterBlueprint,
 )
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
     Substory,
     SubstoryActionNode,
 )
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+
 
 @pytest.fixture()
 def bible() -> Bible:
@@ -26,6 +30,7 @@ def bible() -> Bible:
         key_roles_summary="主角李四是孤儿，配角王五是他的黑客导师",
     )
 
+
 @pytest.fixture()
 def substory_action_node() -> SubstoryActionNode:
     return SubstoryActionNode(
@@ -36,6 +41,7 @@ def substory_action_node() -> SubstoryActionNode:
         context="此时全城的警方力量已被财阀抽走",
     )
 
+
 @pytest.fixture()
 def substory(substory_action_node: SubstoryActionNode) -> Substory:
     return Substory(
@@ -45,13 +51,13 @@ def substory(substory_action_node: SubstoryActionNode) -> Substory:
         logic_nodes=[substory_action_node],
     )
 
+
 @pytest.fixture()
 def chapter_original_substory_nodes(
     substory_action_node: SubstoryActionNode,
 ) -> ChapterOriginalSubstoryNodes:
-    return ChapterOriginalSubstoryNodes(
-        nodes=[substory_action_node]
-    )
+    return ChapterOriginalSubstoryNodes(nodes=[substory_action_node])
+
 
 @pytest.fixture()
 def chapter_scene_beat() -> ChapterSceneBeat:
@@ -60,6 +66,7 @@ def chapter_scene_beat() -> ChapterSceneBeat:
         mood="激昂",
         description="李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷",
     )
+
 
 @pytest.fixture()
 def chapter_scene_blueprint() -> ChapterSceneBlueprint:
@@ -71,6 +78,7 @@ def chapter_scene_blueprint() -> ChapterSceneBlueprint:
         logic_bridge="承接卷一节点1：黑帮火拼爆发",
     )
 
+
 @pytest.fixture()
 def chapter_scene(
     chapter_scene_blueprint: ChapterSceneBlueprint,
@@ -80,6 +88,7 @@ def chapter_scene(
         **chapter_scene_blueprint.model_dump(),
         beats=[chapter_scene_beat],
     )
+
 
 @pytest.fixture()
 def chapter_outline(
@@ -91,16 +100,19 @@ def chapter_outline(
         thematic_tone="紧张、压抑",
         opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
         ending_cliffhanger="李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……",
-        scenes=[chapter_scene]
+        scenes=[chapter_scene],
     )
+
 
 @pytest.fixture()
 def chapter_summary() -> ChapterSummary:
     return ChapterSummary(summary="上一章讲了李四逃入废弃工厂，暂时躲过了追捕。")
 
+
 @pytest.fixture()
 def cumulative_substory_summary() -> CumulativeSubstorySummary:
     return CumulativeSubstorySummary(summary="黑帮大举搜索贫民窟，李四处于极度恐惧中。")
+
 
 @pytest.fixture()
 def chapter_blueprint(
