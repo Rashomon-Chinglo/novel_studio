@@ -1,0 +1,3 @@
+## 2024-05-24 - [Avoid Redundant Client Initializations & Blocking Async Event Loops]
+**Learning:** Found that factory functions for expensive clients like `get_llm()` and `get_vector_store()` were lacking caching, leading to multiple object creations and high memory usage. Furthermore, using synchronous methods like `add_texts` in Langchain/Chroma inside `async` loops blocks the event loop, decreasing concurrency significantly.
+**Action:** Always use `@functools.lru_cache()` for expensive initializations. Always check for `async` equivalents (e.g., `await aadd_texts`) from Langchain and Vector Database libraries to use in async contexts.
