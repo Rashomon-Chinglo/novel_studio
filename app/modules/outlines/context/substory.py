@@ -10,5 +10,5 @@ class SubstoryBrainstormContext(BaseModel):
 
 
 class SubstoryGenerateContext(BaseModel):
-    history: list[str]
+    messages: list[str]
     bible: Bible

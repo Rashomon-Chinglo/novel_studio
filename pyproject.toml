@@ -94,16 +94,24 @@ markers = [
 
 # 项目自动化任务 (使用 uv run poe <task>)
 [tool.poe.tasks]
-# --- 测试相关 ---
-test       = "pytest -n auto --cov=app --cov-report=term-missing" # 全量体检 (并行 + 覆盖率)
-test-quick = "pytest -n auto"                                     # 快速验证 (并行，不看覆盖率)
-test-fix   = "pytest --inline-snapshot=review -p no:xdist --no-cov" # 修正/创建快照 (单线程)
-test-cov   = "pytest --cov=app --cov-report=html"                 # 详细报告 (生成 HTML)
+# --- 全量测试 ---
+test       = "pytest -n auto --cov=app --cov-report=term-missing" # 全部测试 (含 unit + integration，并行 + 覆盖率)
+test-quick = "pytest -n auto -q"                                  # 快速验证 (并行，不看覆盖率)
+test-cov   = "pytest --cov=app --cov-report=html"                 # HTML 覆盖率报告
+
+# --- 分层测试 ---
+test-unit        = "pytest tests/unit/ -n auto -q"                # 只跑 unit tests
+test-integration = "pytest tests/integration/ -v"                 # 只跑 integration tests
+
+# --- 快照维护 ---
+test-fix    = "pytest --inline-snapshot=review -p no:xdist --no-cov" # 交互式修正快照
+test-create = "pytest --inline-snapshot=create -p no:xdist --no-cov" # 创建新快照
 
 # --- 开发相关 ---
 start   = "python main.py"                                        # 启动程序
 init-db = "python init_db.py"                                     # 初始化数据库
-lint    = "ruff check . --fix"                                    # 代码规范检查并自动修复
+lint    = "ruff check . --fix"                                    # 代码检查并自动修复
+fmt     = "ruff format ."                                         # 格式化代码
 
 # BDD 配置
 bdd_features_base_dir = "tests/bdd/features"

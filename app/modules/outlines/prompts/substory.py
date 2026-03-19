@@ -109,7 +109,7 @@ class SubstoryGeneratePrompt(PromptTemplate[SubstoryGenerateContext]):
     def build_variables(self, context: SubstoryGenerateContext) -> dict[str, str]:
         return {
             "overview_outline": context.bible.prompt(),
-            "conversation_text": "\n".join(context.history),
+            "conversation_text": "\n".join(context.messages),
         }
 
     def version(self) -> str:

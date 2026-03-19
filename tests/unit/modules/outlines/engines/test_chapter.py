@@ -12,7 +12,12 @@ from app.modules.outlines.schemas.chapter import (
     ChapterSceneBlueprint,
     ChapterSceneBeat,
 )
-from app.modules.outlines.context.chapter import ChapterBlueprintBrainstormContext, ChapterBlueprintContext, ChapterContext, ChapterSceneContext
+from app.modules.outlines.context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterContext,
+    ChapterSceneContext,
+)
 
 
 @pytest.fixture()
@@ -58,7 +63,9 @@ def mock_scene_chain(mocker: MockerFixture) -> MagicMock:
         logic_bridge="承接卷一节点1：黑帮火拼爆发",
         beats=[
             ChapterSceneBeat(
-                category="动作", mood="激昂", description="李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷"
+                category="动作",
+                mood="激昂",
+                description="李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷",
             )
         ],
     )

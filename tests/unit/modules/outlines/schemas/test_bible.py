@@ -12,8 +12,9 @@ def bible() -> Bible:
         worldview_tone="赛博朋克风格废土世界，基调灰暗但充满希望",
         main_conflict="底层平民与财阀高层的生存资源争夺战",
         ending_vision="主角推翻财阀，建立新的秩序",
-        key_roles_summary="主角李四是孤儿，配角王五是他的黑客导师"
+        key_roles_summary="主角李四是孤儿，配角王五是他的黑客导师",
     )
+
 
 @pytest.mark.unit()
 def test_bible_prompt(bible: Bible) -> None:
@@ -41,6 +42,7 @@ def test_bible_prompt(bible: Bible) -> None:
 主角李四是孤儿，配角王五是他的黑客导师
 </小说总纲>\
 """)
+
 
 @pytest.mark.unit()
 def test_bible_prompt_exclude(bible: Bible) -> None:

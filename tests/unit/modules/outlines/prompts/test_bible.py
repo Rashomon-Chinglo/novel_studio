@@ -30,10 +30,10 @@ def test_bible_brainstorm_prompt_build_variables(
     assert bible_brainstorm_prompt.build_variables(bible_brainstorm_context) == snapshot(
         {
             "history": """\
-test
-history\
+chat_history_1
+chat_history_2\
 """,
-            "user_input": "test",
+            "user_input": "user_input",
         }
     )
 
@@ -61,8 +61,9 @@ def test_bible_generate_prompt_build_variables(
     assert bible_generate_prompt.build_variables(bible_generate_context) == snapshot(
         {
             "conversation_text": """\
-test
-messages\
+chat_history_1
+chat_history_2
+user_input\
 """
         }
     )

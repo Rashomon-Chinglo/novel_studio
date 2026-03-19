@@ -24,8 +24,8 @@ def test_substory_brainstorm_context(
     )
     assert context.model_dump() == snapshot(
         {
-            "history": ["test", "history"],
-            "user_input": "test",
+            "history": ["chat_history_1", "chat_history_2"],
+            "user_input": "user_input",
             "bible": {
                 "title": "测试小说名",
                 "logline": "这是一个测试用的核心梗概，描述了主角的冒险故事。",
@@ -41,16 +41,16 @@ def test_substory_brainstorm_context(
 
 @pytest.mark.unit()
 def test_substory_generate_context(
-    history: list[str],
+    messages: list[str],
     bible: Bible,
 ) -> None:
     context = SubstoryGenerateContext(
         bible=bible,
-        history=history,
+        messages=messages,
     )
     assert context.model_dump() == snapshot(
         {
-            "history": ["test", "history"],
+            "messages": ["chat_history_1", "chat_history_2", "user_input"],
             "bible": {
                 "title": "测试小说名",
                 "logline": "这是一个测试用的核心梗概，描述了主角的冒险故事。",

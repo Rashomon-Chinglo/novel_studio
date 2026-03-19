@@ -9,6 +9,7 @@ from app.modules.outlines.schemas.chapter import (
 )
 from app.modules.base.schemas import MaterialCategory, MaterialMood
 
+
 @pytest.fixture()
 def scene_beat() -> ChapterSceneBeat:
     return ChapterSceneBeat(
@@ -16,6 +17,7 @@ def scene_beat() -> ChapterSceneBeat:
         mood="激昂",
         description="李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷",
     )
+
 
 @pytest.fixture()
 def scene_blueprint() -> ChapterSceneBlueprint:
@@ -27,12 +29,14 @@ def scene_blueprint() -> ChapterSceneBlueprint:
         logic_bridge="承接卷一节点1：黑帮火拼爆发",
     )
 
+
 @pytest.fixture()
 def scene(scene_blueprint: ChapterSceneBlueprint, scene_beat: ChapterSceneBeat) -> ChapterScene:
     return ChapterScene(
         **scene_blueprint.model_dump(),
         beats=[scene_beat],
     )
+
 
 @pytest.fixture()
 def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprint:
@@ -45,6 +49,7 @@ def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprin
         scenes_blueprint=[scene_blueprint],
     )
 
+
 @pytest.fixture()
 def chapter(scene: ChapterScene) -> Chapter:
     return Chapter(
@@ -55,6 +60,7 @@ def chapter(scene: ChapterScene) -> Chapter:
         ending_cliffhanger="李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……",
         scenes=[scene],
     )
+
 
 @pytest.mark.unit()
 def test_chapter_scene_beat_prompt(scene_beat: ChapterSceneBeat) -> None:
@@ -67,6 +73,7 @@ def test_chapter_scene_beat_prompt(scene_beat: ChapterSceneBeat) -> None:
 - **具体的剧情动作点**: 李四翻滚躲开射击，同时抛出一枚自制电磁脉冲手雷
 </场景节拍1>\
 """)
+
 
 @pytest.mark.unit()
 def test_chapter_scene_blueprint_prompt(scene_blueprint: ChapterSceneBlueprint) -> None:
@@ -83,6 +90,7 @@ def test_chapter_scene_blueprint_prompt(scene_blueprint: ChapterSceneBlueprint) 
 - **本场戏承接substory的哪一条**: 承接卷一节点1：黑帮火拼爆发
 </场景蓝图1>\
 """)
+
 
 @pytest.mark.unit()
 def test_chapter_scene_prompt(scene: ChapterScene) -> None:
@@ -108,6 +116,7 @@ def test_chapter_scene_prompt(scene: ChapterScene) -> None:
 </场景节拍列表>
 </场景1>\
 """)
+
 
 @pytest.mark.unit()
 def test_chapter_blueprint_prompt(chapter_blueprint: ChapterBlueprint) -> None:
@@ -142,6 +151,7 @@ def test_chapter_blueprint_prompt(chapter_blueprint: ChapterBlueprint) -> None:
 </场景骨架列表>
 </章节蓝图>\
 """)
+
 
 @pytest.mark.unit()
 def test_chapter_prompt(chapter: Chapter) -> None:

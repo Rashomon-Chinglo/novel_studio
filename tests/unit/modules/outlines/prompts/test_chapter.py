@@ -247,11 +247,11 @@ def test_chapter_blueprint_brainstorm_prompt_build_variables(
 """,
             "conversation_history": """\
 <头脑风暴记录>
-test
-history
+chat_history_1
+chat_history_2
 </头脑风暴记录>\
 """,
-            "user_input": "test",
+            "user_input": "user_input",
         }
     )
 

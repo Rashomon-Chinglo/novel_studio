@@ -34,15 +34,10 @@ class ChapterEngine:
         self.blueprint_llm = get_chapter_blueprint_chain(self.chapter_blueprint_template.prompt)
         self.chapter_llm = get_chapter_scene_chain(self.chapter_scene_template.prompt)
 
-    async def chapter_blueprint_init(self, context: ChapterBlueprintContext) -> ChapterBlueprint:
-        variables = self.chapter_blueprint_template.build_variables(context)
-        result = await self.blueprint_llm.ainvoke(variables)
-        return result
-
-    async def chapter_blueprint_brainstorm(self, context: ChapterBlueprintBrainstormContext) -> str:
-        variables = self.chapter_blueprint_brainstorm_template.build_variables(context)
-        result = await self.brainstorm_llm.ainvoke(variables)
-        return result
+    # async def chapter_blueprint_brainstorm(self, context: ChapterBlueprintBrainstormContext) -> str:
+    #     variables = self.chapter_blueprint_brainstorm_template.build_variables(context)
+    #     result = await self.brainstorm_llm.ainvoke(variables)
+    #     return result
 
     async def chapter_blueprint_generate(
         self, context: ChapterBlueprintContext

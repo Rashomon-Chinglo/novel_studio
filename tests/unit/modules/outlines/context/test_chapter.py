@@ -150,8 +150,8 @@ def test_chapter_blueprint_brainstorm_context(
                     }
                 ],
             },
-            "history": ["test", "history"],
-            "user_input": "test",
+            "history": ["chat_history_1", "chat_history_2"],
+            "user_input": "user_input",
         }
     )
 

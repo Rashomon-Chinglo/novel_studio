@@ -42,9 +42,9 @@ async def test_post_writing_engine_chapter_summary(
     mock_chapter_summary_chain: MagicMock,
 ) -> None:
     result = await post_writing_engine.chapter_summary(chapter_summary_context)
-    
+
     assert result == snapshot(ChapterSummary(summary="测试章节总结"))
-    
+
     variables = post_writing_engine.chapter_summary_prompt.build_variables(chapter_summary_context)
     mock_chapter_summary_chain.return_value.ainvoke.assert_called_once_with(variables)
 
@@ -56,10 +56,12 @@ async def test_post_writing_engine_cumulative_substory_summary(
     substory_cumulative_summary_context: SubstoryCumulativeSummaryContext,
     mock_substory_cumulative_summary_chain: MagicMock,
 ) -> None:
-    result = await post_writing_engine.cumulative_substory_summary(substory_cumulative_summary_context)
-    
+    result = await post_writing_engine.cumulative_substory_summary(
+        substory_cumulative_summary_context
+    )
+
     assert result == snapshot(CumulativeSubstorySummary(summary="测试累积总结"))
-    
+
     variables = post_writing_engine.substory_cumulative_summary_prompt.build_variables(
         substory_cumulative_summary_context
     )

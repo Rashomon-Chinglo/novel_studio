@@ -33,10 +33,10 @@ def test_substory_brainstorm_prompt_build_variables(
     assert substory_brainstorm_prompt.build_variables(substory_brainstorm_context) == snapshot(
         {
             "history": """\
-test
-history\
+chat_history_1
+chat_history_2\
 """,
-            "user_input": "test",
+            "user_input": "user_input",
             "overview_outline": """\
 <小说总纲>
 ## 书名
@@ -121,8 +121,9 @@ def test_substory_generate_prompt_build_variables(
 </小说总纲>\
 """,
             "conversation_text": """\
-test
-history\
+chat_history_1
+chat_history_2
+user_input\
 """,
         }
     )

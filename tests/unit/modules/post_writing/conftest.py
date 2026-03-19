@@ -6,14 +6,16 @@ from app.modules.writing.schemas import Chapter as WritingChapter, SceneChunk
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
 
+
 @pytest.fixture()
 def writing_chapter() -> WritingChapter:
     return WritingChapter(
         chunks=[
             SceneChunk(content="李四喘着粗气，靠在冰冷的墙上。"),
-            SceneChunk(content="外面传来了杂乱的脚步声。")
+            SceneChunk(content="外面传来了杂乱的脚步声。"),
         ]
     )
+
 
 @pytest.fixture()
 def chapter_summary_context(
@@ -34,6 +36,7 @@ def chapter_summary_context(
         pre_chapter_summary=chapter_summary,
         chapter=writing_chapter,
     )
+
 
 @pytest.fixture()
 def substory_cumulative_summary_context(

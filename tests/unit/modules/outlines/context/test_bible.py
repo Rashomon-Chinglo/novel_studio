@@ -13,7 +13,9 @@ def test_bible_brainstorm_context(
         history=history,
         user_input=user_input,
     )
-    assert context.model_dump() == snapshot({"history": ["test", "history"], "user_input": "test"})
+    assert context.model_dump() == snapshot(
+        {"history": ["chat_history_1", "chat_history_2"], "user_input": "user_input"}
+    )
 
 
 @pytest.mark.unit()
@@ -23,4 +25,6 @@ def test_bible_generate_context(
     context = BibleGenerateContext(
         messages=messages,
     )
-    assert context.model_dump() == snapshot({"messages": ["test", "messages"]})
+    assert context.model_dump() == snapshot(
+        {"messages": ["chat_history_1", "chat_history_2", "user_input"]}
+    )
