@@ -1,13 +1,21 @@
-import pytest
 from unittest.mock import AsyncMock
-from app.modules.writing.schemas import Chapter as WritingChapter, SceneChunk
-from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
+
+import pytest
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline, ChapterBlueprint, ChapterScene, ChapterSceneBlueprint
+from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
+from app.modules.outlines.schemas.chapter import (
+    ChapterBlueprint,
+    ChapterScene,
+    ChapterSceneBlueprint,
+)
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
 from app.modules.writing.providers import MaterialProvider
+from app.modules.writing.schemas import SceneChunk
+
 
 @pytest.fixture()
 def scene_chunk() -> SceneChunk:
