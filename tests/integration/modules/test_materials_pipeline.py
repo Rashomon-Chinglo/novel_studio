@@ -1,11 +1,15 @@
 from pathlib import Path
+
 import pytest
 from inline_snapshot import snapshot
 from pytest_mock import MockerFixture
-from app.modules.materials.engine import MaterialEngine
+
 from app.modules.materials.context import MaterialsMiningContext
-from app.modules.materials.schemas import ExtractedResult
-from app.modules.materials.schemas import MaterialSnippet, MaterialCategory, MaterialMood
+from app.modules.materials.engine import MaterialEngine
+from app.modules.materials.schemas import (
+    ExtractedResult,
+    MaterialSnippet,
+)
 
 FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
 

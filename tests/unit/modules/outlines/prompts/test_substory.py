@@ -1,11 +1,9 @@
 import pytest
 from inline_snapshot import snapshot
-
-from app.modules.outlines.prompts.substory import SubstoryBrainstormPrompt
-from app.modules.outlines.prompts.substory import SubstoryGeneratePrompt
-from app.modules.outlines.context.substory import SubstoryBrainstormContext
-from app.modules.outlines.context.substory import SubstoryGenerateContext
 from langchain_core.prompts import ChatPromptTemplate
+
+from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
+from app.modules.outlines.prompts.substory import SubstoryBrainstormPrompt, SubstoryGeneratePrompt
 
 
 @pytest.fixture()

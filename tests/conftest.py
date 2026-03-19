@@ -1,19 +1,26 @@
-import pytest
 import os
+
+import pytest
+from pytest_mock import MockerFixture
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
     Chapter as ChapterOutline,
+)
+from app.modules.outlines.schemas.chapter import (
+    ChapterBlueprint,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
-    ChapterBlueprint,
 )
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
     Substory,
     SubstoryActionNode,
 )
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.writing.providers import MaterialProvider
 
 # 提前注入虚拟的环境变量，防止 `app.core.config.Settings` 初始化时报错
 os.environ["OPENAI_API_KEY"] = "mock-openai-key"
@@ -128,3 +135,20 @@ def chapter_blueprint(
         ending_cliffhanger="李四倒在血泊中，眼看黑帮老大举起了枪，突然他的手心闪烁起蓝色的电光……",
         scenes_blueprint=[chapter_scene_blueprint],
     )
+
+
+@pytest.fixture()
+def material_snippet() -> MaterialSnippet:
+    return MaterialSnippet(
+        essential_text="阴暗的走廊里弥漫着铁锈的味道。",
+        category="环境",
+        mood="压抑",
+        tags=["环境描写", "氛围感"],
+    )
+
+
+@pytest.fixture()
+def material_provider(material_snippet: MaterialSnippet, mocker: MockerFixture) -> MaterialProvider:
+    provider = mocker.AsyncMock(spec=MaterialProvider)
+    provider.provide_materials_for_scene = mocker.AsyncMock(return_value=[material_snippet])
+    return provider

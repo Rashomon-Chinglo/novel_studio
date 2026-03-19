@@ -1,5 +1,6 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.schemas.bible import Bible
 
 

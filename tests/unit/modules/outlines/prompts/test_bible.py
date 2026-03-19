@@ -1,11 +1,9 @@
 import pytest
 from inline_snapshot import snapshot
-
-from app.modules.outlines.prompts.bible import BibleBrainstormPrompt
-from app.modules.outlines.prompts.bible import BibleGeneratePrompt
-from app.modules.outlines.context.bible import BibleBrainstormContext
-from app.modules.outlines.context.bible import BibleGenerateContext
 from langchain_core.prompts import ChatPromptTemplate
+
+from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
+from app.modules.outlines.prompts.bible import BibleBrainstormPrompt, BibleGeneratePrompt
 
 
 @pytest.fixture()

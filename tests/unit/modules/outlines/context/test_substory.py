@@ -1,14 +1,8 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.substory import (
-    Substory,
-    SubstoryActionNode,
-    ChapterOriginalSubstoryNodes,
-)
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterSceneBlueprint
 
 
 @pytest.mark.unit()

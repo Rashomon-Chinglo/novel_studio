@@ -1,15 +1,18 @@
-from app.modules.outlines.chain.chapter import get_chapter_blueprint_chain
-from app.modules.outlines.chain.chapter import get_chapter_brainstorm_chain
-from app.modules.outlines.chain.chapter import get_chapter_scene_chain
-
-from app.modules.outlines.prompts.chapter import ChapterBlueprintPrompt
-from app.modules.outlines.prompts.chapter import ChapterBlueprintBrainstormPrompt
-from app.modules.outlines.prompts.chapter import ChapterScenePrompt
-
 import pytest
 from inline_snapshot import snapshot
-from langchain_core.runnables import RunnableSequence
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
+from langchain_core.runnables import RunnableSequence
+
+from app.modules.outlines.chain.chapter import (
+    get_chapter_blueprint_chain,
+    get_chapter_brainstorm_chain,
+    get_chapter_scene_chain,
+)
+from app.modules.outlines.prompts.chapter import (
+    ChapterBlueprintBrainstormPrompt,
+    ChapterBlueprintPrompt,
+    ChapterScenePrompt,
+)
 
 
 @pytest.fixture()

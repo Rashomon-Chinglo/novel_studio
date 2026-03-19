@@ -1,13 +1,13 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.schemas.chapter import (
+    Chapter,
+    ChapterBlueprint,
+    ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
-    ChapterScene,
-    ChapterBlueprint,
-    Chapter,
 )
-from app.modules.base.schemas import MaterialCategory, MaterialMood
 
 
 @pytest.fixture()

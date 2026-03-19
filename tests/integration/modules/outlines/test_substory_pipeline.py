@@ -1,6 +1,7 @@
 import pytest
-from app.modules.outlines.schemas import Substory, Bible
+
 from app.modules.outlines.engines.substory import SubstoryEngine
+from app.modules.outlines.schemas import Bible, Substory
 
 
 @pytest.fixture()

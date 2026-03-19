@@ -1,6 +1,7 @@
 import pytest
-from app.modules.outlines.schemas import Bible
+
 from app.modules.outlines.engines.bible import BibleEngine
+from app.modules.outlines.schemas import Bible
 
 
 @pytest.fixture()

@@ -1,9 +1,10 @@
 import pytest
 from inline_snapshot import snapshot
+
 from app.modules.outlines.schemas.substory import (
-    SubstoryActionNode,
-    Substory,
     ChapterOriginalSubstoryNodes,
+    Substory,
+    SubstoryActionNode,
 )
 
 

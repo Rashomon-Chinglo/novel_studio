@@ -1,13 +1,12 @@
+from unittest.mock import MagicMock
+
 import pytest
 from inline_snapshot import snapshot
-from unittest.mock import MagicMock
+from pytest_mock import MockerFixture
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
 from app.modules.post_writing.engine import PostWritingEngine
-
-
-from pytest_mock import MockerFixture
 
 
 @pytest.fixture()

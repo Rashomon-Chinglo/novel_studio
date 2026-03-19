@@ -1,13 +1,11 @@
 import pytest
-from app.modules.outlines.schemas.chapter import Chapter
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.outlines.context.chapter import ChapterBlueprintContext, ChapterContext
 from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.context.chapter import ChapterBlueprintContext
-from app.modules.outlines.context.chapter import ChapterContext
-from app.modules.outlines.schemas.substory import Substory
-from app.modules.base.memory import CumulativeSubstorySummary
-from app.modules.base.memory import ChapterSummary
-from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes
+from app.modules.outlines.schemas.chapter import Chapter
+from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 
 
 @pytest.fixture()

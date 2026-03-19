@@ -1,11 +1,12 @@
 import pytest
 from pytest_mock import MockerFixture
+
 from app.modules.outlines.engines.bible import BibleEngine
-from app.modules.outlines.schemas import Bible
-from app.modules.outlines.engines.substory import SubstoryEngine
-from app.modules.outlines.schemas import Substory
 from app.modules.outlines.engines.chapter import ChapterEngine
-from app.modules.outlines.schemas.chapter import Chapter, ChapterBlueprint, ChapterScene
+from app.modules.outlines.engines.substory import SubstoryEngine
+from app.modules.outlines.schemas import Bible, Substory
+from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterScene
+
 
 @pytest.fixture()
 def bible_engine(mocker: MockerFixture, bible: Bible) -> BibleEngine:
