@@ -1,6 +1,8 @@
 import os
+from typing import Any
 
 import pytest
+from langchain_core.messages import AIMessage
 from pytest_mock import MockerFixture
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
@@ -21,6 +23,7 @@ from app.modules.outlines.schemas.substory import (
     SubstoryActionNode,
 )
 from app.modules.writing.providers import MaterialProvider
+from tests.support.llm import FakeLLM
 
 # 提前注入虚拟的环境变量，防止 `app.core.config.Settings` 初始化时报错
 os.environ["OPENAI_API_KEY"] = "mock-openai-key"
@@ -152,3 +155,14 @@ def material_provider(material_snippet: MaterialSnippet, mocker: MockerFixture) 
     provider = mocker.AsyncMock(spec=MaterialProvider)
     provider.provide_materials_for_scene = mocker.AsyncMock(return_value=[material_snippet])
     return provider
+
+
+@pytest.fixture()
+def fake_llm_factory():
+    def factory[R](text_responses: list[str] | None = None, structured_responses: list[R] | None = None) -> FakeLLM[R]:
+        return FakeLLM(
+            responses=[AIMessage(content=response) for response in (text_responses or ["ok"])],
+            structured_responses=list(structured_responses or []),
+        )
+
+    return factory
