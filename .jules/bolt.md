@@ -1,0 +1,3 @@
+## 2024-05-24 - Missing Caching on Expensive Client Initializations
+**Learning:** Factory functions like `get_vector_store()` and `get_llm()` are called frequently during application execution, sometimes multiple times per request or process. Without caching, each call instantiates a new client, leading to measurable performance overhead due to redundant initializations. This is specifically relevant for `app.core.llm.get_llm` and `app.db.vector.get_vector_store`.
+**Action:** Use `@functools.lru_cache` on functions that return expensive singleton clients to ensure they are initialized only once. Always verify that such client initializers are properly cached in similar backend architectures.
