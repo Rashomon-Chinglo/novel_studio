@@ -2,8 +2,8 @@ import pytest
 from inline_snapshot import snapshot
 from langchain_core.prompts import ChatPromptTemplate
 
-from app.modules.writing.prompt import ChapterSceneWritingPrompt
 from app.modules.writing.context import ChapterSceneWritingContext
+from app.modules.writing.prompt import ChapterSceneWritingPrompt
 
 
 @pytest.fixture()
