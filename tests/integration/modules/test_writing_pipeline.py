@@ -11,6 +11,7 @@ from app.modules.writing.context import ChapterWritingContext
 from app.modules.writing.engine import WritingEngine
 from app.modules.writing.providers import MaterialProvider
 from app.modules.writing.schemas import Chapter
+from tests.support.llm import EngineContext, FakeLLM, FakeLLMFactory
 
 
 @pytest.fixture()
@@ -36,19 +37,32 @@ def chapter_writing_context(
 
 
 @pytest.fixture()
-def writing_engine(material_provider: MaterialProvider, mocker: MockerFixture) -> WritingEngine:
-    scene_writing_chain = mocker.patch("app.modules.writing.engine.get_scene_writing_chain")
-    scene_writing_chain.return_value.ainvoke = mocker.AsyncMock(return_value="测试文本")
-    return WritingEngine(material_provider=material_provider)
+def writing_engine_context(
+    material_provider: MaterialProvider, mocker: MockerFixture, fake_llm_factory: FakeLLMFactory
+) -> EngineContext[WritingEngine, Chapter]:
+    fake_llm: FakeLLM[Chapter] = fake_llm_factory(text_responses=["测试文本"])
+    mocker.patch("app.modules.writing.chain.get_llm", return_value=fake_llm)
+    return EngineContext(
+        engine=WritingEngine(material_provider=material_provider), fake_llm=fake_llm
+    )
 
 
 @pytest.mark.integration()
 @pytest.mark.asyncio()
 async def test_writing_pipeline(
-    writing_engine: WritingEngine,
+    writing_engine_context: EngineContext[WritingEngine, Chapter],
     chapter_writing_context: ChapterWritingContext,
 ) -> None:
+    writing_engine = writing_engine_context.engine
+    fake_llm = writing_engine_context.fake_llm
     result = await writing_engine.writing(chapter_writing_context)
     assert isinstance(result, Chapter)
     assert len(result.chunks) == snapshot(1)
     assert result.chunks[0].content == snapshot("测试文本")
+    assert chapter_writing_context.cumulative_substory_summary.summary in "\n".join(
+        fake_llm.plain_prompts[0]
+    )
+    assert chapter_writing_context.pre_chapter_summary.summary in "\n".join(
+        fake_llm.plain_prompts[0]
+    )
+    assert chapter_writing_context.previous_content in "\n".join(fake_llm.plain_prompts[0])

@@ -8,6 +8,7 @@ from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 from app.modules.post_writing.engine import PostWritingEngine
 from app.modules.writing.schemas import Chapter, SceneChunk
+from tests.support.llm import EngineContext, FakeLLM, FakeLLMFactory
 
 
 @pytest.fixture()
@@ -21,23 +22,20 @@ def chapter() -> Chapter:
 
 
 @pytest.fixture()
-def post_writing_engine(mocker: MockerFixture) -> PostWritingEngine:
-    summary_chain = mocker.patch("app.modules.post_writing.engine.get_chapter_summary_chain")
-    summary_chain.return_value.ainvoke = mocker.AsyncMock(return_value="这是本章的剧情梗概")
-
-    cumulative_summary_chain = mocker.patch(
-        "app.modules.post_writing.engine.get_cumulative_substory_summary_chain"
+def post_writing_engine_context(
+    mocker: MockerFixture, fake_llm_factory: FakeLLMFactory
+) -> EngineContext[PostWritingEngine, str]:
+    fake_llm: FakeLLM[str] = fake_llm_factory(
+        text_responses=["这是本章的剧情梗概", "这是本卷的累计剧情梗概"],
     )
-    cumulative_summary_chain.return_value.ainvoke = mocker.AsyncMock(
-        return_value="这是本卷的累计剧情梗概"
-    )
-    return PostWritingEngine()
+    mocker.patch("app.modules.post_writing.chain.get_llm", return_value=fake_llm)
+    return EngineContext(engine=PostWritingEngine(), fake_llm=fake_llm)
 
 
 @pytest.mark.integration()
 @pytest.mark.asyncio()
 async def test_post_writing_pipeline(
-    post_writing_engine: PostWritingEngine,
+    post_writing_engine_context: EngineContext[PostWritingEngine, str],
     cumulative_substory_summary: CumulativeSubstorySummary,
     chapter_summary: ChapterSummary,
     bible: Bible,
@@ -46,6 +44,9 @@ async def test_post_writing_pipeline(
     chapter_outline: ChapterOutline,
     chapter: Chapter,
 ) -> None:
+    post_writing_engine = post_writing_engine_context.engine
+    fake_llm = post_writing_engine_context.fake_llm
+
     current_chapter_summary = await post_writing_engine.chapter_summary(
         post_writing_engine.ChapterSummaryContext(
             bible=bible,
@@ -59,6 +60,9 @@ async def test_post_writing_pipeline(
     )
 
     assert current_chapter_summary.summary == snapshot("这是本章的剧情梗概")
+    assert cumulative_substory_summary.summary in "\n".join(fake_llm.plain_prompts[0])
+    assert chapter_summary.summary in "\n".join(fake_llm.plain_prompts[0])
+    assert fake_llm.structured_output_requests == snapshot([])
 
     cumulative_substory_summary = await post_writing_engine.cumulative_substory_summary(
         post_writing_engine.SubstoryCumulativeSummaryContext(
@@ -69,4 +73,5 @@ async def test_post_writing_pipeline(
         )
     )
 
+    assert current_chapter_summary.summary in "\n".join(fake_llm.plain_prompts[1])
     assert cumulative_substory_summary.summary == snapshot("这是本卷的累计剧情梗概")
