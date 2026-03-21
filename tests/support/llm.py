@@ -1,4 +1,6 @@
-from typing import Any, override
+from asyncio import sleep
+from dataclasses import dataclass
+from typing import Any, Protocol, override
 
 from langchain_core.callbacks import (
     CallbackManagerForLLMRun,
@@ -23,6 +25,7 @@ class StructuredOutputRunnable[T](RunnableSerializable[PromptValue, T]):
         return self.owner.next_structured_response()
 
     async def ainvoke(self, input: PromptValue, config: object = None, **kwargs: Any) -> T:
+        await sleep(0.001)
         self.owner.structured_prompts.append(extract_texts(input.to_messages()))
         return self.owner.next_structured_response()
 
@@ -67,3 +70,16 @@ class FakeLLM[R](FakeMessagesListChatModel):
             }
         )
         return StructuredOutputRunnable(owner=self)
+
+class FakeLLMFactory(Protocol):
+    def __call__[R](
+        self,
+        *,
+        text_responses: list[str] | None = None,
+        structured_responses: list[R] | None = None,
+    ) -> FakeLLM[R]: ...
+
+@dataclass
+class EngineContext[E, R]:
+    engine: E
+    fake_llm: FakeLLM[R]

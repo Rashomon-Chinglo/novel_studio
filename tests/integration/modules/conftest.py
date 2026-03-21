@@ -6,41 +6,41 @@ from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.engines.substory import SubstoryEngine
 from app.modules.outlines.schemas import Bible, Substory
 from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterScene
+from tests.support.llm import EngineContext, FakeLLMFactory
 
 
 @pytest.fixture()
-def bible_engine(mocker: MockerFixture, bible: Bible) -> BibleEngine:
-    brainstorm_chain = mocker.patch("app.modules.outlines.engines.bible.get_brainstorm_chain")
-    bible_chain = mocker.patch("app.modules.outlines.engines.bible.get_bible_chain")
-    brainstorm_chain.return_value.ainvoke = mocker.AsyncMock(return_value="我认为这是一个好主意")
-    bible_chain.return_value.ainvoke = mocker.AsyncMock(return_value=bible)
-    return BibleEngine()
+def bible_engine_context(
+    mocker: MockerFixture, bible: Bible, fake_llm_factory: FakeLLMFactory
+) -> EngineContext[BibleEngine, Bible]:
+    fake_llm = fake_llm_factory(
+        text_responses=["我认为这是一个好主意"], structured_responses=[bible]
+    )
+    mocker.patch("app.modules.outlines.chain.bible.get_llm", return_value=fake_llm)
+    return EngineContext(engine=BibleEngine(), fake_llm=fake_llm)
 
 
 @pytest.fixture()
-def substory_engine(mocker: MockerFixture, substory: Substory) -> SubstoryEngine:
-    brainstorm_chain = mocker.patch("app.modules.outlines.engines.substory.get_brainstorm_chain")
-    substory_chain = mocker.patch("app.modules.outlines.engines.substory.get_substory_chain")
-    brainstorm_chain.return_value.ainvoke = mocker.AsyncMock(return_value="我认为这是一个好主意")
-    substory_chain.return_value.ainvoke = mocker.AsyncMock(return_value=substory)
-    return SubstoryEngine()
+def substory_engine_context(
+    mocker: MockerFixture, substory: Substory, fake_llm_factory: FakeLLMFactory
+) -> EngineContext[SubstoryEngine, Substory]:
+    fake_llm = fake_llm_factory(
+        text_responses=["我认为这是一个好主意"], structured_responses=[substory]
+    )
+    mocker.patch("app.modules.outlines.chain.substory.get_llm", return_value=fake_llm)
+    return EngineContext(engine=SubstoryEngine(), fake_llm=fake_llm)
 
 
 @pytest.fixture()
-def chapter_engine(
-    mocker: MockerFixture, chapter_blueprint: ChapterBlueprint, chapter_scene: ChapterScene
-) -> ChapterEngine:
-    blueprint_chain = mocker.patch(
-        "app.modules.outlines.engines.chapter.get_chapter_blueprint_chain"
+def chapter_engine_context(
+    mocker: MockerFixture,
+    chapter_blueprint: ChapterBlueprint,
+    chapter_scene: ChapterScene,
+    fake_llm_factory: FakeLLMFactory,
+) -> EngineContext[ChapterEngine, ChapterBlueprint | ChapterScene]:
+    fake_llm = fake_llm_factory(
+        text_responses=["我认为这是一个好主意"],
+        structured_responses=[chapter_blueprint, chapter_scene],
     )
-    blueprint_brainstorm_chain = mocker.patch(
-        "app.modules.outlines.engines.chapter.get_chapter_brainstorm_chain"
-    )
-    scene_chain = mocker.patch("app.modules.outlines.engines.chapter.get_chapter_scene_chain")
-
-    blueprint_chain.return_value.ainvoke = mocker.AsyncMock(return_value=chapter_blueprint)
-    blueprint_brainstorm_chain.return_value.ainvoke = mocker.AsyncMock(
-        return_value="我认为这是一个好主意"
-    )
-    scene_chain.return_value.ainvoke = mocker.AsyncMock(return_value=chapter_scene)
-    return ChapterEngine()
+    mocker.patch("app.modules.outlines.chain.chapter.get_llm", return_value=fake_llm)
+    return EngineContext(engine=ChapterEngine(), fake_llm=fake_llm)
