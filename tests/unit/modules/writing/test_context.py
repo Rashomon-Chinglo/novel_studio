@@ -1,16 +1,19 @@
+import pytest
 from inline_snapshot import snapshot
-from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
+
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.substory import Substory, ChapterOriginalSubstoryNodes
 from app.modules.outlines.schemas.chapter import (
     Chapter as ChapterOutline,
+)
+from app.modules.outlines.schemas.chapter import (
     ChapterBlueprint,
     ChapterScene,
     ChapterSceneBlueprint,
 )
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-from app.modules.materials.schemas import MaterialSnippet
-import pytest
+from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
+from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
 
 
 @pytest.mark.unit()
