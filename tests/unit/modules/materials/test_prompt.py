@@ -1,9 +1,9 @@
 import pytest
-
-from app.modules.materials.prompt import MaterialsMiningPrompt
-from app.modules.materials.context import MaterialsMiningContext
-from langchain_core.prompts import ChatPromptTemplate
 from inline_snapshot import snapshot
+from langchain_core.prompts import ChatPromptTemplate
+
+from app.modules.materials.context import MaterialsMiningContext
+from app.modules.materials.prompt import MaterialsMiningPrompt
 
 
 @pytest.fixture()
