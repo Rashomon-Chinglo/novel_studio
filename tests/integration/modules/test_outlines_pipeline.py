@@ -1,4 +1,5 @@
 import pytest
+from inline_snapshot import snapshot
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.context.chapter import ChapterContext
@@ -42,6 +43,9 @@ async def test_outlines_pipeline(
     bible_generate_context = BibleEngine.BibleGenerateContext(messages=messages)
     bible = await bible_engine.generate(bible_generate_context)
     assert bible_brainstorm_result in "\n".join(bible_fake_llm.structured_prompts[0])
+    assert bible_fake_llm.structured_output_requests == snapshot(
+        [{"schema": Bible, "include_raw": False, "method": "function_calling", "strict": True}]
+    )
 
     substory_brainstorm_context = SubstoryEngine.SubstoryBrainstormContext(
         bible=bible,
@@ -61,6 +65,9 @@ async def test_outlines_pipeline(
     )
     substory = await substory_engine.generate(substory_generate_context)
     assert substory_brainstorm_result in "\n".join(substory_fake_llm.structured_prompts[0])
+    assert substory_fake_llm.structured_output_requests == snapshot(
+        [{"schema": Substory, "include_raw": False, "method": "function_calling", "strict": True}]
+    )
 
     chapter_blueprint_context = chapter_engine.ChapterBlueprintContext(
         bible=bible,
@@ -80,5 +87,21 @@ async def test_outlines_pipeline(
     )
     chapter = await chapter_engine.chapter_generate(chapter_context)
     assert chapter_blueprint.title in "\n".join(chapter_fake_llm.structured_prompts[1])
+    assert chapter_fake_llm.structured_output_requests == snapshot(
+        [
+            {
+                "schema": ChapterBlueprint,
+                "include_raw": False,
+                "method": "function_calling",
+                "strict": True,
+            },
+            {
+                "schema": ChapterScene,
+                "include_raw": False,
+                "method": "function_calling",
+                "strict": True,
+            },
+        ]
+    )
 
     assert chapter == chapter_outline

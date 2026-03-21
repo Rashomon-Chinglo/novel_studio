@@ -155,6 +155,7 @@ def material_provider(material_snippet: MaterialSnippet, mocker: MockerFixture) 
     provider.provide_materials_for_scene = mocker.AsyncMock(return_value=[material_snippet])
     return provider
 
+
 @pytest.fixture()
 def fake_llm_factory() -> FakeLLMFactory:
     def factory[R](

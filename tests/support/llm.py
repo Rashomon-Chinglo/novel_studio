@@ -19,13 +19,16 @@ def extract_texts(messages: list[BaseMessage]) -> list[str]:
 
 class StructuredOutputRunnable[T](RunnableSerializable[PromptValue, T]):
     owner: "FakeLLM"
+    request: dict[str, Any]
 
     def invoke(self, input: PromptValue, config: object = None, **kwargs: Any) -> T:
+        self.owner.structured_output_requests.append(self.request)
         self.owner.structured_prompts.append(extract_texts(input.to_messages()))
         return self.owner.next_structured_response()
 
     async def ainvoke(self, input: PromptValue, config: object = None, **kwargs: Any) -> T:
         await sleep(0.001)
+        self.owner.structured_output_requests.append(self.request)
         self.owner.structured_prompts.append(extract_texts(input.to_messages()))
         return self.owner.next_structured_response()
 
@@ -62,14 +65,15 @@ class FakeLLM[R](FakeMessagesListChatModel):
         include_raw: bool = False,
         **kwargs: Any,
     ) -> StructuredOutputRunnable[R]:
-        self.structured_output_requests.append(
-            {
+        return StructuredOutputRunnable(
+            owner=self,
+            request={
                 "schema": schema,
                 "include_raw": include_raw,
                 **kwargs,
-            }
+            },
         )
-        return StructuredOutputRunnable(owner=self)
+
 
 class FakeLLMFactory(Protocol):
     def __call__[R](
@@ -78,6 +82,7 @@ class FakeLLMFactory(Protocol):
         text_responses: list[str] | None = None,
         structured_responses: list[R] | None = None,
     ) -> FakeLLM[R]: ...
+
 
 @dataclass
 class EngineContext[E, R]:
