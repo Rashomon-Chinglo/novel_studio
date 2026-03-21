@@ -29,7 +29,6 @@ def blueprint_engine_context(
     )
     mocker.patch("app.modules.outlines.chain.chapter.get_llm", return_value=fake_llm)
     engine = ChapterEngine()
-    fake_llm.structured_output_requests.clear()
     return EngineContext(engine=engine, fake_llm=fake_llm)
 
 
@@ -44,7 +43,6 @@ def scene_engine_context(
     )
     mocker.patch("app.modules.outlines.chain.chapter.get_llm", return_value=fake_llm)
     engine = ChapterEngine()
-    fake_llm.structured_output_requests.clear()
     return EngineContext(engine=engine, fake_llm=fake_llm)
 
 
@@ -59,7 +57,6 @@ def chapter_engine_context(
     )
     mocker.patch("app.modules.outlines.chain.chapter.get_llm", return_value=fake_llm)
     engine = ChapterEngine()
-    fake_llm.structured_output_requests.clear()
     return EngineContext(engine=engine, fake_llm=fake_llm)
 
 
