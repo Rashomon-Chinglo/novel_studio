@@ -1,0 +1,3 @@
+## 2024-05-18 - [Add caching to get_vector_store and get_llm functions]
+**Learning:** Factory functions returning expensive clients like vector stores (`langchain_chroma.Chroma`) or LLMs (`ChatOpenAI`, `JinaEmbeddings`) run without caching, which causes them to be redundantly initialized on every call. This causes serious performance degradation.
+**Action:** When working with factory methods that return clients with expensive init logic (especially when they don't hold conversational state), wrap them in `@functools.lru_cache()` or a similar memoization decorator to ensure they behave as singletons.
