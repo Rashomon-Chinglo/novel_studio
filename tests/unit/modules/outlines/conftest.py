@@ -1,5 +1,14 @@
 import pytest
 
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
+from app.modules.outlines.context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterContext,
+    ChapterSceneContext,
+)
+from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
     Chapter,
@@ -11,24 +20,23 @@ from app.modules.outlines.schemas.chapter import (
 from app.modules.outlines.schemas.substory import (
     ChapterOriginalSubstoryNodes,
     Substory,
-    SubstoryActionNode,
 )
-from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
-from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-from app.modules.outlines.context.chapter import ChapterBlueprintContext, ChapterBlueprintBrainstormContext, ChapterSceneContext, ChapterContext
+
 
 @pytest.fixture()
 def history() -> list[str]:
     return ["test", "history"]
 
+
 @pytest.fixture()
 def user_input() -> str:
     return "test"
 
+
 @pytest.fixture()
 def messages() -> list[str]:
     return ["test", "messages"]
+
 
 @pytest.fixture()
 def bible_brainstorm_context(history: list[str], user_input: str) -> BibleBrainstormContext:
@@ -37,11 +45,13 @@ def bible_brainstorm_context(history: list[str], user_input: str) -> BibleBrains
         user_input=user_input,
     )
 
+
 @pytest.fixture()
 def bible_generate_context(messages: list[str]) -> BibleGenerateContext:
     return BibleGenerateContext(
         messages=messages,
     )
+
 
 @pytest.fixture()
 def substory_brainstorm_context(
@@ -55,6 +65,7 @@ def substory_brainstorm_context(
         bible=bible,
     )
 
+
 @pytest.fixture()
 def substory_generate_context(
     history: list[str],
@@ -64,6 +75,7 @@ def substory_generate_context(
         history=history,
         bible=bible,
     )
+
 
 @pytest.fixture()
 def chapter_blueprint_context(
@@ -81,6 +93,7 @@ def chapter_blueprint_context(
         logic_nodes_to_process=chapter_original_substory_nodes,
     )
 
+
 @pytest.fixture()
 def chapter_blueprint_brainstorm_context(
     chapter_blueprint_context: ChapterBlueprintContext,
@@ -94,6 +107,7 @@ def chapter_blueprint_brainstorm_context(
         history=history,
         user_input=user_input,
     )
+
 
 @pytest.fixture()
 def chapter_scene_context(
@@ -109,6 +123,7 @@ def chapter_scene_context(
         scene_blueprint=chapter_scene_blueprint,
     )
 
+
 @pytest.fixture()
 def chapter_context(
     chapter_blueprint_context: ChapterBlueprintContext,
@@ -118,6 +133,7 @@ def chapter_context(
         **chapter_blueprint_context.model_dump(),
         chapter_blueprint=chapter_blueprint,
     )
+
 
 @pytest.fixture()
 def chapter(
