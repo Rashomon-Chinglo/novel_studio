@@ -1,7 +1,8 @@
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+
 from .chain import get_chapter_summary_chain, get_cumulative_substory_summary_chain
 from .context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
 from .prompt import ChapterSummaryPrompt, SubstoryCumulativeSummaryPrompt
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 
 
 class PostWritingEngine:
