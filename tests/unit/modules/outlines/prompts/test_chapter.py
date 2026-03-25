@@ -1,15 +1,17 @@
 import pytest
 from inline_snapshot import snapshot
+from langchain_core.prompts import ChatPromptTemplate
 
-from app.modules.outlines.prompts.chapter import ChapterBlueprintPrompt
-from app.modules.outlines.prompts.chapter import ChapterBlueprintBrainstormPrompt
-from app.modules.outlines.prompts.chapter import ChapterScenePrompt
 from app.modules.outlines.context.chapter import (
     ChapterBlueprintBrainstormContext,
     ChapterBlueprintContext,
     ChapterSceneContext,
 )
-from langchain_core.prompts import ChatPromptTemplate
+from app.modules.outlines.prompts.chapter import (
+    ChapterBlueprintBrainstormPrompt,
+    ChapterBlueprintPrompt,
+    ChapterScenePrompt,
+)
 
 
 @pytest.fixture()
