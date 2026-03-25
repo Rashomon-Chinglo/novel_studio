@@ -1,7 +1,7 @@
 import pytest
+from inline_snapshot import snapshot
 
 from app.modules.materials.context import MaterialsMiningContext
-from inline_snapshot import snapshot
 
 
 @pytest.mark.unit()
