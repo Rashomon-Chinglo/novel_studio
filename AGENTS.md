@@ -8,21 +8,27 @@
 
 **Novel Studio** 是一个 AI 驱动的小说创作工作室，基于 Python 3.12+ 和 LangChain 构建。
 
+项目当前状态不是“从零开始”，而是：
+
+**核心创作引擎已具备，正在补齐系统编排层、Service 层、入口层和文档。**
+
 ### 核心模块
 
 | 模块 | 路径 | 功能 |
 |------|------|------|
-| **Bible** | `app/modules/bible/` | 世界观管理（背景、人物、规则的结构化存储） |
-| **Outlines** | `app/modules/outlines/` | 大纲生成引擎（Substory、Chapter Blueprint、Scene 节拍） |
-| **Materials** | `app/modules/materials/` | 素材供给层（Material Provider 抽象，上下文检索） |
-| **Writing** | `app/modules/writing/` | 正文生成引擎（基于场景节拍的文本生成） |
+| **Base** | `app/modules/base/` | 通用抽象、基础 schema、记忆对象 |
+| **Outlines** | `app/modules/outlines/` | Bible、Substory、Chapter Blueprint、Scene 节拍生成 |
+| **Materials** | `app/modules/materials/` | 素材挖掘、结构化提取、向量存储接入 |
+| **Writing** | `app/modules/writing/` | 基于场景节拍和素材的正文生成 |
+| **Post-Writing** | `app/modules/post_writing/` | 章节总结、卷内累计总结 |
+| **Service** | `app/service/` | 应用层封装，当前仍在补齐 |
 
 ### 技术栈
 
 - **运行时**: Python 3.12+
-- **包管理**: `uv` (Astral 生态)
+- **包管理**: `uv`
 - **LLM 框架**: LangChain + LangChain-OpenAI
-- **数据存储**: SQLAlchemy + SQLite (异步: aiosqlite)
+- **数据存储**: SQLAlchemy + SQLite
 - **向量数据库**: ChromaDB
 - **类型校验**: Pydantic v2
 
@@ -33,10 +39,7 @@
 ### 环境设置
 
 ```bash
-# 安装依赖
 uv sync
-
-# 初始化数据库
 uv run python init_db.py
 ```
 
@@ -46,14 +49,28 @@ uv run python init_db.py
 uv run python main.py
 ```
 
+注：`main.py` 当前仍是占位入口，实际开发阶段更应关注模块测试和后续 API 入口。
+
 ### 测试
 
 ```bash
-# 运行所有测试
-uv run python -m pytest test/
+# 全量测试
+uv run poe test
 
-# 运行特定测试
-uv run python -m pytest test/test_name.py -v
+# 快速测试
+uv run poe test-quick
+
+# 单元测试
+uv run poe test-unit
+
+# 集成测试
+uv run poe test-integration
+```
+
+如果环境对默认缓存目录有限制：
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache uv run poe test
 ```
 
 ---
@@ -63,28 +80,26 @@ uv run python -m pytest test/test_name.py -v
 ### 工具链
 
 ```bash
-# 代码检查并自动修复
 uv run ruff check . --fix
-
-# 代码格式化
 uv run ruff format .
-
-# 类型检查
 uv run ty check
 ```
 
 ### 编码约定
 
 1. **异步优先**: I/O 操作使用 `async/await`
-2. **类型注解**: 所有函数必须有完整的类型注解
-3. **Pydantic 校验**: 数据传输对象使用 Pydantic v2 模型
+2. **类型注解**: 所有函数必须有完整类型注解
+3. **Pydantic 校验**: DTO 优先使用 Pydantic v2
 4. **命名规范**: 遵循 PEP 8，使用 `snake_case`
-5. **行宽限制**: 100 字符 (`ruff` 配置)
+5. **行宽限制**: 100 字符
 
 ### 提交前检查
 
 ```bash
-uv run ruff check . --fix && uv run ruff format . && uv run ty check
+uv run ruff check . --fix
+uv run ruff format .
+uv run ty check
+uv run poe test-quick
 ```
 
 ---
@@ -93,13 +108,14 @@ uv run ruff check . --fix && uv run ruff format . && uv run ty check
 
 ### 测试策略
 
-- 单元测试放在 `test/` 目录
-- 集成测试文件以 `test_*_flow.py` 命名
-- 使用 `auto_test_*.py` 进行快速功能验证
+- 单元测试位于 `tests/unit/`
+- 集成测试位于 `tests/integration/`
+- 默认使用 Fake LLM 避免真实 API 调用
+- Service 层和未来的 orchestrator 是下一轮重点补强区域
 
 ### Mock LLM
 
-测试时可使用 Mock 策略避免实际 API 调用，详见 `docs/ROADMAP.md` 中的测试体系规划。
+测试支持通过 `tests/support/llm.py` 注入 Fake LLM。优先使用 Mock/Fake 验证 workflow、prompt 和 context，而不是依赖真实模型输出。
 
 ---
 
@@ -107,59 +123,44 @@ uv run ruff check . --fix && uv run ruff format . && uv run ty check
 
 ### API 密钥管理
 
-- 所有敏感配置存放在 `.env` 文件（已加入 `.gitignore`）
-- 必需的环境变量：
-  - `OPENAI_API_KEY`: OpenAI API 密钥
-  - 其他 LLM 配置项见 `app/core/` 目录
+- 所有敏感配置存放在 `.env`
+- 必需环境变量：
+  - `OPENAI_API_KEY`
+  - `JINA_API_KEY`
 
 ### 数据安全
 
-- 本地数据库文件存放在 `app/data/` 目录
-- ChromaDB 向量数据库为本地存储
-- 不要将用户生成内容提交到 Git
+- SQLite 和 ChromaDB 数据默认保存在 `app/data/`
+- 不要将用户生成内容或本地数据库提交到 Git
 
 ---
 
 ## Project Structure
 
-```
+```text
 novel_studio/
 ├── app/
-│   ├── core/           # 核心配置（LLM、设置）
-│   ├── db/             # 数据库连接与会话
-│   ├── models/         # SQLAlchemy ORM 模型
-│   ├── modules/        # 核心业务模块
-│   │   ├── base/       # 基础抽象类
-│   │   ├── materials/  # 素材供给层
-│   │   ├── outlines/   # 大纲生成引擎
-│   │   └── writing/    # 正文生成引擎
-│   └── service/        # API 服务层
-├── docs/               # 项目文档
-│   ├── DEVELOPMENT.md  # 开发规范
-│   └── ROADMAP.md      # 路线图
-└── test/               # 测试文件
+│   ├── core/
+│   ├── db/
+│   ├── models/
+│   ├── modules/
+│   │   ├── base/
+│   │   ├── materials/
+│   │   ├── outlines/
+│   │   ├── post_writing/
+│   │   └── writing/
+│   └── service/
+├── docs/
+├── tests/
+└── main.py
 ```
 
 ---
 
 ## Git Workflow
 
-遵循 Feature Branch Workflow，详见 [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)：
+遵循 Feature Branch Workflow，详见 `docs/DEVELOPMENT.md`。
 
-- `master`: 正式发布版本
+- `master`: 稳定发布分支
 - `develop`: 主开发分支
 - `feat/*`: 功能开发分支
-
-### 快速开始
-
-```bash
-# 同步并创建功能分支
-git checkout develop && git pull origin develop && git checkout -b feat/task-name
-
-# 提交代码
-git add . && git commit -m "feat: 描述"
-
-# 合并回 develop
-git checkout develop && git pull origin develop && git merge feat/task-name
-git push origin develop && git branch -d feat/task-name
-```
