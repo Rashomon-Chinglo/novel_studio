@@ -1,7 +1,7 @@
+from unittest.mock import MagicMock
+
 import pytest
 from inline_snapshot import snapshot
-from unittest.mock import AsyncMock, MagicMock, patch
-
 from pytest_mock import MockerFixture
 
 from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
@@ -25,7 +25,7 @@ def writing_engine(
     return WritingEngine(material_provider=material_provider)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.unit()
 async def test_scene_writing(
     writing_engine: WritingEngine,
@@ -38,7 +38,7 @@ async def test_scene_writing(
     mock_scene_writing_chain.return_value.ainvoke.assert_called_once_with(variables)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.unit()
 async def test_writing(
     writing_engine: WritingEngine,
