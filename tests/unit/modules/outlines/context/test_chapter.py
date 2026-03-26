@@ -1,21 +1,20 @@
-from app.modules.outlines.context.chapter import ChapterBlueprintContext
-from app.modules.outlines.context.chapter import ChapterBlueprintBrainstormContext
-from app.modules.outlines.context.chapter import ChapterSceneContext
-from app.modules.outlines.context.chapter import ChapterContext
-from app.modules.outlines.context.chapter import ChapterSceneBeat
+import pytest
+from inline_snapshot import snapshot
 
-
+from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.outlines.context.chapter import (
+    ChapterBlueprintBrainstormContext,
+    ChapterBlueprintContext,
+    ChapterContext,
+    ChapterSceneBeat,
+    ChapterSceneContext,
+)
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterSceneBlueprint
 from app.modules.outlines.schemas.substory import (
-    Substory,
-    SubstoryActionNode,
     ChapterOriginalSubstoryNodes,
+    Substory,
 )
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-
-from inline_snapshot import snapshot
-import pytest
 
 
 @pytest.mark.unit()
