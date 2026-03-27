@@ -1,0 +1,3 @@
+## 2024-03-05 - Cache Expensive Client Instances & Async Calls
+**Learning:** In an async service using expensive resources like VectorStore and LLM clients, repeatedly calling client-getter functions without caching instantiates new clients, which becomes a severe bottleneck. Also, standard synchronous `add_texts` can block the event loop in `asyncio.gather` flows.
+**Action:** Always use `functools.lru_cache` for expensive client initializations (like Langchain Chroma/LLM singletons) and ensure non-blocking operations like `aadd_texts` are used in coroutines instead of synchronous `add_texts`.
