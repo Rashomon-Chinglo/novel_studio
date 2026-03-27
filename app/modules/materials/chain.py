@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableSerializable
 
 from app.core.llm import get_llm
-from langchain_core.runnables import RunnableSerializable
 
 from .schemas import ExtractedResult
 
