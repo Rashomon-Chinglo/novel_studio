@@ -1,3 +1,5 @@
+import functools
+
 from langchain_chroma import Chroma
 from langchain_community.embeddings import JinaEmbeddings
 
@@ -10,6 +12,9 @@ from app.core.config import settings
 #     return collection
 
 
+# ⚡ Bolt: Cache vector store and embedding model to avoid redundant instantiations.
+# Expected Impact: Prevents re-loading JinaEmbeddings and Chroma client on every call, saving significant memory and latency.
+@functools.lru_cache(maxsize=1)
 def get_vector_store():
     embeddings = JinaEmbeddings(  # type: ignore[missing-argument]
         jina_api_key=settings.JINA_API_KEY,  # type: ignore[invalid-argument-type]

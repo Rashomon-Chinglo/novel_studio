@@ -1,12 +1,12 @@
-import pytest
-
-from pytest_mock import MockerFixture
 from unittest.mock import MagicMock
-from inline_snapshot import snapshot
 
+import pytest
+from inline_snapshot import snapshot
+from pytest_mock import MockerFixture
+
+from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 from app.modules.outlines.engines.substory import SubstoryEngine
 from app.modules.outlines.schemas.substory import Substory, SubstoryActionNode
-from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 
 
 @pytest.fixture()
