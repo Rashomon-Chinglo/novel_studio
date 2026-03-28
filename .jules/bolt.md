@@ -1,0 +1,3 @@
+## 2026-03-08 - Async vector store writing and factory function caching
+**Learning:** Factory functions initializing expensive clients like ChromaDB and OpenAI models should be cached using `@functools.lru_cache` to avoid repeated initialization costs across requests. Additionally, Langchain vector stores like Chroma expose async methods (e.g., `aadd_texts`) which must be used within async contexts to avoid blocking the event loop when processing large sets of data, as done in the Materials worker.
+**Action:** Always verify if expensive instantiations can be cached with `@functools.lru_cache` and prefer async equivalents of synchronous operations in an `asyncio` context.
