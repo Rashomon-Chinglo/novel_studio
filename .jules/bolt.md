@@ -1,0 +1,3 @@
+## 2025-05-18 - Uncached Vector Store Initialization
+**Learning:** The application uses `JinaEmbeddings` and `Chroma` for vector storage. Initializing `JinaEmbeddings` sets up an HTTP client, and `Chroma` performs file system or network checks. The `get_vector_store` function was re-initializing these components on every call, which is a significant performance bottleneck, especially in loops or frequent API calls.
+**Action:** Always ensure that factory functions for expensive clients (like vector stores, database engines, API clients) are cached using `functools.lru_cache` (or `@cache` in newer Python) to act as singletons, unless a specific reason exists to create new instances.
