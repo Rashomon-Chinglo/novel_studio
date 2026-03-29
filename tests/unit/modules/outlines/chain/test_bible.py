@@ -1,10 +1,10 @@
-from app.modules.outlines.chain.bible import get_bible_chain
-from app.modules.outlines.chain.bible import get_brainstorm_chain
-from app.modules.outlines.prompts.bible import BibleBrainstormPrompt, BibleGeneratePrompt
 import pytest
 from inline_snapshot import snapshot
-from langchain_core.runnables import RunnableSequence
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
+from langchain_core.runnables import RunnableSequence
+
+from app.modules.outlines.chain.bible import get_bible_chain, get_brainstorm_chain
+from app.modules.outlines.prompts.bible import BibleBrainstormPrompt, BibleGeneratePrompt
 
 
 @pytest.fixture()

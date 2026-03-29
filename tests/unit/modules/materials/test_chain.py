@@ -1,9 +1,10 @@
-from app.modules.materials.chain import get_mining_chain
-from app.modules.materials.prompt import MaterialsMiningPrompt
 import pytest
 from inline_snapshot import snapshot
-from langchain_core.runnables import RunnableSequence
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
+from langchain_core.runnables import RunnableSequence
+
+from app.modules.materials.chain import get_mining_chain
+from app.modules.materials.prompt import MaterialsMiningPrompt
 
 
 @pytest.fixture()

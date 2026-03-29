@@ -1,8 +1,6 @@
 import pytest
 from inline_snapshot import snapshot
 from langchain_core.runnables import RunnableSequence
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 
 from app.modules.writing.chain import get_scene_writing_chain
 from app.modules.writing.prompt import ChapterSceneWritingPrompt
