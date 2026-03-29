@@ -1,8 +1,13 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# Cache the LLM initialization to avoid redundant ChatOpenAI client creation,
+# improving performance when get_llm() is called multiple times.
+@functools.lru_cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
