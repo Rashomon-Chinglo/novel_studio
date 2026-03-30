@@ -1,0 +1,1 @@
+## 2024-05-24 - Cache LLM and Vector Store Initialization\n**Learning:** Instantiating Langchain models and ChromaDB clients repeatedly can be a major performance bottleneck, especially in factory functions.\n**Action:** Use `@functools.cache` on functions like `get_llm` and `get_vector_store` to ensure they return singleton instances.
