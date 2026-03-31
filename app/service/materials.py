@@ -1,6 +1,7 @@
 import asyncio
 import json
 import uuid
+from functools import partial
 
 from app.db.session import AsyncSessionLocal
 from app.db.vector import get_vector_store
@@ -79,6 +80,9 @@ class MaterialService:
                 async with session.begin():
                     session.add_all(sql_snippets)
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # ⚡ Bolt Optimization: Offload blocking I/O to thread pool to keep the event loop responsive
+            await asyncio.get_running_loop().run_in_executor(
+                None, partial(self.vector_store.add_texts, **chroma_snippets)
+            )
         except Exception as e:
             print(f"Error saving snippets: {e}")
