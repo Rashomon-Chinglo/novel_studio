@@ -2,12 +2,12 @@ import asyncio
 import json
 import uuid
 
-from app.db.session import AsyncSessionLocal
-from app.db.vector import get_vector_store
-from app.models.snippet import Snippet
 from app.modules.materials.context import MaterialsMiningContext
 from app.modules.materials.engine import MaterialEngine
 from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
+from app.persistence.db.session import AsyncSessionLocal
+from app.persistence.db.vector import get_vector_store
+from app.persistence.models.snippet import Snippet
 
 
 class MaterialService:
