@@ -1,19 +1,26 @@
 import asyncio
 import json
 import uuid
+from collections.abc import Callable
 
 from app.modules.materials.context import MaterialsMiningContext
 from app.modules.materials.engine import MaterialEngine
 from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
-from app.persistence.db.session import AsyncSessionLocal
+from app.persistence.db.unit_of_work import SqlAlchemyUnitOfWork
 from app.persistence.db.vector import get_vector_store
 from app.persistence.models.snippet import Snippet
 
 
 class MaterialService:
-    def __init__(self):
-        self.engine = MaterialEngine()
-        self.vector_store = get_vector_store()
+    def __init__(
+        self,
+        engine: MaterialEngine | None = None,
+        vector_store=None,
+        uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork,
+    ) -> None:
+        self.engine = engine or MaterialEngine()
+        self.vector_store = vector_store or get_vector_store()
+        self.uow_factory = uow_factory
 
     async def mine(self, text: str) -> ExtractedResult:
         context = MaterialsMiningContext(text=text)
@@ -23,7 +30,7 @@ class MaterialService:
         segments = self.engine.split_text(full_text)
         semaphore = asyncio.Semaphore(2)
 
-        async def worker(index, chunk_text):
+        async def worker(index: int, chunk_text: str):
             async with semaphore:
                 try:
                     result: ExtractedResult = await self.mine(chunk_text)
@@ -37,7 +44,7 @@ class MaterialService:
         tasks = [worker(i, segment) for i, segment in enumerate(segments)]
         await asyncio.gather(*tasks)
 
-    async def save_snippets(self, title: str, snippets: list[MaterialSnippet]):
+    async def save_snippets(self, title: str, snippets: list[MaterialSnippet]) -> None:
         sql_snippets = []
         chroma_snippets = {
             "ids": [],
@@ -75,9 +82,11 @@ class MaterialService:
             print(f"Successfully saved snippet: {snippet.model_dump_json(indent=2)}")
 
         try:
-            async with AsyncSessionLocal() as session:
-                async with session.begin():
-                    session.add_all(sql_snippets)
+            async with self.uow_factory() as uow:
+                if uow.materials is None:
+                    raise RuntimeError("Materials repository group is not available in UnitOfWork.")
+                uow.materials.snippets.add_many(sql_snippets)
+                await uow.commit()
 
             self.vector_store.add_texts(**chroma_snippets)
         except Exception as e:
