@@ -86,6 +86,7 @@ uv run ty check
 ## 文档
 
 - [docs/ROADMAP.md](/root/Project/cloud_workspace/novel_studio/docs/ROADMAP.md): 当前阶段判断与后续开发路线
+- [docs/PROJECT_ASSESSMENT_AND_PLAN.md](/root/Project/cloud_workspace/novel_studio/docs/PROJECT_ASSESSMENT_AND_PLAN.md): 当前项目状态评估与后续开发规划
 - [docs/DEVELOPMENT.md](/root/Project/cloud_workspace/novel_studio/docs/DEVELOPMENT.md): 开发规范
 - [docs/TEST_PLAN.md](/root/Project/cloud_workspace/novel_studio/docs/TEST_PLAN.md): 测试策略与执行方式
 - [docs/IDEAS.md](/root/Project/cloud_workspace/novel_studio/docs/IDEAS.md): 想法池与候选方向
