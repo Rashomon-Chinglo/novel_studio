@@ -15,9 +15,9 @@
 
 当前仓库已经具备：
 
-- `app/db/session.py` 中的异步 SQLAlchemy session 基础设施
-- `app/models/outline.py` 中的 `Bible`、`Substory`、`Chapter`
-- `app/models/snippet.py` 中的 `Snippet`
+- `app/persistence/db/session.py` 中的异步 SQLAlchemy session 基础设施
+- `app/persistence/models/outline.py` 中的 `Bible`、`Substory`、`Chapter`
+- `app/persistence/models/snippet.py` 中的 `Snippet`
 - `app/service/materials.py` 中一个早期的 service 写库示例
 
 但当前还缺少一层明确的持久化边界，导致下面这些问题会越来越明显：
@@ -58,6 +58,7 @@
 
 - 统一管理 `AsyncSession`
 - 让多个 repository 共享同一个 session
+- 按领域暴露 repository group，避免顶层命名冲突
 - 提供明确的 `commit` / `rollback` / `close` 生命周期
 - 支撑“每个阶段成功后，立即短事务落库”的策略
 
@@ -84,7 +85,7 @@
 ### 3.3 UnitOfWork 的职责
 
 - 创建和持有一次 `AsyncSession`
-- 暴露本次事务内可用的 repository
+- 暴露本次事务内可用的 repository group
 - 管理 `commit` / `rollback`
 - 作为 service 层短事务边界
 
@@ -175,10 +176,15 @@ Entry -> Orchestrator -> Service -> UnitOfWork -> Repository -> SQLAlchemy/SQLit
 - `commit()`
 - `rollback()`
 - `session`
-- `bibles`
-- `substories`
-- `chapters`
-- `snippets`
+- `outlines`
+- `materials`
+
+建议采用领域分组，而不是将 repository 平铺在 `UnitOfWork` 顶层。初版可先支持：
+
+- `uow.outlines.bibles`
+- `uow.outlines.substories`
+- `uow.outlines.chapters`
+- `uow.materials.snippets`
 
 ### 6.2 Repository
 
@@ -267,7 +273,7 @@ class SomeService:
         result = await self.engine.run(payload)
 
         async with self.uow_factory() as uow:
-            uow.chapters.add(result)
+            uow.outlines.chapters.add(result)
             await uow.commit()
 
         return result
@@ -283,8 +289,8 @@ class SomeService:
 
 ```python
 async with self.uow_factory() as uow:
-    bible = await uow.bibles.get(bible_id)
-    substories = await uow.substories.list_by_bible(bible_id)
+    bible = await uow.outlines.bibles.get(bible_id)
+    substories = await uow.outlines.substories.list_by_bible(bible_id)
 ```
 
 如果只是读查询，初版仍可统一走 `UnitOfWork`，后续再根据性能和复杂度决定是否分出只读 query service。
@@ -344,6 +350,8 @@ async with self.uow_factory() as uow:
 - `app/persistence/repositories/outlines/bible.py`
 - `app/persistence/repositories/outlines/substory.py`
 - `app/persistence/repositories/outlines/chapter.py`
+
+并让 `UnitOfWork` 以领域分组方式暴露 repository，而不是平铺为 `uow.bibles`、`uow.chapters` 这类顶层属性。
 
 ### Step 3
 

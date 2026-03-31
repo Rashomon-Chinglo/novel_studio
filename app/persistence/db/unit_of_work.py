@@ -11,6 +11,18 @@ from app.persistence.repositories.outlines import (
 )
 
 
+class OutlinesRepositoryGroup:
+    def __init__(self, session: AsyncSession) -> None:
+        self.bibles = BibleRepository(session)
+        self.substories = SubstoryRepository(session)
+        self.chapters = ChapterRepository(session)
+
+
+class MaterialsRepositoryGroup:
+    def __init__(self, session: AsyncSession) -> None:
+        self.snippets = SnippetRepository(session)
+
+
 class SqlAlchemyUnitOfWork:
     def __init__(
         self,
@@ -20,17 +32,13 @@ class SqlAlchemyUnitOfWork:
     ) -> None:
         self._session_factory = session_factory
         self.session: AsyncSession | None = None
-        self.bibles: BibleRepository | None = None
-        self.substories: SubstoryRepository | None = None
-        self.chapters: ChapterRepository | None = None
-        self.snippets: SnippetRepository | None = None
+        self.outlines: OutlinesRepositoryGroup | None = None
+        self.materials: MaterialsRepositoryGroup | None = None
 
     async def __aenter__(self) -> "SqlAlchemyUnitOfWork":
         self.session = self._session_factory()
-        self.bibles = BibleRepository(self.session)
-        self.substories = SubstoryRepository(self.session)
-        self.chapters = ChapterRepository(self.session)
-        self.snippets = SnippetRepository(self.session)
+        self.outlines = OutlinesRepositoryGroup(self.session)
+        self.materials = MaterialsRepositoryGroup(self.session)
         return self
 
     async def __aexit__(self, exc_type, exc, tb) -> None:
