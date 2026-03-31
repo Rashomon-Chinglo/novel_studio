@@ -1,7 +1,7 @@
-from app.modules.outlines.context.bible import BibleBrainstormContext
-from app.modules.outlines.context.bible import BibleGenerateContext
-from inline_snapshot import snapshot
 import pytest
+from inline_snapshot import snapshot
+
+from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
 
 
 @pytest.mark.unit()
