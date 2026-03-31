@@ -1,7 +1,9 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableSerializable
+
 from app.core.llm import get_llm
+
 from ..schemas.bible import Bible
 
 
