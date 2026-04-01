@@ -62,7 +62,7 @@ class ChapterSummaryPrompt(PromptTemplate[ChapterSummaryContext]):
             "chapter_outline": context.chapter_outline.prompt(),
             "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
             "pre_chapter_summary": context.pre_chapter_summary.prompt(),
-            "chapter_content": context.chapter.prompt(),
+            "chapter_content": context.written_chapter.prompt(),
         }
 
     def version(self) -> str:

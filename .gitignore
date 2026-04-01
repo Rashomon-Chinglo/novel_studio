@@ -24,6 +24,7 @@ Thumbs.db
 # Editor settings
 .vscode/
 .idea/
+.codex
 
 # Testing and Coverage
 .coverage

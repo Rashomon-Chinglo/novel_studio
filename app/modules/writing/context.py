@@ -4,8 +4,8 @@ from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
-    Chapter,
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBlueprint,
 )
@@ -30,7 +30,7 @@ class ChapterWritingContext(BaseModel):
     substory: Substory
     original_logic_nodes: ChapterOriginalSubstoryNodes
     chapter_blueprint: ChapterBlueprint
-    chapter: Chapter
+    chapter_outline: ChapterOutline
     cumulative_substory_summary: CumulativeSubstorySummary
     pre_chapter_summary: ChapterSummary
     previous_content: str

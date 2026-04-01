@@ -6,7 +6,7 @@ from app.persistence.db.session import AsyncSessionLocal
 from app.persistence.repositories.materials import SnippetRepository
 from app.persistence.repositories.outlines import (
     BibleRepository,
-    ChapterRepository,
+    ChapterOutlineRepository,
     SubstoryRepository,
 )
 
@@ -15,7 +15,7 @@ class OutlinesRepositoryGroup:
     def __init__(self, session: AsyncSession) -> None:
         self.bibles = BibleRepository(session)
         self.substories = SubstoryRepository(session)
-        self.chapters = ChapterRepository(session)
+        self.chapter_outlines = ChapterOutlineRepository(session)
 
 
 class MaterialsRepositoryGroup:

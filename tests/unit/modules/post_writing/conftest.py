@@ -2,16 +2,15 @@ import pytest
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
+from app.modules.outlines.schemas.chapter import ChapterOutline
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
-from app.modules.writing.schemas import Chapter as WritingChapter
-from app.modules.writing.schemas import SceneChunk
+from app.modules.writing.schemas import SceneChunk, WrittenChapter
 
 
 @pytest.fixture()
-def writing_chapter() -> WritingChapter:
-    return WritingChapter(
+def written_chapter() -> WrittenChapter:
+    return WrittenChapter(
         chunks=[
             SceneChunk(content="李四喘着粗气，靠在冰冷的墙上。"),
             SceneChunk(content="外面传来了杂乱的脚步声。"),
@@ -27,7 +26,7 @@ def chapter_summary_context(
     chapter_outline: ChapterOutline,
     cumulative_substory_summary: CumulativeSubstorySummary,
     chapter_summary: ChapterSummary,
-    writing_chapter: WritingChapter,
+    written_chapter: WrittenChapter,
 ) -> ChapterSummaryContext:
     return ChapterSummaryContext(
         bible=bible,
@@ -36,7 +35,7 @@ def chapter_summary_context(
         chapter_outline=chapter_outline,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        chapter=writing_chapter,
+        written_chapter=written_chapter,
     )
 
 

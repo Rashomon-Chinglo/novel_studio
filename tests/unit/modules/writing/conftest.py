@@ -4,10 +4,8 @@ from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
-    Chapter as ChapterOutline,
-)
-from app.modules.outlines.schemas.chapter import (
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBlueprint,
 )
@@ -62,7 +60,7 @@ def chapter_writing_context(
         substory=substory,
         original_logic_nodes=chapter_original_substory_nodes,
         chapter_blueprint=chapter_blueprint,
-        chapter=chapter_outline,
+        chapter_outline=chapter_outline,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
         previous_content="这是上一章的结尾内容。",

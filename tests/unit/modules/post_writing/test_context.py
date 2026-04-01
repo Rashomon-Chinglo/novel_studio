@@ -3,10 +3,10 @@ from inline_snapshot import snapshot
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
+from app.modules.outlines.schemas.chapter import ChapterOutline
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 from app.modules.post_writing.context import ChapterSummaryContext, SubstoryCumulativeSummaryContext
-from app.modules.writing.schemas import Chapter as WritingChapter
+from app.modules.writing.schemas import WrittenChapter
 
 
 @pytest.mark.unit()
@@ -17,7 +17,7 @@ def test_chapter_summary_context(
     chapter_outline: ChapterOutline,
     cumulative_substory_summary: CumulativeSubstorySummary,
     chapter_summary: ChapterSummary,
-    writing_chapter: WritingChapter,
+    written_chapter: WrittenChapter,
 ) -> None:
     context = ChapterSummaryContext(
         bible=bible,
@@ -26,7 +26,7 @@ def test_chapter_summary_context(
         chapter_outline=chapter_outline,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        chapter=writing_chapter,
+        written_chapter=written_chapter,
     )
     assert context.model_dump() == snapshot(
         {
@@ -89,7 +89,7 @@ def test_chapter_summary_context(
             },
             "cumulative_substory_summary": {"summary": "黑帮大举搜索贫民窟，李四处于极度恐惧中。"},
             "pre_chapter_summary": {"summary": "上一章讲了李四逃入废弃工厂，暂时躲过了追捕。"},
-            "chapter": {
+            "written_chapter": {
                 "chunks": [
                     {"content": "李四喘着粗气，靠在冰冷的墙上。"},
                     {"content": "外面传来了杂乱的脚步声。"},

@@ -2,8 +2,8 @@ import pytest
 from inline_snapshot import snapshot
 
 from app.modules.outlines.schemas.chapter import (
-    Chapter,
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
@@ -51,8 +51,8 @@ def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprin
 
 
 @pytest.fixture()
-def chapter(scene: ChapterScene) -> Chapter:
-    return Chapter(
+def chapter_outline(scene: ChapterScene) -> ChapterOutline:
+    return ChapterOutline(
         chapter_index=1,
         title="雨夜的枪声",
         thematic_tone="紧张、压抑",
@@ -154,8 +154,8 @@ def test_chapter_blueprint_prompt(chapter_blueprint: ChapterBlueprint) -> None:
 
 
 @pytest.mark.unit()
-def test_chapter_prompt(chapter: Chapter) -> None:
-    assert chapter.prompt() == snapshot("""\
+def test_chapter_prompt(chapter_outline: ChapterOutline) -> None:
+    assert chapter_outline.prompt() == snapshot("""\
 <章节>
 ## 章节序号
 1

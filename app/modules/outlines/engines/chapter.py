@@ -14,7 +14,7 @@ from ..prompts.chapter import (
     ChapterBlueprintPrompt,
     ChapterScenePrompt,
 )
-from ..schemas.chapter import Chapter, ChapterBlueprint, ChapterScene
+from ..schemas.chapter import ChapterBlueprint, ChapterOutline, ChapterScene
 
 
 class ChapterEngine:
@@ -51,7 +51,7 @@ class ChapterEngine:
         result = await self.chapter_llm.ainvoke(variables)
         return result
 
-    async def chapter_generate(self, context: ChapterContext) -> Chapter:
+    async def chapter_generate(self, context: ChapterContext) -> ChapterOutline:
         scenes_blueprint = context.chapter_blueprint.scenes_blueprint
         scenes = []
         for scene_blueprint in scenes_blueprint:
@@ -68,7 +68,7 @@ class ChapterEngine:
                 )
             )
             scenes.append(scene)
-        return Chapter(
+        return ChapterOutline(
             chapter_index=context.chapter_blueprint.chapter_index,
             title=context.chapter_blueprint.title,
             thematic_tone=context.chapter_blueprint.thematic_tone,

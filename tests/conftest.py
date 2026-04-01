@@ -8,10 +8,8 @@ from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.materials.schemas import MaterialSnippet
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
-    Chapter as ChapterOutline,
-)
-from app.modules.outlines.schemas.chapter import (
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,

@@ -8,7 +8,7 @@ class SceneChunk(BaseModel):
         return self.content
 
 
-class Chapter(BaseModel):
+class WrittenChapter(BaseModel):
     chunks: list[SceneChunk]
 
     def prompt(self) -> str:

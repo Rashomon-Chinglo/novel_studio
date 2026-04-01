@@ -11,8 +11,8 @@ from app.modules.outlines.context.chapter import (
 from app.modules.outlines.context.substory import SubstoryBrainstormContext, SubstoryGenerateContext
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
-    Chapter,
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
@@ -136,12 +136,12 @@ def chapter_context(
 
 
 @pytest.fixture()
-def chapter(
+def chapter_outline(
     chapter_blueprint: ChapterBlueprint,
     chapter_scene: ChapterScene,
-) -> Chapter:
+) -> ChapterOutline:
     data = chapter_blueprint.model_dump(exclude={"scenes_blueprint"})
-    return Chapter(
+    return ChapterOutline(
         **data,
         scenes=[chapter_scene],
     )

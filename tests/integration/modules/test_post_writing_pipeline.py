@@ -4,16 +4,16 @@ from pytest_mock import MockerFixture
 
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.chapter import Chapter as ChapterOutline
+from app.modules.outlines.schemas.chapter import ChapterOutline
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 from app.modules.post_writing.engine import PostWritingEngine
-from app.modules.writing.schemas import Chapter, SceneChunk
+from app.modules.writing.schemas import SceneChunk, WrittenChapter
 from tests.support.llm import EngineContext, FakeLLM, FakeLLMFactory
 
 
 @pytest.fixture()
-def chapter() -> Chapter:
-    return Chapter(
+def written_chapter() -> WrittenChapter:
+    return WrittenChapter(
         chunks=[
             SceneChunk(content="第一场戏内容。"),
             SceneChunk(content="第二场戏内容。"),
@@ -42,7 +42,7 @@ async def test_post_writing_pipeline(
     substory: Substory,
     chapter_original_substory_nodes: ChapterOriginalSubstoryNodes,
     chapter_outline: ChapterOutline,
-    chapter: Chapter,
+    written_chapter: WrittenChapter,
 ) -> None:
     post_writing_engine = post_writing_engine_context.engine
     fake_llm = post_writing_engine_context.fake_llm
@@ -55,7 +55,7 @@ async def test_post_writing_pipeline(
             chapter_outline=chapter_outline,
             cumulative_substory_summary=cumulative_substory_summary,
             pre_chapter_summary=chapter_summary,
-            chapter=chapter,
+            written_chapter=written_chapter,
         )
     )
 

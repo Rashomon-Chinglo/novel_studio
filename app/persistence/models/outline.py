@@ -27,7 +27,7 @@ class Substory(AsyncAttrs, Base):
     created_at = Column(DateTime, default=utc_now, index=True)
 
 
-class Chapter(AsyncAttrs, Base):
+class ChapterOutline(AsyncAttrs, Base):
     __tablename__ = "chapters"
     id = Column(String, primary_key=True, index=True)
     substory_id = Column(String, ForeignKey("substories.id"), index=True)

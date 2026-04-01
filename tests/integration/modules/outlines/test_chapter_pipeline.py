@@ -6,8 +6,8 @@ from app.modules.outlines.context.chapter import ChapterBlueprintContext, Chapte
 from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.schemas.bible import Bible
 from app.modules.outlines.schemas.chapter import (
-    Chapter,
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
@@ -38,7 +38,7 @@ def chapter_blueprint_context(
 async def test_chapter_pipeline(
     chapter_engine_context: EngineContext[ChapterEngine, ChapterBlueprint | ChapterScene],
     chapter_blueprint_context: ChapterBlueprintContext,
-    chapter_outline: Chapter,
+    chapter_outline: ChapterOutline,
 ):
     chapter_engine = chapter_engine_context.engine
     fake_llm = chapter_engine_context.fake_llm

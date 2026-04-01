@@ -5,7 +5,7 @@ from pytest_mock import MockerFixture
 from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
 from app.modules.writing.engine import WritingEngine
 from app.modules.writing.providers import MaterialProvider
-from app.modules.writing.schemas import Chapter, SceneChunk
+from app.modules.writing.schemas import SceneChunk, WrittenChapter
 from tests.support.llm import EngineContext, FakeLLMFactory
 
 
@@ -62,7 +62,7 @@ async def test_writing(
 
     result = await writing_engine.writing(chapter_writing_context)
 
-    assert result == snapshot(Chapter(chunks=[SceneChunk(content="第一场戏内容。")]))
-    assert chapter_writing_context.chapter.scenes[0].beats[0].description in "\n".join(
+    assert result == snapshot(WrittenChapter(chunks=[SceneChunk(content="第一场戏内容。")]))
+    assert chapter_writing_context.chapter_outline.scenes[0].beats[0].description in "\n".join(
         fake_llm.plain_prompts[0]
     )

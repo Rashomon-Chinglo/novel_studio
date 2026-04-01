@@ -7,7 +7,7 @@ from app.modules.outlines.engines.bible import BibleEngine
 from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.engines.substory import SubstoryEngine
 from app.modules.outlines.schemas import Bible, Substory
-from app.modules.outlines.schemas.chapter import Chapter, ChapterBlueprint, ChapterScene
+from app.modules.outlines.schemas.chapter import ChapterBlueprint, ChapterOutline, ChapterScene
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes
 from tests.support.llm import EngineContext
 
@@ -26,7 +26,7 @@ async def test_outlines_pipeline(
     bible_brainstorm_context: BibleEngine.BibleBrainstormContext,
     cumulative_substory_summary: CumulativeSubstorySummary,
     chapter_summary: ChapterSummary,
-    chapter_outline: Chapter,
+    chapter_outline: ChapterOutline,
 ) -> None:
     bible_engine = bible_engine_context.engine
     substory_engine = substory_engine_context.engine

@@ -9,8 +9,8 @@ from app.modules.outlines.context.chapter import (
 )
 from app.modules.outlines.engines.chapter import ChapterEngine
 from app.modules.outlines.schemas.chapter import (
-    Chapter,
     ChapterBlueprint,
+    ChapterOutline,
     ChapterScene,
     ChapterSceneBeat,
     ChapterSceneBlueprint,
@@ -160,7 +160,7 @@ async def test_chapter_engine_generate_chapter(
     result = await chapter_engine.chapter_generate(chapter_context)
 
     assert result == snapshot(
-        Chapter(
+        ChapterOutline(
             chapter_index=1,
             title="雨夜的枪声",
             thematic_tone="紧张、压抑",

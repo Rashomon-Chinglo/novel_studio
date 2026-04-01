@@ -2,7 +2,7 @@ from .chain import get_scene_writing_chain
 from .context import ChapterSceneWritingContext, ChapterWritingContext
 from .prompt import ChapterSceneWritingPrompt
 from .providers import MaterialProvider
-from .schemas import Chapter, SceneChunk
+from .schemas import SceneChunk, WrittenChapter
 
 
 class WritingEngine:
@@ -19,10 +19,10 @@ class WritingEngine:
         result = await self.scene_llm.ainvoke(variables)
         return SceneChunk(content=result)
 
-    async def writing(self, context: ChapterWritingContext) -> Chapter:
+    async def writing(self, context: ChapterWritingContext) -> WrittenChapter:
         scene_chunks: list[SceneChunk] = []
         for scene_blueprint, scene in zip(
-            context.chapter_blueprint.scenes_blueprint, context.chapter.scenes, strict=True
+            context.chapter_blueprint.scenes_blueprint, context.chapter_outline.scenes, strict=True
         ):
             scene_context = self.ChapterSceneWritingContext(
                 bible=context.bible,
@@ -41,4 +41,4 @@ class WritingEngine:
             scene_chunk = await self.scene_writing(scene_context)
             scene_chunks.append(scene_chunk)
 
-        return Chapter(chunks=scene_chunks)
+        return WrittenChapter(chunks=scene_chunks)

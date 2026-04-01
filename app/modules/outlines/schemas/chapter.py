@@ -103,7 +103,7 @@ class ChapterBlueprint(ChapterBase):
         return f"<章节蓝图>\n{content}\n<场景骨架列表>\n{scenes_blueprint}\n</场景骨架列表>\n</章节蓝图>"
 
 
-class Chapter(ChapterBase):
+class ChapterOutline(ChapterBase):
     _prompt_labels: ClassVar[dict[str, str]] = {
         **ChapterBase._prompt_labels,
         "scenes": "章节内的场景序列",
