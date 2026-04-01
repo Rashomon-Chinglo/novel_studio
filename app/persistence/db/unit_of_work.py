@@ -31,29 +31,39 @@ class SqlAlchemyUnitOfWork:
         ),
     ) -> None:
         self._session_factory = session_factory
-        self.session: AsyncSession | None = None
+        self._session: AsyncSession | None = None
         self.outlines: OutlinesRepositoryGroup | None = None
         self.materials: MaterialsRepositoryGroup | None = None
 
+    def _clear_state(self) -> None:
+        self._session = None
+        self.outlines = None
+        self.materials = None
+
+    @property
+    def session(self) -> AsyncSession:
+        if self._session is None:
+            raise RuntimeError("UnitOfWork session has not been started.")
+        return self._session
+
     async def __aenter__(self) -> "SqlAlchemyUnitOfWork":
-        self.session = self._session_factory()
+        self._session = self._session_factory()
         self.outlines = OutlinesRepositoryGroup(self.session)
         self.materials = MaterialsRepositoryGroup(self.session)
         return self
 
     async def __aexit__(self, exc_type, exc, tb) -> None:
-        if self.session is None:
+        if self._session is None:
             return
-        if exc is not None:
-            await self.rollback()
-        await self.session.close()
+        try:
+            if exc is not None:
+                await self.rollback()
+            await self._session.close()
+        finally:
+            self._clear_state()
 
     async def commit(self) -> None:
-        if self.session is None:
-            raise RuntimeError("UnitOfWork session has not been started.")
         await self.session.commit()
 
     async def rollback(self) -> None:
-        if self.session is None:
-            raise RuntimeError("UnitOfWork session has not been started.")
         await self.session.rollback()
