@@ -13,25 +13,42 @@ def utc_now() -> datetime:
 class Bible(AsyncAttrs, Base):
     __tablename__ = "bibles"
     id = Column(String, primary_key=True, index=True)
-    content = Column(JSON)
-    created_at = Column(DateTime, default=utc_now, index=True)
+    content = Column(JSON, nullable=False)
+    workflow_run_id = Column(String, ForeignKey("workflow_runs.id"), nullable=False, index=True)
+    created_at = Column(DateTime, default=utc_now, nullable=False, index=True)
 
 
 class Substory(AsyncAttrs, Base):
     __tablename__ = "substories"
     id = Column(String, primary_key=True, index=True)
-    bible_id = Column(String, ForeignKey("bibles.id"), index=True)
-    title = Column(String, index=True)
-    order_index = Column(Integer, index=True)
-    content = Column(JSON)
-    created_at = Column(DateTime, default=utc_now, index=True)
+    bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
+    title = Column(String, nullable=False, index=True)
+    order_index = Column(Integer, nullable=False, index=True)
+    content = Column(JSON, nullable=False)
+    workflow_run_id = Column(String, ForeignKey("workflow_runs.id"), nullable=False, index=True)
+    created_at = Column(DateTime, default=utc_now, nullable=False, index=True)
+
+
+class ChapterBlueprint(AsyncAttrs, Base):
+    __tablename__ = "chapter_blueprints"
+    id = Column(String, primary_key=True, index=True)
+    chapter_index = Column(Integer, nullable=False, index=True)
+    substory_id = Column(String, ForeignKey("substories.id"), nullable=False, index=True)
+    bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
+    content = Column(JSON, nullable=False)
+    workflow_run_id = Column(String, ForeignKey("workflow_runs.id"), nullable=False, index=True)
+    created_at = Column(DateTime, default=utc_now, nullable=False, index=True)
 
 
 class ChapterOutline(AsyncAttrs, Base):
-    __tablename__ = "chapters"
+    __tablename__ = "chapter_outlines"
     id = Column(String, primary_key=True, index=True)
-    substory_id = Column(String, ForeignKey("substories.id"), index=True)
-    title = Column(String, index=True)
-    order_index = Column(Integer, index=True)
-    content = Column(JSON)
-    created_at = Column(DateTime, default=utc_now, index=True)
+    bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
+    chapter_blueprint_id = Column(
+        String, ForeignKey("chapter_blueprints.id"), nullable=False, index=True
+    )
+    substory_id = Column(String, ForeignKey("substories.id"), nullable=False, index=True)
+    chapter_index = Column(Integer, nullable=False, index=True)
+    content = Column(JSON, nullable=False)
+    workflow_run_id = Column(String, ForeignKey("workflow_runs.id"), nullable=False, index=True)
+    created_at = Column(DateTime, default=utc_now, nullable=False, index=True)

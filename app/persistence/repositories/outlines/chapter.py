@@ -20,6 +20,6 @@ class ChapterOutlineRepository:
         result = await self.session.execute(
             select(ChapterOutline)
             .where(ChapterOutline.substory_id == substory_id)
-            .order_by(ChapterOutline.order_index.asc(), ChapterOutline.created_at.asc())
+            .order_by(ChapterOutline.chapter_index.asc(), ChapterOutline.created_at.asc())
         )
         return result.scalars().all()
