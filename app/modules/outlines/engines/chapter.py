@@ -1,20 +1,20 @@
-from ..chain.chapter import (
+from ..chain import (
     get_chapter_blueprint_chain,
     get_chapter_brainstorm_chain,
     get_chapter_scene_chain,
 )
-from ..context.chapter import (
+from ..context import (
     ChapterBlueprintBrainstormContext,
     ChapterBlueprintContext,
     ChapterContext,
     ChapterSceneContext,
 )
-from ..prompts.chapter import (
+from ..prompts import (
     ChapterBlueprintBrainstormPrompt,
     ChapterBlueprintPrompt,
     ChapterScenePrompt,
 )
-from ..schemas.chapter import ChapterBlueprint, ChapterOutline, ChapterScene
+from ..schemas import ChapterBlueprint, ChapterOutline, ChapterScene
 
 
 class ChapterEngine:

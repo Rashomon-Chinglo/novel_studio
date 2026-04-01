@@ -3,12 +3,14 @@ import json
 import uuid
 from collections.abc import Callable
 
-from app.modules.materials.context import MaterialsMiningContext
-from app.modules.materials.engine import MaterialEngine
-from app.modules.materials.schemas import ExtractedResult, MaterialSnippet
-from app.persistence.db.unit_of_work import SqlAlchemyUnitOfWork
-from app.persistence.db.vector import get_vector_store
-from app.persistence.models.snippet import Snippet
+from app.modules.materials import (
+    ExtractedResult,
+    MaterialEngine,
+    MaterialsMiningContext,
+    MaterialSnippet,
+)
+from app.persistence import SqlAlchemyUnitOfWork, get_vector_store
+from app.persistence.models import Snippet
 
 
 class MaterialService:

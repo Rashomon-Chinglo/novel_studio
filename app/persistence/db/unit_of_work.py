@@ -3,10 +3,10 @@ from collections.abc import Callable
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.persistence.db.session import AsyncSessionLocal
-from app.persistence.repositories.materials import SnippetRepository
-from app.persistence.repositories.outlines import (
+from app.persistence.repositories import (
     BibleRepository,
     ChapterOutlineRepository,
+    SnippetRepository,
     SubstoryRepository,
 )
 

@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from pydantic import BaseModel, Field
 
-from app.modules.base.schemas import MaterialCategory, MaterialMood
+from app.modules.base import MaterialCategory, MaterialMood
 
 
 class ChapterSceneBeat(BaseModel):

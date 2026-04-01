@@ -1,7 +1,7 @@
 from typing import Protocol
 
-from app.modules.materials.schemas import MaterialSnippet
-from app.modules.outlines.schemas.chapter import ChapterScene
+from app.modules.materials import MaterialSnippet
+from app.modules.outlines.schemas import ChapterScene
 
 
 class MaterialProvider(Protocol):

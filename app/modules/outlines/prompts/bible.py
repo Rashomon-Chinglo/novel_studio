@@ -1,8 +1,8 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-from app.modules.base.prompt import PromptTemplate
+from app.modules.base import PromptTemplate
 
-from ..context.bible import BibleBrainstormContext, BibleGenerateContext
+from ..context import BibleBrainstormContext, BibleGenerateContext
 
 
 class BibleBrainstormPrompt(PromptTemplate[BibleBrainstormContext]):

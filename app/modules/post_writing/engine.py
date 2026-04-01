@@ -1,4 +1,4 @@
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.base import ChapterSummary, CumulativeSubstorySummary
 
 from .chain import get_chapter_summary_chain, get_cumulative_substory_summary_chain
 from .context import ChapterSummaryContext, SubstoryCumulativeSummaryContext

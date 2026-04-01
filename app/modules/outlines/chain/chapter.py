@@ -2,9 +2,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableSerializable
 
-from app.core.llm import get_llm
+from app.core import get_llm
 
-from ..schemas.chapter import ChapterBlueprint, ChapterScene
+from ..schemas import ChapterBlueprint, ChapterScene
 
 
 def get_chapter_blueprint_chain(prompt: ChatPromptTemplate) -> RunnableSerializable:

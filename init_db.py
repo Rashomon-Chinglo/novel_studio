@@ -1,8 +1,6 @@
 import asyncio
 
-from app.persistence import models as _models  # noqa: F401
-from app.persistence.db.session import init_sqlite_db
-from app.persistence.db.vector import get_vector_store
+from app.persistence import get_vector_store, init_sqlite_db
 
 
 async def init_db():

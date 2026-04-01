@@ -1,10 +1,13 @@
 from pydantic import BaseModel
 
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
-from app.modules.outlines.schemas.bible import Bible
-from app.modules.outlines.schemas.chapter import ChapterOutline
-from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
-from app.modules.writing.schemas import WrittenChapter
+from app.modules.base import ChapterSummary, CumulativeSubstorySummary
+from app.modules.outlines.schemas import (
+    Bible,
+    ChapterOriginalSubstoryNodes,
+    ChapterOutline,
+    Substory,
+)
+from app.modules.writing import WrittenChapter
 
 
 class ChapterSummaryContext(BaseModel):

@@ -1,6 +1,6 @@
-from ..chain.bible import get_bible_chain, get_brainstorm_chain
-from ..context.bible import BibleBrainstormContext, BibleGenerateContext
-from ..prompts.bible import BibleBrainstormPrompt, BibleGeneratePrompt
+from ..chain import get_bible_brainstorm_chain, get_bible_chain
+from ..context import BibleBrainstormContext, BibleGenerateContext
+from ..prompts import BibleBrainstormPrompt, BibleGeneratePrompt
 from ..schemas import Bible
 
 
@@ -10,7 +10,7 @@ class BibleEngine:
 
     def __init__(self):
         self.brainstorm_template = BibleBrainstormPrompt()
-        self.brainstorm_llm = get_brainstorm_chain(self.brainstorm_template.prompt)
+        self.brainstorm_llm = get_bible_brainstorm_chain(self.brainstorm_template.prompt)
 
         self.bible_template = BibleGeneratePrompt()
         self.bible_llm = get_bible_chain(self.bible_template.prompt)

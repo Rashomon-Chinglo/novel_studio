@@ -1,10 +1,15 @@
 from pydantic import BaseModel
 
-from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
+from app.modules.base import ChapterSummary, CumulativeSubstorySummary
 
-from ..schemas.bible import Bible
-from ..schemas.chapter import ChapterBlueprint, ChapterSceneBeat, ChapterSceneBlueprint
-from ..schemas.substory import ChapterOriginalSubstoryNodes, Substory
+from ..schemas import (
+    Bible,
+    ChapterBlueprint,
+    ChapterOriginalSubstoryNodes,
+    ChapterSceneBeat,
+    ChapterSceneBlueprint,
+    Substory,
+)
 
 
 class ChapterBlueprintContext(BaseModel):

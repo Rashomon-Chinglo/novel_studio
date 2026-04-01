@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from ..schemas.bible import Bible
+from ..schemas import Bible
 
 
 class SubstoryBrainstormContext(BaseModel):
