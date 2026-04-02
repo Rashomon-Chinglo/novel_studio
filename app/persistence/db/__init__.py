@@ -2,21 +2,28 @@ from importlib import import_module
 from typing import TYPE_CHECKING, Any
 
 __all__ = [
-    "AsyncSessionLocal",
     "Base",
+    "SessionFactory",
+    "engine",
     "get_vector_store",
-    "init_sqlite_db",
+    "init_db_schema",
+    "initialize_persistence",
 ]
 
 _EXPORTS: dict[str, tuple[str, str]] = {
-    "AsyncSessionLocal": (".session", "AsyncSessionLocal"),
-    "Base": (".session", "Base"),
+    "Base": (".base", "Base"),
+    "SessionFactory": (".engine", "SessionFactory"),
+    "engine": (".engine", "engine"),
     "get_vector_store": (".vector", "get_vector_store"),
-    "init_sqlite_db": (".session", "init_sqlite_db"),
+    "initialize_persistence": (".init", "initialize_persistence"),
+    "init_db_schema": (".schema", "init_db_schema"),
 }
 
 if TYPE_CHECKING:
-    from .session import AsyncSessionLocal, Base, init_sqlite_db
+    from .base import Base
+    from .engine import SessionFactory, engine
+    from .init import initialize_persistence
+    from .schema import init_db_schema
     from .vector import get_vector_store
 
 

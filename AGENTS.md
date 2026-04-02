@@ -40,7 +40,7 @@
 
 ```bash
 uv sync
-uv run python init_db.py
+uv run python scripts/init_persistence.py
 ```
 
 ### 运行项目

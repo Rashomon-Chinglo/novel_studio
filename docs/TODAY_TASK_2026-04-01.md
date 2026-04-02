@@ -36,7 +36,7 @@
 
 - `app/persistence/models/`
 - `app/persistence/repositories/workflow.py`
-- `init_db.py` 相关初始化路径
+- `scripts/init_persistence.py` 与持久化初始化路径
 
 建议最小字段：
 

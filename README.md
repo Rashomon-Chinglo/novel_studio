@@ -40,7 +40,7 @@ Novel Studio 是一个面向长篇网文创作流程的 AI 写作工作室，基
 
 ```bash
 uv sync
-uv run python init_db.py
+uv run python scripts/init_persistence.py
 ```
 
 ### 运行

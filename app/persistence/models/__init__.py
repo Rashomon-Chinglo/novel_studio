@@ -11,6 +11,7 @@ __all__ = [
     "Substory",
     "WorkflowRun",
     "WrittenChapter",
+    "register_models",
 ]
 
 _EXPORTS: dict[str, tuple[str, str]] = {
@@ -24,6 +25,7 @@ _EXPORTS: dict[str, tuple[str, str]] = {
     "WorkflowRun": (".workflow", "WorkflowRun"),
     "WrittenChapter": (".writing", "WrittenChapter"),
 }
+_MODEL_MODULES = (".outline", ".post_writing", ".snippet", ".workflow", ".writing")
 
 if TYPE_CHECKING:
     from .outline import Bible, ChapterBlueprint, ChapterOutline, Substory
@@ -31,6 +33,11 @@ if TYPE_CHECKING:
     from .snippet import Snippet
     from .workflow import WorkflowRun
     from .writing import WrittenChapter
+
+
+def register_models() -> None:
+    for module_name in _MODEL_MODULES:
+        import_module(module_name, __name__)
 
 
 def __getattr__(name: str) -> Any:
