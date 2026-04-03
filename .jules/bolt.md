@@ -1,0 +1,3 @@
+## 2026-04-03 - Cache expensive client initialization
+**Learning:** Factory functions initializing expensive clients like LangChain's `Chroma` and `ChatOpenAI` are being called repeatedly, causing redundant instantiations and potential performance bottlenecks in vector store and LLM access.
+**Action:** Always wrap singleton factory functions with `@functools.cache` or `@functools.lru_cache` to ensure single instance reuse across the application lifecycle.
