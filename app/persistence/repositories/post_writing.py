@@ -32,6 +32,15 @@ class ChapterSummaryRepository:
         )
         return result.scalars().all()
 
+    async def get_latest_by_bible(self, bible_id: str) -> ChapterSummary | None:
+        result = await self.session.execute(
+            select(ChapterSummary)
+            .where(ChapterSummary.bible_id == bible_id)
+            .order_by(ChapterSummary.chapter_index.desc())
+            .limit(1)
+        )
+        return result.scalar_one_or_none()
+
 
 class CumulativeSubstorySummaryRepository:
     def __init__(self, session: AsyncSession):
@@ -55,7 +64,7 @@ class CumulativeSubstorySummaryRepository:
         result = await self.session.execute(
             select(CumulativeSubstorySummary)
             .where(CumulativeSubstorySummary.bible_id == bible_id)
-            .order_by(CumulativeSubstorySummary.created_at.desc())
+            .order_by(CumulativeSubstorySummary.chapter_index.desc())
             .limit(1)
         )
         return result.scalar_one_or_none()
@@ -64,7 +73,7 @@ class CumulativeSubstorySummaryRepository:
         result = await self.session.execute(
             select(CumulativeSubstorySummary)
             .where(CumulativeSubstorySummary.substory_id == substory_id)
-            .order_by(CumulativeSubstorySummary.created_at.desc())
+            .order_by(CumulativeSubstorySummary.chapter_index.desc())
             .limit(1)
         )
         return result.scalar_one_or_none()

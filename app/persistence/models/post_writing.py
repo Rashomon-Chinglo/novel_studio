@@ -27,4 +27,7 @@ class CumulativeSubstorySummary(AsyncAttrs, Base):
     content = Column(String, nullable=False)
     workflow_run_id = Column(String, ForeignKey("workflow_runs.id"), nullable=False, index=True)
     chapter_index = Column(Integer, nullable=False, index=True)
+    written_chapter_id = Column(
+        String, ForeignKey("written_chapters.id"), nullable=False, index=True
+    )
     created_at = Column(DateTime, default=utc_now, nullable=False, index=True)
