@@ -1,33 +1,16 @@
 import asyncio
 import json
 from collections.abc import Callable
-from typing import Protocol
 
-from app.core import new_id
 from app.modules.materials import (
     ExtractedResult,
     MaterialEngine,
     MaterialsMiningContext,
     MaterialSnippet,
 )
+from app.core import new_id
 from app.persistence import SqlAlchemyUnitOfWork, get_vector_store
 from app.persistence.models import Snippet
-
-
-class _SnippetRepositoryProtocol(Protocol):
-    def add_many(self, snippets: list[Snippet]) -> None: ...
-
-
-class _MaterialsRepositoryGroupProtocol(Protocol):
-    snippets: _SnippetRepositoryProtocol
-
-
-class _MaterialsUnitOfWorkProtocol(Protocol):
-    materials: _MaterialsRepositoryGroupProtocol
-
-    async def __aenter__(self) -> "_MaterialsUnitOfWorkProtocol": ...
-    async def __aexit__(self, exc_type, exc, tb) -> None: ...
-    async def commit(self) -> None: ...
 
 
 class MaterialService:
@@ -35,13 +18,11 @@ class MaterialService:
         self,
         engine: MaterialEngine | None = None,
         vector_store=None,
-        uow_factory: Callable[[], _MaterialsUnitOfWorkProtocol] | None = None,
+        uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork,
     ) -> None:
         self.engine = engine or MaterialEngine()
         self.vector_store = vector_store or get_vector_store()
-        self.uow_factory: Callable[[], _MaterialsUnitOfWorkProtocol] = (
-            uow_factory or SqlAlchemyUnitOfWork
-        )
+        self.uow_factory = uow_factory
 
     async def mine(self, text: str) -> ExtractedResult:
         context = MaterialsMiningContext(text=text)
