@@ -2,7 +2,6 @@ from enum import StrEnum
 
 
 class WorkflowType(StrEnum):
-    SNIPPET_GENERATION = "snippet_generation"
     CHAPTER_GENERATION = "chapter_generation"
 
 

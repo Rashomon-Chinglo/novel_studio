@@ -1,18 +1,13 @@
-from datetime import UTC, datetime
-
 from sqlalchemy import JSON, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.ext.asyncio import AsyncAttrs
 
+from app.core import new_id, utc_now
 from app.persistence.db.base import Base
-
-
-def utc_now() -> datetime:
-    return datetime.now(UTC)
 
 
 class WrittenChapter(AsyncAttrs, Base):
     __tablename__ = "written_chapters"
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, default=new_id, index=True)
     bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
     substory_id = Column(String, ForeignKey("substories.id"), nullable=False, index=True)
     chapter_outline_id = Column(

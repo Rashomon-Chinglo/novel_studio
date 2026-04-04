@@ -6,7 +6,9 @@ __all__ = [
     "DATA_DIR",
     "Settings",
     "get_llm",
+    "new_id",
     "settings",
+    "utc_now",
 ]
 
 _EXPORTS: dict[str, tuple[str, str]] = {
@@ -14,12 +16,16 @@ _EXPORTS: dict[str, tuple[str, str]] = {
     "DATA_DIR": (".config", "DATA_DIR"),
     "Settings": (".config", "Settings"),
     "get_llm": (".llm", "get_llm"),
+    "new_id": (".id", "new_id"),
     "settings": (".config", "settings"),
+    "utc_now": (".time", "utc_now"),
 }
 
 if TYPE_CHECKING:
     from .config import BASE_DIR, DATA_DIR, Settings, settings
+    from .id import new_id
     from .llm import get_llm
+    from .time import utc_now
 
 
 def __getattr__(name: str) -> Any:

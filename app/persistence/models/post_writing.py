@@ -1,18 +1,13 @@
-from datetime import UTC, datetime
-
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.ext.asyncio import AsyncAttrs
 
+from app.core import new_id, utc_now
 from app.persistence.db.base import Base
-
-
-def utc_now() -> datetime:
-    return datetime.now(UTC)
 
 
 class ChapterSummary(AsyncAttrs, Base):
     __tablename__ = "chapter_summaries"
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, default=new_id, index=True)
     bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
     substory_id = Column(String, ForeignKey("substories.id"), nullable=False, index=True)
     chapter_index = Column(Integer, nullable=False, index=True)
@@ -26,7 +21,7 @@ class ChapterSummary(AsyncAttrs, Base):
 
 class CumulativeSubstorySummary(AsyncAttrs, Base):
     __tablename__ = "cumulative_substory_summaries"
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, default=new_id, index=True)
     bible_id = Column(String, ForeignKey("bibles.id"), nullable=False, index=True)
     substory_id = Column(String, ForeignKey("substories.id"), nullable=False, index=True)
     content = Column(String, nullable=False)

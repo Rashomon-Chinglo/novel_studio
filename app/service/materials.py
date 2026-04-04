@@ -1,6 +1,5 @@
 import asyncio
 import json
-import uuid
 from collections.abc import Callable
 
 from app.modules.materials import (
@@ -9,6 +8,7 @@ from app.modules.materials import (
     MaterialsMiningContext,
     MaterialSnippet,
 )
+from app.core import new_id
 from app.persistence import SqlAlchemyUnitOfWork, get_vector_store
 from app.persistence.models import Snippet
 
@@ -55,7 +55,7 @@ class MaterialService:
         }
 
         for snippet in snippets:
-            snippet_id = str(uuid.uuid4())
+            snippet_id = new_id()
             sql_snippets.append(
                 Snippet(
                     id=snippet_id,
@@ -85,8 +85,6 @@ class MaterialService:
 
         try:
             async with self.uow_factory() as uow:
-                if uow.materials is None:
-                    raise RuntimeError("Materials repository group is not available in UnitOfWork.")
                 uow.materials.snippets.add_many(sql_snippets)
                 await uow.commit()
 
