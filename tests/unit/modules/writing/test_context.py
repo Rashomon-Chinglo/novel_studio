@@ -12,6 +12,7 @@ from app.modules.outlines.schemas.chapter import (
 )
 from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes, Substory
 from app.modules.writing.context import ChapterSceneWritingContext, ChapterWritingContext
+from app.modules.writing.schemas import SceneChunk
 
 
 @pytest.mark.unit()
@@ -35,7 +36,7 @@ def test_chapter_scene_writing_context(
         scene=chapter_scene,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        previous_content="李四站在门前，犹豫了片刻。",
+        previous_scene_chunk=SceneChunk(content="李四站在门前，犹豫了片刻。"),
         materials=[material_snippet],
     )
     assert context.model_dump() == snapshot(
@@ -113,7 +114,7 @@ def test_chapter_scene_writing_context(
             },
             "cumulative_substory_summary": {"summary": "黑帮大举搜索贫民窟，李四处于极度恐惧中。"},
             "pre_chapter_summary": {"summary": "上一章讲了李四逃入废弃工厂，暂时躲过了追捕。"},
-            "previous_content": "李四站在门前，犹豫了片刻。",
+            "previous_scene_chunk": {"content": "李四站在门前，犹豫了片刻。"},
             "materials": [
                 {
                     "essential_text": "阴暗的走廊里弥漫着铁锈的味道。",
@@ -144,7 +145,7 @@ def test_chapter_writing_context(
         chapter_outline=chapter_outline,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        previous_content="这是上一章的结尾内容。",
+        previous_scene_chunk=SceneChunk(content="这是上一章的结尾内容。"),
     )
     assert context.model_dump() == snapshot(
         {
@@ -223,6 +224,6 @@ def test_chapter_writing_context(
             },
             "cumulative_substory_summary": {"summary": "黑帮大举搜索贫民窟，李四处于极度恐惧中。"},
             "pre_chapter_summary": {"summary": "上一章讲了李四逃入废弃工厂，暂时躲过了追捕。"},
-            "previous_content": "这是上一章的结尾内容。",
+            "previous_scene_chunk": {"content": "这是上一章的结尾内容。"},
         }
     )

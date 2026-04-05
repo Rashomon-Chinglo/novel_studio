@@ -3,7 +3,6 @@ import pytest
 from app.modules.base.memory import ChapterSummary, CumulativeSubstorySummary
 from app.modules.outlines.context.bible import BibleBrainstormContext, BibleGenerateContext
 from app.modules.outlines.context.chapter import (
-    ChapterBlueprintBrainstormContext,
     ChapterBlueprintContext,
     ChapterContext,
     ChapterSceneContext,
@@ -91,21 +90,6 @@ def chapter_blueprint_context(
         pre_chapter_summary=chapter_summary,
         cumulative_substory_summary=cumulative_substory_summary,
         logic_nodes_to_process=chapter_original_substory_nodes,
-    )
-
-
-@pytest.fixture()
-def chapter_blueprint_brainstorm_context(
-    chapter_blueprint_context: ChapterBlueprintContext,
-    chapter_blueprint: ChapterBlueprint,
-    history: list[str],
-    user_input: str,
-) -> ChapterBlueprintBrainstormContext:
-    return ChapterBlueprintBrainstormContext(
-        **chapter_blueprint_context.model_dump(),
-        chapter_blueprint=chapter_blueprint,
-        history=history,
-        user_input=user_input,
     )
 
 

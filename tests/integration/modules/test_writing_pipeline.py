@@ -9,7 +9,7 @@ from app.modules.outlines.schemas.substory import ChapterOriginalSubstoryNodes
 from app.modules.writing.context import ChapterWritingContext
 from app.modules.writing.engine import WritingEngine
 from app.modules.writing.providers import MaterialProvider
-from app.modules.writing.schemas import WrittenChapter
+from app.modules.writing.schemas import SceneChunk, WrittenChapter
 from tests.support.llm import EngineContext, FakeLLM, FakeLLMFactory
 
 
@@ -30,7 +30,7 @@ def chapter_writing_context(
         chapter_blueprint=chapter_blueprint,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        previous_content="李四站在门前，犹豫了片刻。",
+        previous_scene_chunk=SceneChunk(content="李四站在门前，犹豫了片刻。"),
         original_logic_nodes=chapter_original_substory_nodes,
     )
 
@@ -64,4 +64,4 @@ async def test_writing_pipeline(
     assert chapter_writing_context.pre_chapter_summary.summary in "\n".join(
         fake_llm.plain_prompts[0]
     )
-    assert chapter_writing_context.previous_content in "\n".join(fake_llm.plain_prompts[0])
+    assert chapter_writing_context.previous_scene_chunk.content in "\n".join(fake_llm.plain_prompts[0])

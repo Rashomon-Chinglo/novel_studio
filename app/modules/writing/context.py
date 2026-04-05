@@ -11,6 +11,7 @@ from app.modules.outlines.schemas import (
     ChapterSceneBlueprint,
     Substory,
 )
+from app.modules.writing.schemas import SceneChunk
 
 
 class ChapterSceneWritingContext(BaseModel):
@@ -22,7 +23,7 @@ class ChapterSceneWritingContext(BaseModel):
     scene: ChapterScene
     cumulative_substory_summary: CumulativeSubstorySummary
     pre_chapter_summary: ChapterSummary
-    previous_content: str
+    previous_scene_chunk: SceneChunk
     materials: list[MaterialSnippet]
 
 
@@ -34,4 +35,4 @@ class ChapterWritingContext(BaseModel):
     chapter_outline: ChapterOutline
     cumulative_substory_summary: CumulativeSubstorySummary
     pre_chapter_summary: ChapterSummary
-    previous_content: str
+    previous_scene_chunk: SceneChunk

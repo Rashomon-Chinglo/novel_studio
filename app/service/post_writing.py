@@ -16,10 +16,12 @@ from app.persistence.models import ChapterSummary, CumulativeSubstorySummary
 
 class PostWritingService:
     def __init__(
-        self, uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork
+        self,
+        uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork,
+        engine_factory: Callable[[], PostWritingEngine] = PostWritingEngine,
     ) -> None:
         self.uow_factory: Callable[[], SqlAlchemyUnitOfWork] = uow_factory
-        self.engine: PostWritingEngine = PostWritingEngine()
+        self.engine: PostWritingEngine = engine_factory()
 
     def _to_chapter_summary_schema(self, model: ChapterSummary) -> ChapterSummarySchema:
         return ChapterSummarySchema(
@@ -73,7 +75,7 @@ class PostWritingService:
             )
         )
 
-    async def save_chapter_summary(
+    async def create_chapter_summary(
         self,
         *,
         chapter_summary_content: str,
@@ -98,7 +100,7 @@ class PostWritingService:
 
             return summary.id
 
-    async def save_cumulative_substory_summary(
+    async def create_cumulative_substory_summary(
         self,
         *,
         written_chapter_id: str,

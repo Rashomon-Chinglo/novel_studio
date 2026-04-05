@@ -2,13 +2,13 @@ import asyncio
 import json
 from collections.abc import Callable
 
+from app.core import new_id
 from app.modules.materials import (
     ExtractedResult,
     MaterialEngine,
     MaterialsMiningContext,
     MaterialSnippet,
 )
-from app.core import new_id
 from app.persistence import SqlAlchemyUnitOfWork, get_vector_store
 from app.persistence.models import Snippet
 

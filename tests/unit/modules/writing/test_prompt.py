@@ -15,7 +15,7 @@ def chapter_scene_writing_prompt() -> ChapterSceneWritingPrompt:
 def test_chapter_scene_writing_prompt_template(
     chapter_scene_writing_prompt: ChapterSceneWritingPrompt,
 ) -> None:
-    assert len(chapter_scene_writing_prompt.template) == snapshot(935)
+    assert len(chapter_scene_writing_prompt.template) == snapshot(939)
 
 
 @pytest.mark.unit()
@@ -165,7 +165,7 @@ def test_chapter_scene_writing_prompt_build_variables(
 上一章讲了李四逃入废弃工厂，暂时躲过了追捕。
 </章节总结>\
 """,
-            "previous_content": """\
+            "previous_scene_chunk": """\
 <上文内容>
 李四站在门前，犹豫了片刻。
 </上文内容>\
@@ -196,7 +196,7 @@ def test_chapter_scene_writing_prompt_prompt(
             "original_logic_nodes",
             "overview_outline",
             "pre_chapter_summary",
-            "previous_content",
+            "previous_scene_chunk",
             "reference_texts",
             "scene",
             "scene_blueprint",

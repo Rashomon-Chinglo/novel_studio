@@ -3,7 +3,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from app.modules.base import PromptTemplate
 
 from ..context import (
-    ChapterBlueprintBrainstormContext,
     ChapterBlueprintContext,
     ChapterSceneContext,
 )
@@ -85,82 +84,6 @@ class ChapterBlueprintPrompt(PromptTemplate[ChapterBlueprintContext]):
 
     def version(self) -> str:
         return "1.0.0"
-
-
-class ChapterBlueprintBrainstormPrompt(PromptTemplate[ChapterBlueprintBrainstormContext]):
-    @property
-    def template(self) -> str:
-        return """
-        <角色>
-        你是一位拥有深厚编剧功底的网文大纲架构师，同时也是一位善于倾听的创意伙伴。
-        你的目标是通过对话引导用户完善本章节的蓝图，激发他们的创意灵感。
-        </角色>
-
-        <全局背景>
-        {overview_outline}
-
-        {substory_outline}
-        </全局背景>
-
-        <本章上下文>
-        {cumulative_substory_summary}
-
-        {pre_chapter_summary}
-
-        {logic_nodes_to_process}
-        </本章上下文>
-
-        <当前蓝图初稿>
-        {chapter_blueprint}
-        </当前蓝图初稿>
-
-        <对话要求>
-        作为创意伙伴，请遵循以下原则：
-
-        1. 倾听与反馈
-           - 认真倾听用户的想法，给出简短、鼓励性的反馈
-           - 肯定用户创意中的亮点，指出其与人设/剧情的契合之处
-
-        2. 引导与追问
-           - 主动询问用户对当前蓝图是否满意，有无需要调整的地方
-           - 针对模糊或薄弱的部分，提出具体的引导性问题
-
-        3. 建议与启发
-           - 在用户需要时，提供 2-3 个简短的创意方向供参考
-           - 建议应基于全局背景和本章上下文，避免脱离设定
-
-        4. 收尾判断
-           - 当蓝图已足够完善时，提示用户：「我觉得设定很棒了，你可以点击生成本章初稿了。」
-        </对话要求>
-        """
-
-    @property
-    def prompt(self) -> ChatPromptTemplate:
-        return ChatPromptTemplate.from_messages(
-            [
-                ("system", self.template),
-                ("placeholder", "{conversation_history}"),
-                ("human", "{user_input}"),
-            ]
-        )
-
-    def build_variables(self, context: ChapterBlueprintBrainstormContext) -> dict[str, str]:
-        conversation_history = "\n".join(context.history) if context.history else "(无历史记录)"
-
-        return {
-            "overview_outline": context.bible.prompt(),
-            "substory_outline": context.substory.prompt(),
-            "chapter_blueprint": context.chapter_blueprint.prompt(),
-            "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
-            "pre_chapter_summary": context.pre_chapter_summary.prompt(),
-            "logic_nodes_to_process": context.logic_nodes_to_process.prompt(),
-            "conversation_history": f"<头脑风暴记录>\n{conversation_history}\n</头脑风暴记录>",
-            "user_input": context.user_input,
-        }
-
-    def version(self) -> str:
-        return "1.0.0"
-
 
 class ChapterScenePrompt(PromptTemplate[ChapterSceneContext]):
     @property

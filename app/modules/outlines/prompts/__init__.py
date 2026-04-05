@@ -1,11 +1,10 @@
 from .bible import BibleBrainstormPrompt, BibleGeneratePrompt
-from .chapter import ChapterBlueprintBrainstormPrompt, ChapterBlueprintPrompt, ChapterScenePrompt
+from .chapter import ChapterBlueprintPrompt, ChapterScenePrompt
 from .substory import SubstoryBrainstormPrompt, SubstoryGeneratePrompt
 
 __all__ = [
     "BibleBrainstormPrompt",
     "BibleGeneratePrompt",
-    "ChapterBlueprintBrainstormPrompt",
     "ChapterBlueprintPrompt",
     "ChapterScenePrompt",
     "SubstoryBrainstormPrompt",

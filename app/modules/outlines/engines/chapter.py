@@ -1,16 +1,13 @@
 from ..chain import (
     get_chapter_blueprint_chain,
-    get_chapter_brainstorm_chain,
     get_chapter_scene_chain,
 )
 from ..context import (
-    ChapterBlueprintBrainstormContext,
     ChapterBlueprintContext,
     ChapterContext,
     ChapterSceneContext,
 )
 from ..prompts import (
-    ChapterBlueprintBrainstormPrompt,
     ChapterBlueprintPrompt,
     ChapterScenePrompt,
 )
@@ -19,25 +16,15 @@ from ..schemas import ChapterBlueprint, ChapterOutline, ChapterScene
 
 class ChapterEngine:
     ChapterBlueprintContext = ChapterBlueprintContext
-    ChapterBlueprintBrainstormContext = ChapterBlueprintBrainstormContext
     ChapterSceneContext = ChapterSceneContext
     ChapterContext = ChapterContext
 
     def __init__(self):
-        self.chapter_blueprint_brainstorm_template = ChapterBlueprintBrainstormPrompt()
         self.chapter_blueprint_template = ChapterBlueprintPrompt()
         self.chapter_scene_template = ChapterScenePrompt()
 
-        self.brainstorm_llm = get_chapter_brainstorm_chain(
-            self.chapter_blueprint_brainstorm_template.prompt
-        )
         self.blueprint_llm = get_chapter_blueprint_chain(self.chapter_blueprint_template.prompt)
         self.chapter_llm = get_chapter_scene_chain(self.chapter_scene_template.prompt)
-
-    # async def chapter_blueprint_brainstorm(self, context: ChapterBlueprintBrainstormContext) -> str:
-    #     variables = self.chapter_blueprint_brainstorm_template.build_variables(context)
-    #     result = await self.brainstorm_llm.ainvoke(variables)
-    #     return result
 
     async def chapter_blueprint_generate(
         self, context: ChapterBlueprintContext

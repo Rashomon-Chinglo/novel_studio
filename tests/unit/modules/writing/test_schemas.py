@@ -32,8 +32,16 @@ def test_scene_chunk_dump(
 
 @pytest.mark.unit()
 def test_scene_chunk_prompt(scene_chunk_1: SceneChunk, scene_chunk_2: SceneChunk) -> None:
-    assert scene_chunk_1.prompt() == snapshot("李四深吸一口气，推开了沉重的铁门。")
-    assert scene_chunk_2.prompt() == snapshot("进入铁门后，引入眼帘的是不可名状的怪物。")
+    assert scene_chunk_1.prompt() == snapshot("""\
+<上文内容>
+李四深吸一口气，推开了沉重的铁门。
+</上文内容>\
+""")
+    assert scene_chunk_2.prompt() == snapshot("""\
+<上文内容>
+进入铁门后，引入眼帘的是不可名状的怪物。
+</上文内容>\
+""")
 
 
 @pytest.mark.unit()

@@ -20,12 +20,6 @@ class ChapterBlueprintContext(BaseModel):
     logic_nodes_to_process: ChapterOriginalSubstoryNodes
 
 
-class ChapterBlueprintBrainstormContext(ChapterBlueprintContext):
-    chapter_blueprint: ChapterBlueprint
-    history: list[str]
-    user_input: str
-
-
 class ChapterSceneContext(ChapterBlueprintContext):
     last_scene_beat: ChapterSceneBeat | None
     chapter_blueprint: ChapterBlueprint

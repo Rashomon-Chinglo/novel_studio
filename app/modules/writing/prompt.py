@@ -26,7 +26,7 @@ class ChapterSceneWritingPrompt(PromptTemplate[ChapterSceneWritingContext]):
 
         {pre_chapter_summary}
 
-        {previous_content}
+        {previous_scene_chunk}
         </剧情上下文>
 
         <本章规划>
@@ -77,7 +77,7 @@ class ChapterSceneWritingPrompt(PromptTemplate[ChapterSceneWritingContext]):
             "scene": context.scene.prompt(),
             "cumulative_substory_summary": context.cumulative_substory_summary.prompt(),
             "pre_chapter_summary": context.pre_chapter_summary.prompt(),
-            "previous_content": f"<上文内容>\n{context.previous_content}\n</上文内容>",
+            "previous_scene_chunk": context.previous_scene_chunk.prompt(),
             "reference_texts": f"<参考素材>\n{materials_prompt}\n</参考素材>",
         }
 

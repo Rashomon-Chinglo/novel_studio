@@ -17,7 +17,6 @@ class WorkflowRunService:
         *,
         bible_id: str,
         substory_id: str,
-        chapter_outline_id: str,
         chapter_index: int,
     ) -> WorkflowRun:
         async with self.uow_factory() as uow:
@@ -27,7 +26,6 @@ class WorkflowRunService:
                 current_stage=WorkflowStage.LOAD_CONTEXT,
                 bible_id=bible_id,
                 substory_id=substory_id,
-                chapter_outline_id=chapter_outline_id,
                 chapter_index=chapter_index,
             )
             uow.workflow.workflow_runs.add(run)

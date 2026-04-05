@@ -33,9 +33,9 @@ class WritingEngine:
                 scene=scene,
                 cumulative_substory_summary=context.cumulative_substory_summary,
                 pre_chapter_summary=context.pre_chapter_summary,
-                previous_content=scene_chunks[-1].content
+                previous_scene_chunk=scene_chunks[-1]
                 if scene_chunks
-                else context.previous_content,
+                else context.previous_scene_chunk,
                 materials=await self.material_provider.provide_materials_for_scene(scene=scene),
             )
             scene_chunk = await self.scene_writing(scene_context)

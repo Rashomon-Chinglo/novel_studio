@@ -40,7 +40,7 @@ def chapter_scene_writing_context(
         scene=chapter_scene,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        previous_content="李四站在门前，犹豫了片刻。",
+        previous_scene_chunk=SceneChunk(content="李四站在门前，犹豫了片刻。"),
         materials=[material_snippet],
     )
 
@@ -63,5 +63,5 @@ def chapter_writing_context(
         chapter_outline=chapter_outline,
         cumulative_substory_summary=cumulative_substory_summary,
         pre_chapter_summary=chapter_summary,
-        previous_content="这是上一章的结尾内容。",
+        previous_scene_chunk=SceneChunk(content="这是上一章的结尾内容。"),
     )
