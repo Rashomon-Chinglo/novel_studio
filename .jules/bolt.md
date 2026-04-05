@@ -1,0 +1,3 @@
+## 2024-05-24 - Cache Expensive Factory Clients
+**Learning:** Factory functions that initialize expensive clients (like LangChain LLMs and ChromaDB vector stores) should be cached using `@functools.cache`. Without it, repeated calls to `get_llm()` or `get_vector_store()` recreate these clients unnecessarily, leading to performance bottlenecks, especially in chains that call these functions multiple times.
+**Action:** Always wrap client/connection factory functions with `@functools.cache` or an equivalent singleton pattern to ensure the expensive client is initialized only once per process.
