@@ -3,19 +3,21 @@ from typing import TYPE_CHECKING, Any
 
 __all__ = [
     "BibleRepository",
+    "ChapterBlueprintRepository",
     "ChapterOutlineRepository",
     "SubstoryRepository",
 ]
 
 _EXPORTS: dict[str, tuple[str, str]] = {
     "BibleRepository": (".bible", "BibleRepository"),
+    "ChapterBlueprintRepository": (".chapter", "ChapterBlueprintRepository"),
     "ChapterOutlineRepository": (".chapter", "ChapterOutlineRepository"),
     "SubstoryRepository": (".substory", "SubstoryRepository"),
 }
 
 if TYPE_CHECKING:
     from .bible import BibleRepository
-    from .chapter import ChapterOutlineRepository
+    from .chapter import ChapterBlueprintRepository, ChapterOutlineRepository
     from .substory import SubstoryRepository
 
 

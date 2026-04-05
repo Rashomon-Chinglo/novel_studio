@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.persistence.repositories.materials import SnippetRepository
 from app.persistence.repositories.outlines import (
     BibleRepository,
+    ChapterBlueprintRepository,
     ChapterOutlineRepository,
     SubstoryRepository,
 )
@@ -20,6 +21,7 @@ from app.persistence.repositories.writing import WrittenChapterRepository
 class OutlinesRepositoryGroup:
     bibles: BibleRepository
     substories: SubstoryRepository
+    chapter_blueprints: ChapterBlueprintRepository
     chapter_outlines: ChapterOutlineRepository
 
 
@@ -58,6 +60,7 @@ def build_repository_groups(session: AsyncSession) -> RepositoryGroups:
         outlines=OutlinesRepositoryGroup(
             bibles=BibleRepository(session),
             substories=SubstoryRepository(session),
+            chapter_blueprints=ChapterBlueprintRepository(session),
             chapter_outlines=ChapterOutlineRepository(session),
         ),
         materials=MaterialsRepositoryGroup(snippets=SnippetRepository(session)),
