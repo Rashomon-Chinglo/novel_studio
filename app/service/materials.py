@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import json
 from collections.abc import Callable
 
@@ -88,6 +89,10 @@ class MaterialService:
                 uow.materials.snippets.add_many(sql_snippets)
                 await uow.commit()
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # Bolt: Use run_in_executor to avoid blocking the event loop during vector store operations
+            loop = asyncio.get_running_loop()
+            await loop.run_in_executor(
+                None, functools.partial(self.vector_store.add_texts, **chroma_snippets)
+            )
         except Exception as e:
             print(f"Error saving snippets: {e}")
