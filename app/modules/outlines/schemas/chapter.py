@@ -69,6 +69,7 @@ class ChapterScene(ChapterSceneBlueprint):
 class ChapterBase(BaseModel):
     _prompt_labels: ClassVar[dict[str, str]] = {
         "chapter_index": "章节序号",
+        "substory_chapter_index": "substory内章节序号",
         "title": "章节标题",
         "thematic_tone": "章节主题色调",
         "opening_hook": "章节开头的悬念",
@@ -76,6 +77,7 @@ class ChapterBase(BaseModel):
     }
 
     chapter_index: int
+    substory_chapter_index: int
     title: str
     thematic_tone: str
     opening_hook: str | None = None

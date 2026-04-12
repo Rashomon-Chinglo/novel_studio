@@ -57,6 +57,7 @@ class ChapterEngine:
             scenes.append(scene)
         return ChapterOutline(
             chapter_index=context.chapter_blueprint.chapter_index,
+            substory_chapter_index=context.chapter_blueprint.substory_chapter_index,
             title=context.chapter_blueprint.title,
             thematic_tone=context.chapter_blueprint.thematic_tone,
             opening_hook=context.chapter_blueprint.opening_hook,

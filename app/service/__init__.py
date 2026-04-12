@@ -3,14 +3,23 @@ from typing import TYPE_CHECKING, Any
 
 __all__ = [
     "MaterialService",
+    "PostWritingService",
+    "WorkflowRunService",
+    "WritingService",
 ]
 
 _EXPORTS: dict[str, tuple[str, str]] = {
     "MaterialService": (".materials", "MaterialService"),
+    "PostWritingService": (".post_writing", "PostWritingService"),
+    "WorkflowRunService": (".workflow", "WorkflowRunService"),
+    "WritingService": (".writing", "WritingService"),
 }
 
 if TYPE_CHECKING:
     from .materials import MaterialService
+    from .post_writing import PostWritingService
+    from .workflow import WorkflowRunService
+    from .writing import WritingService
 
 
 def __getattr__(name: str) -> Any:

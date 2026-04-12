@@ -18,6 +18,7 @@ class WorkflowRunService:
         bible_id: str,
         substory_id: str,
         chapter_index: int,
+        substory_chapter_index: int,
     ) -> WorkflowRun:
         async with self.uow_factory() as uow:
             run = WorkflowRun(
@@ -27,6 +28,7 @@ class WorkflowRunService:
                 bible_id=bible_id,
                 substory_id=substory_id,
                 chapter_index=chapter_index,
+                substory_chapter_index=substory_chapter_index,
             )
             uow.workflow.workflow_runs.add(run)
             await uow.commit()
@@ -73,6 +75,30 @@ class WorkflowRunService:
                 case WorkflowStatus.PENDING | WorkflowStatus.RUNNING:
                     run.status = WorkflowStatus.SUCCEEDED
                     run.finished_at = utc_now()
+            await uow.commit()
+
+    async def mark_waiting_approval(self, run_id: str):
+        async with self.uow_factory() as uow:
+            run = await uow.workflow.workflow_runs.get(run_id)
+            if run is None:
+                raise ValueError(f"Workflow run {run_id} not found.")
+            match run.status:
+                case WorkflowStatus.SUCCEEDED | WorkflowStatus.FAILED:
+                    raise ValueError(f"Workflow run {run_id} is already finished.")
+                case WorkflowStatus.PENDING | WorkflowStatus.RUNNING:
+                    run.status = WorkflowStatus.WAITING_APPROVAL
+            await uow.commit()
+
+    async def mark_running(self, run_id: str):
+        async with self.uow_factory() as uow:
+            run = await uow.workflow.workflow_runs.get(run_id)
+            if run is None:
+                raise ValueError(f"Workflow run {run_id} not found.")
+            match run.status:
+                case WorkflowStatus.SUCCEEDED | WorkflowStatus.FAILED:
+                    raise ValueError(f"Workflow run {run_id} is already finished.")
+                case WorkflowStatus.PENDING | WorkflowStatus.WAITING_APPROVAL:
+                    run.status = WorkflowStatus.RUNNING
             await uow.commit()
 
     async def get(self, run_id: str) -> WorkflowRun | None:

@@ -139,6 +139,7 @@ def test_chapter_scene_context(
             },
             "chapter_blueprint": {
                 "chapter_index": 1,
+                "substory_chapter_index": 1,
                 "title": "雨夜的枪声",
                 "thematic_tone": "紧张、压抑",
                 "opening_hook": "一颗子弹擦过李四的耳边，打碎了身后的净水器",
@@ -221,6 +222,7 @@ def test_chapter_context(
             },
             "chapter_blueprint": {
                 "chapter_index": 1,
+                "substory_chapter_index": 1,
                 "title": "雨夜的枪声",
                 "thematic_tone": "紧张、压抑",
                 "opening_hook": "一颗子弹擦过李四的耳边，打碎了身后的净水器",

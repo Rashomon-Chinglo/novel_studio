@@ -50,6 +50,7 @@ class ChapterService:
         substory_id: str,
         bible_id: str,
         chapter_index: int,
+        substory_chapter_index: int,
         workflow_run_id: str,
         chapter_blueprint: ChapterBlueprintSchema,
     ) -> str:
@@ -59,6 +60,7 @@ class ChapterService:
                 substory_id=substory_id,
                 bible_id=bible_id,
                 chapter_index=chapter_index,
+                substory_chapter_index=substory_chapter_index,
                 workflow_run_id=workflow_run_id,
             )
             uow.outlines.chapter_blueprints.add(model)
@@ -77,6 +79,7 @@ class ChapterService:
                 substory_id=chapter_blueprint.substory_id,
                 bible_id=chapter_blueprint.bible_id,
                 chapter_index=chapter_blueprint.chapter_index,
+                substory_chapter_index=chapter_blueprint.substory_chapter_index,
                 workflow_run_id=chapter_blueprint.workflow_run_id,
                 chapter_blueprint_id=chapter_blueprint_id,
             )

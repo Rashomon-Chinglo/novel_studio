@@ -42,6 +42,7 @@ def scene(scene_blueprint: ChapterSceneBlueprint, scene_beat: ChapterSceneBeat) 
 def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprint:
     return ChapterBlueprint(
         chapter_index=1,
+        substory_chapter_index=1,
         title="雨夜的枪声",
         thematic_tone="紧张、压抑",
         opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
@@ -54,6 +55,7 @@ def chapter_blueprint(scene_blueprint: ChapterSceneBlueprint) -> ChapterBlueprin
 def chapter_outline(scene: ChapterScene) -> ChapterOutline:
     return ChapterOutline(
         chapter_index=1,
+        substory_chapter_index=1,
         title="雨夜的枪声",
         thematic_tone="紧张、压抑",
         opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
@@ -125,6 +127,9 @@ def test_chapter_blueprint_prompt(chapter_blueprint: ChapterBlueprint) -> None:
 ## 章节序号
 1
 
+## substory内章节序号
+1
+
 ## 章节标题
 雨夜的枪声
 
@@ -158,6 +163,9 @@ def test_chapter_prompt(chapter_outline: ChapterOutline) -> None:
     assert chapter_outline.prompt() == snapshot("""\
 <章节>
 ## 章节序号
+1
+
+## substory内章节序号
 1
 
 ## 章节标题

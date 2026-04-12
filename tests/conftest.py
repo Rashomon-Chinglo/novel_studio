@@ -105,6 +105,7 @@ def chapter_outline(
 ) -> ChapterOutline:
     return ChapterOutline(
         chapter_index=1,
+        substory_chapter_index=1,
         title="雨夜的枪声",
         thematic_tone="紧张、压抑",
         opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",
@@ -129,6 +130,7 @@ def chapter_blueprint(
 ) -> ChapterBlueprint:
     return ChapterBlueprint(
         chapter_index=1,
+        substory_chapter_index=1,
         title="雨夜的枪声",
         thematic_tone="紧张、压抑",
         opening_hook="一颗子弹擦过李四的耳边，打碎了身后的净水器",

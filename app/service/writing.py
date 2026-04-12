@@ -19,12 +19,12 @@ from app.persistence.models import WrittenChapter
 class WritingService:
     def __init__(
         self,
+        material_provider: MaterialProvider,
         uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork,
         engine_factory: Callable[[MaterialProvider], WritingEngine] = WritingEngine,
-        material_provider_factory: Callable[[], MaterialProvider] = MaterialProvider,
     ) -> None:
         self.uow_factory: Callable[[], SqlAlchemyUnitOfWork] = uow_factory
-        self.engine: WritingEngine = engine_factory(material_provider_factory())
+        self.engine: WritingEngine = engine_factory(material_provider)
 
     def _to_schema(self, written_chapter: WrittenChapter) -> WrittenChapterSchema:
         return WrittenChapterSchema(**written_chapter.content)
@@ -46,6 +46,7 @@ class WritingService:
                 chapter_outline_id=chapter_outline_id,
                 workflow_run_id=chapter_outline.workflow_run_id,
                 chapter_index=chapter_outline.chapter_index,
+                substory_chapter_index=chapter_outline.substory_chapter_index,
                 content=written_chapter.model_dump(),
             )
             uow.writing.written_chapters.add(writing)

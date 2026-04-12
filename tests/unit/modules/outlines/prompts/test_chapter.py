@@ -179,6 +179,9 @@ def test_chapter_scene_prompt_build_variables(
 ## 章节序号
 1
 
+## substory内章节序号
+1
+
 ## 章节标题
 雨夜的枪声
 

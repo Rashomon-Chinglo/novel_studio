@@ -10,7 +10,7 @@ class WorkflowStatus(StrEnum):
     RUNNING = "running"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
-    PARTIALLY_SUCCEEDED = "partially_succeeded"
+    WAITING_APPROVAL = "waiting_approval"
 
 
 class WorkflowStage(StrEnum):
