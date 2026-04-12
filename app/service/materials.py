@@ -1,5 +1,6 @@
 import asyncio
 import json
+import typing
 from collections.abc import Callable
 
 from app.core import new_id
@@ -18,7 +19,7 @@ class MaterialService:
         self,
         engine: MaterialEngine | None = None,
         vector_store=None,
-        uow_factory: Callable[[], SqlAlchemyUnitOfWork] = SqlAlchemyUnitOfWork,
+        uow_factory: Callable[[], SqlAlchemyUnitOfWork | typing.Any] = SqlAlchemyUnitOfWork,
     ) -> None:
         self.engine = engine or MaterialEngine()
         self.vector_store = vector_store or get_vector_store()
