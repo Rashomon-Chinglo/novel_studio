@@ -26,19 +26,36 @@ class SubstoryService:
                 raise ValueError(f"Substory with id {substory_id} not found.")
             return self._to_schema(substory)
 
-    async def create(self, *, substory: SubstorySchema) -> str:
+    async def create(
+        self,
+        *,
+        bible_id: str,
+        order_index: int,
+        substory: SubstorySchema,
+    ) -> str:
         async with self.uow_factory() as uow:
-            model = Substory(content=substory.model_dump())
+            model = Substory(
+                bible_id=bible_id,
+                title=substory.substory_title,
+                order_index=order_index,
+                content=substory.model_dump(),
+            )
             uow.outlines.substories.add(model)
             await uow.commit()
             return model.id
 
     async def brainstorm(
-        self, *, history: list[str], user_input: str, bible: BibleSchema, substory: SubstorySchema
+        self,
+        *,
+        history: list[str],
+        user_input: str,
+        bible: BibleSchema,
     ) -> str:
         return await self.engine.brainstorm(
             SubstoryEngine.SubstoryBrainstormContext(
-                history=history, user_input=user_input, bible=bible, substory=substory
+                history=history,
+                user_input=user_input,
+                bible=bible,
             )
         )
 
