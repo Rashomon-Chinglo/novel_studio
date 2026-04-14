@@ -14,7 +14,7 @@ from app.modules.outlines.schemas import (
 from app.modules.writing import SceneChunk, WrittenChapter
 from app.persistence.models.workflow import WorkflowRun
 from app.service import PostWritingService, WorkflowRunService, WritingService
-from app.service.material_providers import NoopMaterialProvider
+from app.service.material_providers import HybridSearchMaterialProvider
 from app.service.outlines import OutlineServiceGroup
 
 
@@ -63,7 +63,7 @@ class ChapterOrchestrator:
     def __init__(self) -> None:
         self.workflow_run_service: WorkflowRunService = WorkflowRunService()
         self.writing_service: WritingService = WritingService(
-            material_provider=NoopMaterialProvider()
+            material_provider=HybridSearchMaterialProvider()
         )
         self.post_writing_service: PostWritingService = PostWritingService()
         self.outlines: OutlineServiceGroup = OutlineServiceGroup()
