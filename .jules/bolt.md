@@ -1,0 +1,3 @@
+## 2024-05-18 - Avoid Event Loop Blocking with Async Client Operations
+**Learning:** `langchain_chroma.Chroma.add_texts` executes synchronously and can severely block the event loop in `app/service/materials.py` when processing concurrent chunk operations via `asyncio.gather`. Also, factory methods for initializing expensive clients like `Chroma` and `ChatOpenAI` are being called repeatedly, introducing significant performance overhead.
+**Action:** Replace synchronous operations like `add_texts` with their async counterparts (`aadd_texts`) inside async functions. Apply `@functools.cache` to factory functions (`get_vector_store`, `get_llm`) to ensure singleton instances and prevent redundant initializations.

@@ -88,6 +88,8 @@ class MaterialService:
                 uow.materials.snippets.add_many(sql_snippets)
                 await uow.commit()
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # ⚡ Bolt: Use aadd_texts instead of add_texts to prevent event loop blocking
+            # during async content processing, significantly improving concurrency.
+            await self.vector_store.aadd_texts(**chroma_snippets)
         except Exception as e:
             print(f"Error saving snippets: {e}")
