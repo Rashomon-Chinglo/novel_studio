@@ -1,8 +1,12 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# Cache the LLM client initialization to avoid redundant ChatOpenAI client creation
+@functools.cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
