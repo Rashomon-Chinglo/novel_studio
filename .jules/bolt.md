@@ -1,0 +1,3 @@
+## 2024-06-25 - Asyncio Event Loop Blocked by Synchronous Vector Store Calls
+**Learning:** Using synchronous methods from `langchain_chroma.Chroma` (e.g., `add_texts`) inside an async function (`save_snippets` called by `worker` running via `asyncio.gather`) blocks the asyncio event loop. This negates the concurrency benefits intended by using an `asyncio.Semaphore` in `MaterialService.process_content`.
+**Action:** Always prefer asynchronous equivalents (`aadd_texts`) when interacting with LangChain or ChromaDB in an async context. Mock classes in tests must also be updated to implement these asynchronous methods.
