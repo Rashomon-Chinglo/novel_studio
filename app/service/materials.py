@@ -88,6 +88,9 @@ class MaterialService:
                 uow.materials.snippets.add_many(sql_snippets)
                 await uow.commit()
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # 💡 What: Replaced synchronous `add_texts` with asynchronous `aadd_texts`.
+            # 🎯 Why: Using synchronous DB IO inside an async context blocks the event loop.
+            # 📊 Impact: Prevents event loop blocking, improving concurrent throughput.
+            await self.vector_store.aadd_texts(**chroma_snippets)
         except Exception as e:
             print(f"Error saving snippets: {e}")
