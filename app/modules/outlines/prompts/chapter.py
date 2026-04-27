@@ -85,6 +85,7 @@ class ChapterBlueprintPrompt(PromptTemplate[ChapterBlueprintContext]):
     def version(self) -> str:
         return "1.0.0"
 
+
 class ChapterScenePrompt(PromptTemplate[ChapterSceneContext]):
     @property
     def template(self) -> str:

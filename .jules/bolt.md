@@ -1,0 +1,3 @@
+## 2024-05-18 - [Optimize ChromaDB Vector Store Insertions]
+**Learning:** `langchain_chroma.Chroma` provides `aadd_texts` as an asynchronous counterpart to `add_texts`. Calling the synchronous `add_texts` method inside an `async def` function (like `save_snippets` in `MaterialService`) blocks the async event loop, reducing overall concurrency and throughput during bulk inserts.
+**Action:** Always prefer asynchronous methods (like `aadd_texts`) over their synchronous counterparts when interacting with IO-bound services like ChromaDB within an `async` context. Also ensure that test mocks (e.g., `FakeVectorStore`) implement the corresponding `async def` methods to maintain test coverage and correctness.
