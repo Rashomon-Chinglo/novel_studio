@@ -1,0 +1,3 @@
+## 2025-05-05 - Cache Expensive Factory Functions
+**Learning:** Factory functions that initialize expensive clients (like LangChain's ChatOpenAI and Chroma vector stores) were being called repeatedly across different modules, leading to redundant instantiations. Because LangChain models and vector stores can be reused across the application safely, re-creating them repeatedly adds overhead.
+**Action:** Always wrap application-wide factory functions (e.g., `get_llm`, `get_vector_store`) with `@functools.cache` to enforce the singleton pattern, avoid redundant I/O, and save memory overhead in complex LangChain orchestrations.
