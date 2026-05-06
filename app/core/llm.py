@@ -1,8 +1,13 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# ⚡ Bolt: Caching this function ensures we only initialize ChatOpenAI once,
+# preventing redundant initialization overhead across different parts of the application.
+@functools.cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
