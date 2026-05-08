@@ -1,8 +1,13 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# ⚡ Bolt: Cache LLM client to ensure a singleton instance, preventing redundant
+# initialization (I/O) overhead and minimizing memory footprint across the application.
+@functools.cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
