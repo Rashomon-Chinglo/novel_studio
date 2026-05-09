@@ -1,8 +1,14 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# ⚡ Bolt Optimization: Cache the expensive ChatOpenAI client initialization
+# LangChain clients are thread-safe for stateless usage, so caching prevents
+# redundant I/O and memory overhead across the application.
+@functools.cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
