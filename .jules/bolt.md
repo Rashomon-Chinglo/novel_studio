@@ -1,0 +1,3 @@
+## 2024-05-18 - Cache Initialization of LangChain Clients
+**Learning:** LangChain clients like `ChatOpenAI` and `Chroma` are thread-safe and expensive to initialize due to Pydantic validation and underlying connection setups (like `httpx` connection pools or database connections). Uncached initializations within frequently called factory functions (e.g., `get_llm`, `get_vector_store`) cause measurable overhead and connection resource exhaustion.
+**Action:** Always implement caching (e.g., `@functools.cache`) on factory functions that return stateless LangChain clients to ensure they act as singletons across the application lifecycle.
