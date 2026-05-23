@@ -64,4 +64,6 @@ async def test_writing_pipeline(
     assert chapter_writing_context.pre_chapter_summary.summary in "\n".join(
         fake_llm.plain_prompts[0]
     )
-    assert chapter_writing_context.previous_scene_chunk.content in "\n".join(fake_llm.plain_prompts[0])
+    assert chapter_writing_context.previous_scene_chunk.content in "\n".join(
+        fake_llm.plain_prompts[0]
+    )
