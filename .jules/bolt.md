@@ -1,0 +1,3 @@
+## 2024-05-24 - Async Event Loop Blocking from Synchronous LangChain Chroma calls
+**Learning:** LangChain clients like `Chroma` provide synchronous APIs (e.g., `add_texts`) that can block the Python async event loop when called from async functions like `save_snippets`. This introduces performance bottlenecks, especially during concurrent processing. Additionally, frequently initializing heavy clients (like `ChatOpenAI` and `Chroma`) introduces unnecessary I/O and memory overhead.
+**Action:** Use asynchronous equivalents like `aadd_texts` in async contexts to prevent blocking. Ensure heavy clients are implemented as cached singletons (using `@functools.cache`) to minimize initialization costs across the application.
