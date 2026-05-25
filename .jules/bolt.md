@@ -1,0 +1,3 @@
+## 2024-05-25 - Avoid Blocking the Async Event Loop with Synchronous LangChain Calls
+**Learning:** LangChain clients like `Chroma` provide both synchronous (`add_texts`) and asynchronous (`aadd_texts`) methods. Using synchronous methods in an `async def` function, particularly within an application doing significant I/O, silently blocks the underlying event loop, destroying concurrent execution benefits.
+**Action:** When working with LangChain vector stores or LLMs in an async context, always explicitly use the `a*` prefix methods (e.g., `aadd_texts`, `ainvoke`, `agenerate`) to ensure non-blocking I/O.
