@@ -1,9 +1,14 @@
+import functools
+
 from langchain_chroma import Chroma
 from langchain_community.embeddings import JinaEmbeddings
 
 from app.core.config import settings
 
 
+# Cache the vector store to minimize memory footprint and I/O initialization overhead
+# by reusing the thread-safe Chroma client and embeddings.
+@functools.cache
 def get_vector_store():
     embeddings = JinaEmbeddings(  # type: ignore[missing-argument]
         jina_api_key=settings.JINA_API_KEY,  # type: ignore[invalid-argument-type]
