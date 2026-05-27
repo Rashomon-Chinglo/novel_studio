@@ -33,7 +33,7 @@ class FakeVectorStore:
     def __init__(self) -> None:
         self.payload = None
 
-    def add_texts(self, **kwargs) -> None:
+    async def aadd_texts(self, **kwargs) -> None:
         self.payload = kwargs
 
 
