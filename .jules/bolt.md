@@ -1,0 +1,3 @@
+## 2024-05-28 - Avoid synchronous I/O in Async Contexts with LangChain Chroma
+**Learning:** Calling LangChain Chroma's synchronous methods like `add_texts` inside asynchronous contexts (like FastAPI/asyncio routines) blocks the event loop and significantly degrades application throughput. Wait until LangChain implements full async support, or explicitly use `aadd_texts`.
+**Action:** Always verify if LangChain components (especially VectorStores and LLMs) expose asynchronous counterparts (e.g. `aadd_texts`) when used inside async functions, or run them in a separate thread if only synchronous methods are available.
