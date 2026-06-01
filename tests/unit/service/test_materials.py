@@ -36,6 +36,9 @@ class FakeVectorStore:
     def add_texts(self, **kwargs) -> None:
         self.payload = kwargs
 
+    async def aadd_texts(self, **kwargs) -> None:
+        self.payload = kwargs
+
 
 @pytest.mark.asyncio()
 async def test_save_snippets_uses_uow_and_vector_store() -> None:
