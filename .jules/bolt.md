@@ -1,0 +1,3 @@
+## 2026-06-02 - Cached LangChain Singletons & Async I/O
+**Learning:** In a heavily AI-driven app leveraging LangChain clients (like `ChatOpenAI` and `Chroma`), redundant initialization of these clients during instantiation (e.g., in factories like `get_llm()` and `get_vector_store()`) incurs massive I/O, API connection overhead, and memory penalties. Additionally, synchronous vector DB insertions block the async event loop.
+**Action:** Use `@functools.cache` to memoize heavy singletons such as LLMs and Vector Stores. Always migrate synchronous I/O operations (like `add_texts`) to their async counterparts (`aadd_texts`) inside asynchronous event loops.
