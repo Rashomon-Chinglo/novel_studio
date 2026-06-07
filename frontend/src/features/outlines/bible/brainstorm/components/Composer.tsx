@@ -1,3 +1,4 @@
+import { WorkspaceComposerInput } from "../../../shared/layout/components/WorkspaceComposerInput";
 import { brainstormBibleCopy } from "../fixtures";
 import { useBrainstormBible } from "../hooks/useBrainstormBible";
 
@@ -12,42 +13,36 @@ export function Composer() {
   }
 
   return (
-    <section className="mx-auto flex w-full max-w-[800px] shrink-0 flex-col gap-4 bg-surface-bright pt-1">
-      <textarea
-        className="w-full resize-none border-0 border-b border-surface-container-high bg-transparent px-0 py-2 font-headline text-xl leading-relaxed text-on-surface outline-none placeholder:text-outline-variant focus:border-primary focus:ring-0"
-        onChange={(e) => setDraftNote(e.target.value)}
+    <section className="w-full shrink-0 bg-surface-bright pt-4">
+      <WorkspaceComposerInput
+        actions={
+          <>
+            <button
+              aria-label={brainstormBibleCopy.generateDraftLabel}
+              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-container text-on-primary shadow-sm transition-opacity hover:opacity-90"
+              onClick={generateDraft}
+              title={brainstormBibleCopy.generateDraftLabel}
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[20px]">magic_button</span>
+            </button>
+            <button
+              aria-label={brainstormBibleCopy.clearLabel}
+              className="inline-flex size-10 items-center justify-center rounded-full border border-outline-variant bg-surface-bright text-outline transition-colors hover:border-error hover:text-error"
+              onClick={clearBrainstorm}
+              title={brainstormBibleCopy.clearLabel}
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[20px]">delete_sweep</span>
+            </button>
+          </>
+        }
+        ariaLabel={brainstormBibleCopy.composerPlaceholder}
+        onChange={setDraftNote}
         onKeyDown={handleKeyDown}
         placeholder={brainstormBibleCopy.composerPlaceholder}
-        rows={2}
         value={draftNote}
       />
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap gap-4">
-          <button
-            className="flex items-center gap-2 rounded-full bg-primary-container px-6 py-2 font-label text-sm font-semibold text-on-primary shadow-sm transition-opacity hover:opacity-90"
-            onClick={generateDraft}
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[18px]">magic_button</span>
-            {brainstormBibleCopy.generateDraftLabel}
-          </button>
-          <button
-            className="flex items-center gap-2 rounded-full border border-secondary bg-transparent px-6 py-2 font-label text-sm font-semibold text-secondary transition-colors hover:bg-surface-container"
-            onClick={submitNote}
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[18px]">add_notes</span>
-            {brainstormBibleCopy.addNoteLabel}
-          </button>
-        </div>
-        <button
-          className="px-4 py-2 font-label text-sm font-semibold text-outline transition-colors hover:text-error"
-          onClick={clearBrainstorm}
-          type="button"
-        >
-          {brainstormBibleCopy.clearLabel}
-        </button>
-      </div>
     </section>
   );
 }

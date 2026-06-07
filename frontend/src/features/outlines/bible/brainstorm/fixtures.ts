@@ -1,27 +1,15 @@
-import type { BrainstormMessage, DirectionNote, IconAction, MobileTab } from "./model";
+import type { OutlineHeaderModel } from "../../shared/layout/model";
+import type { BrainstormMessage } from "./model";
 
 export const brainstormBibleCopy = {
-  activeSessionLabel: "New Bible Brainstorm",
-  addNoteLabel: "Add note",
   clearLabel: "Clear brainstorm",
   composerPlaceholder: "继续描述世界观、主角、冲突或禁忌...",
-  directionHeading: "当前方向",
   generateDraftLabel: "生成 Bible 初版",
-  projectLabel: "Low Whispering Forest",
-  productName: "Novel Studio",
 } as const;
 
-export const topBarActions: IconAction[] = [
-  { icon: "settings", label: "Settings" },
-  { icon: "history", label: "History" },
-];
-
-export const mobileTabs: MobileTab[] = [
-  { icon: "edit_note", label: "Draft" },
-  { icon: "format_list_bulleted", label: "Outline" },
-  { icon: "sticky_note_2", label: "Notes" },
-  { icon: "center_focus_strong", label: "Focus" },
-];
+export const brainstormBibleHeader: OutlineHeaderModel = {
+  segments: ["Low Whispering Forest", "New Bible Brainstorm"],
+};
 
 export const brainstormMessages: BrainstormMessage[] = [
   {
@@ -49,11 +37,4 @@ export const brainstormMessages: BrainstormMessage[] = [
     speaker: "ai",
     text: "方向已经足够生成初版 Bible。可以继续补充，也可以让 AI 整理成结构化草稿。",
   },
-];
-
-export const directionNotes: DirectionNote[] = [
-  { label: "基调", value: "神秘、哀悼、乡土禁忌" },
-  { label: "核心设定", value: "森林保存死者记忆" },
-  { label: "主角动机", value: "寻找母亲残留的记忆" },
-  { label: "社会冲突", value: "村庄依靠森林规则维持秩序" },
 ];

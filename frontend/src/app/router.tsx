@@ -4,16 +4,21 @@ import {
   createRootRouteWithContext,
   createRoute,
   createRouter,
+  redirect,
 } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { queryClient } from "../api/query-client";
 import { BrainstormBiblePage } from "../features/outlines/bible/brainstorm/page";
 import { EditBiblePage } from "../features/outlines/bible/edit/page";
-import { ReviewChapterOutlinePage } from "../features/outlines/chapter/review/page";
+import { EditChapterOutlinePage } from "../features/outlines/chapter/edit/page";
+import { OutlinesLayout } from "../features/outlines/shared/layout/OutlinesLayout";
 import { ErrorBoundary } from "../shared/components/ErrorBoundary";
 
 import type { QueryClient } from "@tanstack/react-query";
 import { bibleDetailOptions } from "../features/outlines/bible/api";
+import { brainstormBibleHeader } from "../features/outlines/bible/brainstorm/fixtures";
+import { createBibleEditHeader } from "../features/outlines/bible/edit/fixtures";
+import { chapterOutlineEditHeader } from "../features/outlines/chapter/edit/fixtures";
 
 type RouterContext = {
   queryClient: QueryClient;
@@ -26,36 +31,50 @@ const rootRoute = createRootRouteWithContext<RouterContext>()({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: HomePage,
+  beforeLoad: () => {
+    throw redirect({ to: "/outlines/bible/brainstorm" });
+  },
+});
+
+const outlinesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "outlines",
+  component: OutlinesLayout,
 });
 
 const brainstormBibleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "outlines/bible/brainstorm",
+  getParentRoute: () => outlinesRoute,
+  path: "bible/brainstorm",
+  loader: () => ({ outlineHeader: brainstormBibleHeader }),
   component: BrainstormBiblePage,
 });
 
 const editBibleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "outlines/bible/$bibleId/edit",
-  loader: ({ context, params }) => {
-    return context.queryClient.ensureQueryData(bibleDetailOptions(params.bibleId));
+  getParentRoute: () => outlinesRoute,
+  path: "bible/$bibleId/edit",
+  loader: async ({ context, params }) => {
+    const bibleDetail = await context.queryClient.ensureQueryData(
+      bibleDetailOptions(params.bibleId),
+    );
+    return { outlineHeader: createBibleEditHeader(bibleDetail.bible.title) };
   },
   component: EditBiblePage,
 });
 
-const reviewChapterOutlineRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "outlines/chapters/$chapterId/review",
-  component: ReviewChapterOutlinePage,
+const editChapterOutlineRoute = createRoute({
+  getParentRoute: () => outlinesRoute,
+  path: "chapters/$chapterId/edit",
+  loader: () => ({ outlineHeader: chapterOutlineEditHeader }),
+  component: EditChapterOutlinePage,
 });
 
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  editBibleRoute,
+const outlinesRouteTree = outlinesRoute.addChildren([
   brainstormBibleRoute,
-  reviewChapterOutlineRoute,
+  editBibleRoute,
+  editChapterOutlineRoute,
 ]);
+
+const routeTree = rootRoute.addChildren([indexRoute, outlinesRouteTree]);
 
 export const router = createRouter({
   context: {
@@ -90,8 +109,4 @@ function RootLayout() {
       </Suspense>
     </ErrorBoundary>
   );
-}
-
-function HomePage() {
-  return <BrainstormBiblePage />;
 }
