@@ -20,6 +20,9 @@ dependencies = [
     "uvicorn>=0.38.0",
 ]
 
+[project.scripts]
+novel-studio = "main:main"
+
 [dependency-groups]
 dev = [
     # 代码质量工具

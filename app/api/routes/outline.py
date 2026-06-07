@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends
 
 from app.api.deps import get_outline_orchestrator
 from app.api.schemas.outline import (
+    BibleResponse,
     BrainstormBibleRequest,
     BrainstormResponse,
     BrainstormSubstoryRequest,
@@ -13,6 +14,7 @@ from app.api.schemas.outline import (
     CreateBibleResponse,
     CreateSubstoryRequest,
     CreateSubstoryResponse,
+    SubstoryResponse,
 )
 from app.orchestrator.outline import OutlineOrchestrator
 
@@ -40,6 +42,15 @@ async def create_bible(
     return CreateBibleResponse(bible_id=bible_id)
 
 
+@router.get("/bible/{bible_id}", response_model=BibleResponse)
+async def get_bible(
+    bible_id: str,
+    orchestrator: Annotated[OutlineOrchestrator, Depends(get_outline_orchestrator)],
+) -> BibleResponse:
+    bible = await orchestrator.get_bible(bible_id=bible_id)
+    return BibleResponse(bible=bible)
+
+
 @router.post("/substory/brainstorm", response_model=BrainstormResponse)
 async def brainstorm_substory(
     request: BrainstormSubstoryRequest,
@@ -64,3 +75,12 @@ async def create_substory(
         messages=request.messages,
     )
     return CreateSubstoryResponse(substory_id=substory_id)
+
+
+@router.get("/substory/{substory_id}", response_model=SubstoryResponse)
+async def get_substory(
+    substory_id: str,
+    orchestrator: Annotated[OutlineOrchestrator, Depends(get_outline_orchestrator)],
+) -> SubstoryResponse:
+    substory = await orchestrator.get_substory(substory_id=substory_id)
+    return SubstoryResponse(substory=substory)
