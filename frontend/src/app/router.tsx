@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { queryClient } from "../api/query-client";
 import { BrainstormBiblePage } from "../features/outlines/bible/brainstorm/page";
 import { EditBiblePage } from "../features/outlines/bible/edit/page";
+import { ReviewChapterOutlinePage } from "../features/outlines/chapter/review/page";
 import { ErrorBoundary } from "../shared/components/ErrorBoundary";
 
 import type { QueryClient } from "@tanstack/react-query";
@@ -43,7 +44,18 @@ const editBibleRoute = createRoute({
   component: EditBiblePage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, editBibleRoute, brainstormBibleRoute]);
+const reviewChapterOutlineRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "outlines/chapters/$chapterId/review",
+  component: ReviewChapterOutlinePage,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  editBibleRoute,
+  brainstormBibleRoute,
+  reviewChapterOutlineRoute,
+]);
 
 export const router = createRouter({
   context: {

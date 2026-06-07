@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Novel Studio - 审阅大纲</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary-container": "#d8e8c7",
+                        "tertiary-container": "#1e4d44",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1b1c19",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#ffdad3",
+                        "on-secondary-fixed": "#131f0a",
+                        "surface-container-highest": "#e4e2dd",
+                        "surface": "#fbf9f4",
+                        "on-primary-fixed-variant": "#733427",
+                        "inverse-surface": "#30312e",
+                        "surface-tint": "#904b3c",
+                        "background": "#fbf9f4",
+                        "tertiary": "#00362e",
+                        "on-surface": "#1b1c19",
+                        "on-surface-variant": "#534340",
+                        "on-secondary-container": "#5b694e",
+                        "on-tertiary-container": "#8dbdb1",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#ffb4a4",
+                        "secondary-fixed-dim": "#bcccac",
+                        "surface-variant": "#e4e2dd",
+                        "surface-container-low": "#f5f3ee",
+                        "surface-container-high": "#eae8e3",
+                        "primary-container": "#713326",
+                        "tertiary-fixed-dim": "#a0d0c4",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#d9c1bd",
+                        "on-secondary-fixed-variant": "#3d4b32",
+                        "tertiary-fixed": "#bcece0",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "secondary": "#556349",
+                        "on-tertiary-fixed": "#00201b",
+                        "on-primary-container": "#f49d8b",
+                        "primary-fixed-dim": "#ffb4a4",
+                        "outline": "#86736f",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#204e46",
+                        "surface-bright": "#fbf9f4",
+                        "primary": "#551d12",
+                        "on-primary-fixed": "#3a0a03",
+                        "surface-container": "#f0eee9",
+                        "secondary-fixed": "#d8e8c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "inline-padding": "1.5rem",
+                        "container-max": "1280px",
+                        "edge-margin": "2rem",
+                        "component-gap": "1rem",
+                        "section-gap": "3rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Newsreader", "serif"],
+                        "display": ["Newsreader", "serif"],
+                        "label-xs": ["Manrope", "sans-serif"],
+                        "label-sm": ["Manrope", "sans-serif"],
+                        "body-md": ["Newsreader", "serif"],
+                        "body-lg": ["Newsreader", "serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-xs": ["12px", { "lineHeight": "1.0", "fontWeight": "700" }],
+                        "label-sm": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["17.6px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["20px", { "lineHeight": "1.8", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared TopNavBar & Header Content -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1 w-full">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-surface-variant px-0 md:px-10 py-4 mb-6">
+<div class="flex items-center gap-4 text-on-surface">
+<div class="size-4 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-surface font-headline-md font-bold leading-tight tracking-[-0.015em]">Novel Studio</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-6 md:gap-9 font-label-sm">
+<span class="text-on-surface-variant">低语森林</span>
+<span class="text-surface-variant">/</span>
+<span class="text-on-surface-variant">埃拉拉的冒险</span>
+<span class="text-surface-variant">/</span>
+<span class="text-on-surface font-bold">Chapter 04</span>
+</div>
+<div class="flex min-w-[84px] items-center justify-center rounded px-4 py-1.5 bg-primary-container text-on-primary-container font-label-xs tracking-wider">
+                                待审阅
+                            </div>
+</div>
+</header>
+<!-- Main Review Artifact Container -->
+<div class="px-0 md:px-10 pb-20">
+<div class="flex flex-col gap-3 mb-8">
+<h1 class="text-on-surface font-display text-[32px] mb-2">审阅章节大纲</h1>
+<p class="text-on-surface-variant font-body-md text-sm italic">AI 已生成结构化章节大纲。你可以添加批注、写整体建议，或批准后让 AI 继续生成正文。</p>
+<div class="flex flex-col gap-1 mt-2">
+<p class="text-on-surface-variant font-label-xs uppercase tracking-wider text-xs">ChapterOutline · Version 2 · 3 minutes ago</p>
+<p class="text-primary font-body-md text-sm font-medium">正文生成已暂停，等待你批准大纲。</p>
+</div>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-[20%_1fr] gap-x-6 border-b border-surface-variant mb-10 pb-4">
+<div class="col-span-2 grid grid-cols-subgrid border-t border-surface-variant py-4 items-baseline">
+<p class="text-on-surface-variant font-label-sm">章节序号</p>
+<p class="text-on-surface font-body-md">Chapter 04 · 卷内第 2 章</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-surface-variant py-4 items-baseline">
+<p class="text-on-surface-variant font-label-sm">章节标题</p>
+<p class="text-on-surface font-body-md font-bold">守林人的秘密</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-surface-variant py-4 items-baseline">
+<p class="text-on-surface-variant font-label-sm">章节主题色调</p>
+<p class="text-on-surface font-body-md">克制、哀悼、乡土禁忌感</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-surface-variant py-4 items-baseline relative">
+<p class="text-on-surface-variant font-label-sm">开头悬念</p>
+<div class="flex flex-col gap-3">
+<p class="text-on-surface font-body-md">埃拉拉在新芽中听见一段只属于母亲的摇篮曲...</p>
+<div class="bg-surface-container-low border-l-[3px] border-primary p-3 rounded-r flex gap-3 mt-1 w-fit">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">comment</span>
+<p class="text-on-surface-variant font-body-md text-sm leading-relaxed">母亲线索可以再间接一点，不要让她马上意识到真相。</p>
+</div>
+</div>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-surface-variant py-4 items-baseline">
+<p class="text-on-surface-variant font-label-sm">结尾悬念</p>
+<p class="text-on-surface font-body-md">她抵达心木井外...</p>
+</div>
+</div>
+<!-- Scenes Section -->
+<h3 class="font-headline-md text-on-surface mb-6 border-b border-surface-highest pb-2 inline-block">场景切分</h3>
+<div class="flex flex-col gap-6 mb-12">
+<!-- Scene 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-surface-variant relative">
+<div class="absolute -left-3 top-6 w-1 h-8 bg-surface-variant rounded-full"></div>
+<h4 class="font-label-xs text-on-surface-variant uppercase tracking-widest mb-4">Scene 01</h4>
+<div class="grid grid-cols-[120px_1fr] gap-y-3 mb-5 font-body-md text-[16px]">
+<span class="text-on-surface-variant font-label-sm pt-1">Location / Time</span>
+<span class="text-on-surface">寂静边缘 · 清晨</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Characters</span>
+<span class="text-on-surface">埃拉拉、守林人</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Objective</span>
+<span class="text-on-surface italic">让埃拉拉确认森林记忆并非幻觉</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Bridge</span>
+<span class="text-on-surface text-primary-fixed-variant">发现母亲线索</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Environment / 压抑</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Psychology / 恐惧</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Dialogue / 平静</span>
+</div>
+</div>
+<!-- Scene 2 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-surface-variant relative">
+<div class="absolute -left-3 top-6 w-1 h-8 bg-primary/40 rounded-full"></div>
+<h4 class="font-label-xs text-on-surface-variant uppercase tracking-widest mb-4">Scene 02</h4>
+<div class="grid grid-cols-[120px_1fr] gap-y-3 mb-5 font-body-md text-[16px]">
+<span class="text-on-surface-variant font-label-sm pt-1">Location</span>
+<span class="text-on-surface">村庄</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Characters</span>
+<span class="text-on-surface">村长等</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Objective</span>
+<span class="text-on-surface italic">展示村庄秩序</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-5">
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Dialogue / 压抑</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Psychology / 愤怒</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Action / 平静</span>
+</div>
+<div class="bg-surface-container-low border-l-[3px] border-primary p-3 rounded-r flex gap-3">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">comment</span>
+<p class="text-on-surface-variant font-body-md text-sm leading-relaxed">这里的村庄禁忌感很好，但制度压力可以更具体。</p>
+</div>
+</div>
+<!-- Scene 3 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-surface-variant relative">
+<div class="absolute -left-3 top-6 w-1 h-8 bg-surface-variant rounded-full"></div>
+<h4 class="font-label-xs text-on-surface-variant uppercase tracking-widest mb-4">Scene 03</h4>
+<div class="grid grid-cols-[120px_1fr] gap-y-3 mb-5 font-body-md text-[16px]">
+<span class="text-on-surface-variant font-label-sm pt-1">Location / Time</span>
+<span class="text-on-surface">心木井 · 夜晚</span>
+<span class="text-on-surface-variant font-label-sm pt-1">Objective</span>
+<span class="text-on-surface italic">主动违反禁令</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Action / 恐惧</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Image / 压抑</span>
+<span class="bg-secondary/10 text-on-secondary-container font-label-xs px-2.5 py-1 border border-secondary/20 rounded">Psychology / 激昂</span>
+</div>
+</div>
+</div>
+<!-- Feedback Area -->
+<div class="bg-surface-container-low rounded-xl p-6 md:p-8">
+<h3 class="font-headline-md text-on-surface mb-6">批注与修改建议</h3>
+<!-- Active Comments Summary -->
+<div class="flex flex-col gap-3 mb-6">
+<h4 class="font-label-xs text-on-surface-variant uppercase tracking-widest">Active Comments (2)</h4>
+<div class="flex gap-4 items-start text-sm">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">chat_bubble</span>
+<div>
+<span class="font-label-xs text-on-surface-variant mr-2">开头悬念:</span>
+<span class="font-body-md text-on-surface">母亲线索可以再间接一点，不要让她马上意识到真相。</span>
+</div>
+</div>
+<div class="flex gap-4 items-start text-sm">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">chat_bubble</span>
+<div>
+<span class="font-label-xs text-on-surface-variant mr-2">Scene 02:</span>
+<span class="font-body-md text-on-surface">这里的村庄禁忌感很好，但制度压力可以更具体。</span>
+</div>
+</div>
+</div>
+<textarea class="w-full bg-surface-container-lowest border border-surface-variant rounded p-4 font-body-md text-on-surface focus:outline-none focus:border-outline focus:ring-1 focus:ring-outline min-h-[140px] resize-y placeholder:text-on-surface-variant/50" placeholder="例如：整体更克制，减少解释..."></textarea>
+<!-- Bottom Actions -->
+<div class="flex items-center justify-end gap-5 mt-8">
+<button class="text-on-surface-variant font-label-sm hover:text-primary transition-colors px-2">稍后处理</button>
+<button class="bg-secondary text-on-secondary font-label-sm px-6 py-2.5 rounded hover:bg-secondary/90 transition-colors shadow-sm">带批注重生成</button>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-sm px-8 py-2.5 rounded hover:opacity-95 transition-opacity shadow-sm">批准大纲</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>
