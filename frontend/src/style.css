@@ -104,6 +104,10 @@ button {
   scrollbar-width: thin;
 }
 
+.scrollbar-stable {
+  scrollbar-gutter: stable;
+}
+
 .scrollbar-thin::-webkit-scrollbar {
   width: 8px;
 }
