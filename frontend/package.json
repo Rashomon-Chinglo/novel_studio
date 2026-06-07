@@ -6,9 +6,26 @@
   "scripts": {
     "dev": "vp dev",
     "build": "tsc && vp build",
+    "api:types": "vp exec openapi-typescript http://localhost:8976/openapi.json -o src/api/schema.ts",
     "preview": "vp preview"
   },
+  "dependencies": {
+    "@tanstack/react-query": "^5.99.2",
+    "@tanstack/react-router": "^1.168.23",
+    "jotai": "^2.19.1",
+    "openapi-fetch": "^0.17.0",
+    "openapi-react-query": "^0.5.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "zod": "^4.3.6"
+  },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "openapi-typescript": "^7.13.0",
+    "tailwindcss": "^4.2.2",
     "typescript": "~6.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
