@@ -88,6 +88,7 @@ class MaterialService:
                 uow.materials.snippets.add_many(sql_snippets)
                 await uow.commit()
 
-            self.vector_store.add_texts(**chroma_snippets)
+            # Prevent blocking the asyncio event loop during I/O operations
+            await self.vector_store.aadd_texts(**chroma_snippets)
         except Exception as e:
             print(f"Error saving snippets: {e}")
