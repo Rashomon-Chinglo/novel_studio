@@ -1,0 +1,3 @@
+## 2024-06-20 - [Use Asynchronous Vector Store Methods]
+**Learning:** The `MaterialService` implementation previously used the synchronous `add_texts` method of `langchain_chroma.Chroma` inside an asynchronous `save_snippets` method. Because Chroma interactions are I/O bound (especially with external databases or when embedding happens remotely), this blocked the `asyncio` event loop.
+**Action:** Always prefer `aadd_texts` or equivalent asynchronous methods when working with `langchain_chroma.Chroma` inside asynchronous functions to prevent blocking the event loop and improve throughput during bulk processing.
