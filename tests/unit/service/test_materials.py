@@ -33,8 +33,9 @@ class FakeVectorStore:
     def __init__(self) -> None:
         self.payload = None
 
-    def add_texts(self, **kwargs) -> None:
+    async def aadd_texts(self, **kwargs) -> list[str]:
         self.payload = kwargs
+        return ["dummy_id"]
 
 
 @pytest.mark.asyncio()
