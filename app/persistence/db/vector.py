@@ -1,9 +1,14 @@
+import functools
+
 from langchain_chroma import Chroma
 from langchain_community.embeddings import JinaEmbeddings
 
 from app.core.config import settings
 
 
+# ⚡ Bolt: Caching this factory function prevents multiple initializations
+# of the JinaEmbeddings and Chroma clients, reducing memory footprint and I/O overhead.
+@functools.cache
 def get_vector_store():
     embeddings = JinaEmbeddings(  # type: ignore[missing-argument]
         jina_api_key=settings.JINA_API_KEY,  # type: ignore[invalid-argument-type]
