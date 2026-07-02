@@ -26,5 +26,7 @@ class WorkflowRun(AsyncAttrs, Base):
     chapter_index: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
     error_code: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
     error_message: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
-    started_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now, nullable=False, index=True)
+    started_at: Mapped[datetime] = mapped_column(
+        DateTime, default=utc_now, nullable=False, index=True
+    )
     finished_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, index=True)
