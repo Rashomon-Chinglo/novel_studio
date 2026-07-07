@@ -1,8 +1,12 @@
+import functools
+
 from langchain_openai import ChatOpenAI
 
 from app.core.config import settings
 
 
+# ⚡ Bolt: cache expensive client initialization to prevent re-initialization of the LLM client on every call, saving memory and I/O overhead.
+@functools.cache
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.OPENAI_API_KEY,  # type: ignore[unknown-argument]
