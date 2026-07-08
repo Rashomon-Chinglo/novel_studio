@@ -1,0 +1,3 @@
+## 2024-07-08 - Use async vector store methods to prevent event loop blocking
+**Learning:** Calling synchronous methods like `Chroma.add_texts` within async methods (`save_snippets`) blocks the entire event loop. This negates the concurrency benefits intended by using an `asyncio.Semaphore` in `MaterialService.process_content`, leading to performance bottlenecks during embedding generation and storage.
+**Action:** Always verify that I/O operations and third-party library integrations within async contexts utilize their asynchronous counterparts (e.g., `aadd_texts` instead of `add_texts`) to maintain non-blocking behavior.
